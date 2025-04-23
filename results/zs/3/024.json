@@ -1,0 +1,60 @@
+{
+  "completion": "def largest_divisor(n: int) -> int:\n    for i in range(n // 2, 0, -1):\n        if n % i == 0:\n            return i",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n",
+  "problem_id": "HumanEval/24",
+  "problem_data": {
+    "task_id": "HumanEval/24",
+    "prompt": "\n\ndef largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n",
+    "canonical_solution": "    for i in reversed(range(n)):\n        if n % i == 0:\n            return i\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3) == 1\n    assert candidate(7) == 1\n    assert candidate(10) == 5\n    assert candidate(100) == 50\n    assert candidate(49) == 7\n",
+    "entry_point": "largest_divisor"
+  },
+  "path": "results/zs/3/024.json",
+  "method": "zs",
+  "trial": 3,
+  "time_taken": 1.291066,
+  "time_start": "2025-04-23T02:26:34.533208",
+  "time_end": "2025-04-23T02:26:35.824274",
+  "prompt_tokens": 104,
+  "completion_tokens": 40,
+  "total_tokens": 144,
+  "raw": {
+    "id": "chatcmpl-BPNr0ru26OQqCWnFswjscf7M0VCQO",
+    "object": "chat.completion",
+    "created": 1745389594,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def largest_divisor(n: int) -> int:\n    for i in range(n // 2, 0, -1):\n        if n % i == 0:\n            return i",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 104,
+      "completion_tokens": 40,
+      "total_tokens": 144,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 496.33251
+  }
+}

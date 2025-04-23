@@ -1,0 +1,60 @@
+{
+  "completion": "def make_a_pile(n):\n    return [n + 2 * i for i in range(n)]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef make_a_pile(n):\n    \"\"\"\n    Given a positive integer n, you have to make a pile of n levels of stones.\n    The first level has n stones.\n    The number of stones in the next level is:\n        - the next odd number if n is odd.\n        - the next even number if n is even.\n    Return the number of stones in each level in a list, where element at index\n    i represents the number of stones in the level (i+1).\n\n    Examples:\n    >>> make_a_pile(3)\n    [3, 5, 7]\n    \"\"\"\n",
+  "problem_id": "HumanEval/100",
+  "problem_data": {
+    "task_id": "HumanEval/100",
+    "prompt": "\ndef make_a_pile(n):\n    \"\"\"\n    Given a positive integer n, you have to make a pile of n levels of stones.\n    The first level has n stones.\n    The number of stones in the next level is:\n        - the next odd number if n is odd.\n        - the next even number if n is even.\n    Return the number of stones in each level in a list, where element at index\n    i represents the number of stones in the level (i+1).\n\n    Examples:\n    >>> make_a_pile(3)\n    [3, 5, 7]\n    \"\"\"\n",
+    "canonical_solution": "    return [n + 2*i for i in range(n)]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(3) == [3, 5, 7], \"Test 3\"\n    assert candidate(4) == [4,6,8,10], \"Test 4\"\n    assert candidate(5) == [5, 7, 9, 11, 13]\n    assert candidate(6) == [6, 8, 10, 12, 14, 16]\n    assert candidate(8) == [8, 10, 12, 14, 16, 18, 20, 22]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "make_a_pile"
+  },
+  "path": "results/zs/24/100.json",
+  "method": "zs",
+  "trial": 24,
+  "time_taken": 0.857198,
+  "time_start": "2025-04-23T05:21:15.333457",
+  "time_end": "2025-04-23T05:21:16.190655",
+  "prompt_tokens": 184,
+  "completion_tokens": 23,
+  "total_tokens": 207,
+  "raw": {
+    "id": "chatcmpl-BPQa3TwfXpdllW47ZCnMpskVscRoG",
+    "object": "chat.completion",
+    "created": 1745400075,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def make_a_pile(n):\n    return [n + 2 * i for i in range(n)]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 184,
+      "completion_tokens": 23,
+      "total_tokens": 207,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 496.10852
+  }
+}

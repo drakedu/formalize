@@ -1,0 +1,60 @@
+{
+  "completion": "```python\ndef any_int(x, y, z):\n    return all(isinstance(i, int) for i in (x, y, z)) and (x == y + z or y == x + z or z == x + y)\n```",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) \u279e True\n    \n    any_int(3, 2, 2) \u279e False\n\n    any_int(3, -2, 1) \u279e True\n    \n    any_int(3.6, -2.2, 2) \u279e False\n  \n\n    \n    '''\n",
+  "problem_id": "HumanEval/92",
+  "problem_data": {
+    "task_id": "HumanEval/92",
+    "prompt": "\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) \u279e True\n    \n    any_int(3, 2, 2) \u279e False\n\n    any_int(3, -2, 1) \u279e True\n    \n    any_int(3.6, -2.2, 2) \u279e False\n  \n\n    \n    '''\n",
+    "canonical_solution": "    \n    if isinstance(x,int) and isinstance(y,int) and isinstance(z,int):\n        if (x+y==z) or (x+z==y) or (y+z==x):\n            return True\n        return False\n    return False\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(2, 3, 1)==True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(2.5, 2, 3)==False, \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate(1.5, 5, 3.5)==False, \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate(2, 6, 2)==False, \"This prints if this assert fails 4 (good for debugging!)\"\n    assert candidate(4, 2, 2)==True, \"This prints if this assert fails 5 (good for debugging!)\"\n    assert candidate(2.2, 2.2, 2.2)==False, \"This prints if this assert fails 6 (good for debugging!)\"\n    assert candidate(-4, 6, 2)==True, \"This prints if this assert fails 7 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(2,1,1)==True, \"This prints if this assert fails 8 (also good for debugging!)\"\n    assert candidate(3,4,7)==True, \"This prints if this assert fails 9 (also good for debugging!)\"\n    assert candidate(3.0,4,7)==False, \"This prints if this assert fails 10 (also good for debugging!)\"\n\n",
+    "entry_point": "any_int"
+  },
+  "path": "results/zs/17/092.json",
+  "method": "zs",
+  "trial": 17,
+  "time_taken": 1.215263,
+  "time_start": "2025-04-23T04:24:51.462593",
+  "time_end": "2025-04-23T04:24:52.677856",
+  "prompt_tokens": 187,
+  "completion_tokens": 53,
+  "total_tokens": 240,
+  "raw": {
+    "id": "chatcmpl-BPPhTTho2mVYEcj7xbnTntx9uDE1H",
+    "object": "chat.completion",
+    "created": 1745396691,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef any_int(x, y, z):\n    return all(isinstance(i, int) for i in (x, y, z)) and (x == y + z or y == x + z or z == x + y)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 187,
+      "completion_tokens": 53,
+      "total_tokens": 240,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 496.18502
+  }
+}

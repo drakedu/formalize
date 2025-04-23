@@ -1,0 +1,60 @@
+{
+  "completion": "return len(string)",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n",
+  "problem_id": "HumanEval/23",
+  "problem_data": {
+    "task_id": "HumanEval/23",
+    "prompt": "\n\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n",
+    "canonical_solution": "    return len(string)\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('x') == 1\n    assert candidate('asdasnakj') == 9\n",
+    "entry_point": "strlen"
+  },
+  "path": "results/zs/16/023.json",
+  "method": "zs",
+  "trial": 16,
+  "time_taken": 0.754481,
+  "time_start": "2025-04-23T04:13:29.578732",
+  "time_end": "2025-04-23T04:13:30.333213",
+  "prompt_tokens": 95,
+  "completion_tokens": 5,
+  "total_tokens": 100,
+  "raw": {
+    "id": "chatcmpl-BPPWTPN402qanVR2ufmGDh6JV2wka",
+    "object": "chat.completion",
+    "created": 1745396009,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "return len(string)",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 95,
+      "completion_tokens": 5,
+      "total_tokens": 100,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 1e-05,
+    "your_harvard_credits_still_available": 496.19932
+  }
+}

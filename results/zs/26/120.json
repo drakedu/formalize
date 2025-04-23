@@ -1,0 +1,60 @@
+{
+  "completion": "    return sorted(sorted(arr)[-k:])",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n",
+  "problem_id": "HumanEval/120",
+  "problem_data": {
+    "task_id": "HumanEval/120",
+    "prompt": "\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n",
+    "canonical_solution": "    if k == 0:\n        return []\n    arr.sort()\n    ans = arr[-k:]\n    return ans\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([-3, -4, 5], 3) == [-4, -3, 5]\n    assert candidate([4, -4, 4], 2) == [4, 4]\n    assert candidate([-3, 2, 1, 2, -1, -2, 1], 1) == [2]\n    assert candidate([123, -123, 20, 0 , 1, 2, -3], 3) == [2, 20, 123]\n    assert candidate([-123, 20, 0 , 1, 2, -3], 4) == [0, 1, 2, 20]\n    assert candidate([5, 15, 0, 3, -13, -8, 0], 7) == [-13, -8, 0, 0, 3, 5, 15]\n    assert candidate([-1, 0, 2, 5, 3, -10], 2) == [3, 5]\n    assert candidate([1, 0, 5, -7], 1) == [5]\n    assert candidate([4, -4], 2) == [-4, 4]\n    assert candidate([-10, 10], 2) == [-10, 10]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1, 2, 3, -23, 243, -400, 0], 0) == []\n\n",
+    "entry_point": "maximum"
+  },
+  "path": "results/zs/26/120.json",
+  "method": "zs",
+  "trial": 26,
+  "time_taken": 7.501431,
+  "time_start": "2025-04-23T05:36:41.217195",
+  "time_end": "2025-04-23T05:36:48.718626",
+  "prompt_tokens": 269,
+  "completion_tokens": 11,
+  "total_tokens": 280,
+  "raw": {
+    "id": "chatcmpl-BPQp1Ns4OolhWlE555f5a3CnILGpW",
+    "object": "chat.completion",
+    "created": 1745401003,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    return sorted(sorted(arr)[-k:])",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 269,
+      "completion_tokens": 11,
+      "total_tokens": 280,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 496.08678
+  }
+}

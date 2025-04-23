@@ -1,0 +1,60 @@
+{
+  "completion": "def numerical_letter_grade(grades):\n    return [\n        'A+' if g == 4.0 else\n        'A' if g > 3.7 else\n        'A-' if g > 3.3 else\n        'B+' if g > 3.0 else\n        'B' if g > 2.7 else\n        'B-' if g > 2.3 else\n        'C+' if g > 2.0 else\n        'C' if g > 1.7 else\n        'C-' if g > 1.3 else\n        'D+' if g > 1.0 else\n        'D' if g > 0.7 else\n        'D-' if g > 0.0 else\n        'E'\n        for g in grades\n    ]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef numerical_letter_grade(grades):\n    \"\"\"It is the last week of the semester and the teacher has to give the grades\n    to students. The teacher has been making her own algorithm for grading.\n    The only problem is, she has lost the code she used for grading.\n    She has given you a list of GPAs for some students and you have to write \n    a function that can output a list of letter grades using the following table:\n             GPA       |    Letter grade\n              4.0                A+\n            > 3.7                A \n            > 3.3                A- \n            > 3.0                B+\n            > 2.7                B \n            > 2.3                B-\n            > 2.0                C+\n            > 1.7                C\n            > 1.3                C-\n            > 1.0                D+ \n            > 0.7                D \n            > 0.0                D-\n              0.0                E\n    \n\n    Example:\n    grade_equation([4.0, 3, 1.7, 2, 3.5]) ==> ['A+', 'B', 'C-', 'C', 'A-']\n    \"\"\"\n",
+  "problem_id": "HumanEval/81",
+  "problem_data": {
+    "task_id": "HumanEval/81",
+    "prompt": "\ndef numerical_letter_grade(grades):\n    \"\"\"It is the last week of the semester and the teacher has to give the grades\n    to students. The teacher has been making her own algorithm for grading.\n    The only problem is, she has lost the code she used for grading.\n    She has given you a list of GPAs for some students and you have to write \n    a function that can output a list of letter grades using the following table:\n             GPA       |    Letter grade\n              4.0                A+\n            > 3.7                A \n            > 3.3                A- \n            > 3.0                B+\n            > 2.7                B \n            > 2.3                B-\n            > 2.0                C+\n            > 1.7                C\n            > 1.3                C-\n            > 1.0                D+ \n            > 0.7                D \n            > 0.0                D-\n              0.0                E\n    \n\n    Example:\n    grade_equation([4.0, 3, 1.7, 2, 3.5]) ==> ['A+', 'B', 'C-', 'C', 'A-']\n    \"\"\"\n",
+    "canonical_solution": "\n   \n    letter_grade = []\n    for gpa in grades:\n        if gpa == 4.0:\n            letter_grade.append(\"A+\")\n        elif gpa > 3.7:\n            letter_grade.append(\"A\")\n        elif gpa > 3.3:\n            letter_grade.append(\"A-\")\n        elif gpa > 3.0:\n            letter_grade.append(\"B+\")\n        elif gpa > 2.7:\n            letter_grade.append(\"B\")\n        elif gpa > 2.3:\n            letter_grade.append(\"B-\")\n        elif gpa > 2.0:\n            letter_grade.append(\"C+\")\n        elif gpa > 1.7:\n            letter_grade.append(\"C\")\n        elif gpa > 1.3:\n            letter_grade.append(\"C-\")\n        elif gpa > 1.0:\n            letter_grade.append(\"D+\")\n        elif gpa > 0.7:\n            letter_grade.append(\"D\")\n        elif gpa > 0.0:\n            letter_grade.append(\"D-\")\n        else:\n            letter_grade.append(\"E\")\n    return letter_grade\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([4.0, 3, 1.7, 2, 3.5]) == ['A+', 'B', 'C-', 'C', 'A-']\n    assert candidate([1.2]) == ['D+']\n    assert candidate([0.5]) == ['D-']\n    assert candidate([0.0]) == ['E']\n    assert candidate([1, 0.3, 1.5, 2.8, 3.3]) == ['D', 'D-', 'C-', 'B', 'B+']\n    assert candidate([0, 0.7]) == ['E', 'D-']\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "numerical_letter_grade"
+  },
+  "path": "results/zs/12/081.json",
+  "method": "zs",
+  "trial": 12,
+  "time_taken": 3.851537,
+  "time_start": "2025-04-23T03:42:35.954303",
+  "time_end": "2025-04-23T03:42:39.805840",
+  "prompt_tokens": 322,
+  "completion_tokens": 179,
+  "total_tokens": 501,
+  "raw": {
+    "id": "chatcmpl-BPP2aTsrReMv7Hm6XCv00NEqhSMkL",
+    "object": "chat.completion",
+    "created": 1745394156,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def numerical_letter_grade(grades):\n    return [\n        'A+' if g == 4.0 else\n        'A' if g > 3.7 else\n        'A-' if g > 3.3 else\n        'B+' if g > 3.0 else\n        'B' if g > 2.7 else\n        'B-' if g > 2.3 else\n        'C+' if g > 2.0 else\n        'C' if g > 1.7 else\n        'C-' if g > 1.3 else\n        'D+' if g > 1.0 else\n        'D' if g > 0.7 else\n        'D-' if g > 0.0 else\n        'E'\n        for g in grades\n    ]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 322,
+      "completion_tokens": 179,
+      "total_tokens": 501,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 496.23716
+  }
+}
