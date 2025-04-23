@@ -26,7 +26,7 @@ URL = "https://go.apis.huit.harvard.edu/ais-openai-direct-limited-schools/v1/cha
 RESULTS = "results"
 PROMPTS = "prompts"
 FAILURES = "failures.log"
-BENCHMARK = "benchmark"
+BENCHMARKS = "benchmarks"
 
 # Set number of retries on completion error.
 NUM_RETRIES = 3
