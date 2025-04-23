@@ -14,5 +14,5 @@
 
 3. Install required Python packages.
     ```bash
-    pip install requests datasets human-eval
+    pip install requests datasets human-eval scipy
     ```
