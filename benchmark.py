@@ -1,0 +1,90 @@
+import os
+import json
+import argparse
+import tempfile
+import pandas as pd
+from datasets import load_dataset
+from human_eval.evaluation import evaluate_functional_correctness
+import config
+
+def benchmark_method(approach: str):
+    humaneval = load_dataset(config.DATASET, split="test")
+    output_path = os.path.join(config.BENCHMARKS, f"{approach}.csv")
+
+    for trial_index in range(config.NUM_TRIALS):
+        if os.path.exists(output_path):
+            df = pd.read_csv(output_path, index_col="problem")
+        else:
+            df = pd.DataFrame({"problem": [f"{i:03d}" for i in range(config.NUM_PROBLEMS)]})
+            df.set_index("problem", inplace=True)
+
+        col_name = f"trial_{trial_index}"
+
+        if col_name in df.columns:
+            print(f"Method-trial {approach}-{col_name} is already benchmarked.")
+            continue
+
+        trial_results = []
+
+        for problem_index in range(config.NUM_PROBLEMS):
+            problem_name = f"{problem_index:03d}"
+            run_path = os.path.join(config.RESULTS, approach, str(trial_index), f"{problem_name}.json")
+
+            if not os.path.exists(run_path):
+                print(f"{run_path} is missing for benchmarking.")
+                trial_results.append(None)
+                continue
+
+            success = False
+            for attempt in range(config.NUM_RETRIES):
+                try:
+                    with open(run_path) as f:
+                        result_data = json.load(f)
+                        completion = result_data["completion"]
+                        task_id = result_data.get("problem_id", humaneval[problem_index]["task_id"])
+
+                    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".jsonl") as tmp_samples:
+                        tmp_samples.write(json.dumps({"task_id": task_id, "completion": completion}) + "\n")
+                        tmp_samples_path = tmp_samples.name
+
+                    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".jsonl") as tmp_problem:
+                        tmp_problem.write(json.dumps(humaneval[problem_index]) + "\n")
+                        tmp_problem_path = tmp_problem.name
+
+                    results = evaluate_functional_correctness(
+                        sample_file=tmp_samples_path,
+                        problem_file=tmp_problem_path,
+                        k=[1]
+                    )
+
+                    os.remove(tmp_samples_path)
+                    os.remove(tmp_problem_path)
+
+                    passed = int(results["pass@1"] == 1.0)
+                    trial_results.append(passed)
+                    success = True
+                    break
+
+                except Exception as e:
+                    print(f"Method-trial-problem {approach}-{trial_index}-{problem_index} benchmarking encountered error {e}.")
+
+            if not success:
+                trial_results.append(None)
+                msg = f"Method-trial-problem {approach}-{trial_index}-{problem_index} failed benchmarking after {config.NUM_RETRIES} retries."
+                print(msg)
+                with open(f"{config.FAILURES}.log", "a") as log:
+                    log.write(msg + "\n")
+
+        df[col_name] = trial_results
+        df.to_csv(output_path)
+        print(f"Method-trial {approach}-{col_name} finished benchmarking.")
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("approach", type=str, help="Provide approach file.")
+    args = parser.parse_args()
+    approach = args.approach.split(".")[0]
+    benchmark_method(approach)
+
+if __name__ == "__main__":
+    main()
