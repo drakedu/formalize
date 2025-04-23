@@ -7,6 +7,9 @@ NUM_PROBLEMS = 164
 # Set K for use in self-consistency experiments.
 K = 5
 
+# Set number of retries on completion error.
+NUM_RETRIES = 3
+
 # Set temperature for sampling.
 TEMP = 0.7
 
@@ -25,8 +28,5 @@ URL = "https://go.apis.huit.harvard.edu/ais-openai-direct-limited-schools/v1/cha
 # Set locations.
 RESULTS = "results"
 PROMPTS = "prompts"
-FAILURES = "failures.log"
+FAILURES = "failures"
 BENCHMARKS = "benchmarks"
-
-# Set number of retries on completion error.
-NUM_RETRIES = 3

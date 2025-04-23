@@ -26,7 +26,7 @@ for trial in range(config.NUM_TRIALS):
         if not success:
             description = f"Method-trial-problem {method}-{trial}-{problem} failed after {config.NUM_RETRIES} retries."
             print(description)
-            with open(config.FAILURES, "a") as log:
+            with open(f"{config.FAILURES}.log", "a") as log:
                 log.write(f"{description}\n")
 
     print(f"Method {method} for trial {trial} has finished.")
