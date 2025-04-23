@@ -62,8 +62,7 @@ def get_prompt(method: str) -> str:
     with open(prompt_path, "r") as f:
         return f.read()
 
-def build_result(data, system_prompt, user_prompt, problem_id, problem_data, path, method, trial, start, end, usage):
-    # Get time taken.
+def build_result(data, system_prompt, user_prompt, problem_id, problem_data, path, method, trial, start, end, usage) -> dict:
     dt1 = datetime.fromisoformat(start)
     dt2 = datetime.fromisoformat(end)
     delta_seconds = (dt2 - dt1).total_seconds()

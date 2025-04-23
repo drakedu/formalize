@@ -28,16 +28,21 @@ system_prompt = utils.get_prompt(method_name)
 # Keep track of time.
 start_time = datetime.now().isoformat()
 
+# Get completion.
 data = utils.get_completion(
     system_prompt=system_prompt,
     user_prompt=prompt
     )
 
+# Get the end time.
 end_time = datetime.now().isoformat()
 
+# Build the result.
 result = utils.build_result(data, system_prompt, prompt, problem_data["task_id"], problem_data, result_file, method_name, trial_index, start_time, end_time, data["usage"])
 
+# Save the result to a file.
 with open(result_file, "w") as f:
     json.dump(result, f, indent=2)
 
+# Indicate success.
 print(f"Method-trial-problem {method_name}-{trial_index}-{problem_index} has completed.")
