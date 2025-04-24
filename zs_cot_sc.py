@@ -91,4 +91,4 @@ with open(final_result_file, "w") as f:
     json.dump(final_result, f, indent=2)
 
 # Indicate success.
-print(f"Method-trial-problem {method_name}-{trial_index}-{problem_index} (SC) has completed.")
+print(f"Method-trial-problem {method_name}-{trial_index}-{problem_index} has completed.")
