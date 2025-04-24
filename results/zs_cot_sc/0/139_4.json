@@ -1,0 +1,60 @@
+{
+  "completion": "def special_factorial(n):\n    from math import factorial\n    return factorial(n) * factorial(n - 1) * factorial(n - 2) * factorial(n - 3) * factorial(n - 4) * factorial(n - 5) * factorial(n - 6) * factorial(n - 7) * factorial(n - 8) * factorial(n - 9) * factorial(n - 10) * factorial(n - 11) * factorial(n - 12) * factorial(n - 13) * factorial(n - 14) * factorial(n - 15) * factorial(n - 16) * factorial(n - 17) * factorial(n - 18) * factorial(n - 19) * factorial(n - 20) * factorial(n - 21) * factorial(n - 22) * factorial(n - 23) * factorial(n - 24) * factorial(n - 25) * factorial(n - 26) * factorial(n - 27) * factorial(n - 28) * factorial(n - 29) * factorial(n - 30) * factorial(n - 31) * factorial(n - 32) * factorial(n - 33) * factorial(n - 34) * factorial(n - 35) * factorial(n - 36) * factorial(n - 37) * factorial(n - 38) * factorial(n - 39) * factorial(n - 40) * factorial(n - 41) * factorial(n - 42) * factorial(n - 43) * factorial(n - 44) * factorial(n - 45) * factorial(n - 46) * factorial(n - 47) * factorial(n - 48) * factorial(n - 49) * factorial(n - 50) * factorial(n - 51) * factorial(n - 52) * factorial(n - 53) * factorial(n - 54) * factorial(n - 55) * factorial(n - 56) * factorial(n - 57) * factorial(n - 58) * factorial(n - 59) * factorial(n - 60) * factorial(n - 61) * factorial(n - 62) * factorial(n - 63) * factorial(n - 64) * factorial(n - 65) * factorial(n - 66) * factorial(n - 67) * factorial(n - 68) * factorial(n - 69) * factorial(n - 70) * factorial(n - 71) * factorial(n - 72) * factorial(n - 73) * factorial(n - 74) * factorial(n - 75) * factorial(n - 76) * factorial(n - 77) * factorial(n - 78) * factorial(n - 79) * factorial(n - 80) * factorial(n - 81) * factorial(n - 82) * factorial(n - 83) * factorial(n - 84) * factorial(n - 85) * factorial(n - 86) * factorial(n - 87) * factorial(n - 88) * factorial(n - 89) * factorial(n - 90) * factorial(n - 91) * factorial(n - 92) * factorial(n - 93) * factorial(n - 94) * factorial(n - 95) * factorial(n - 96) * factorial(n - 97) * factorial(n - 98) * factorial(n - 99) * factorial(n - 100) if n > 0 else 1",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n",
+  "problem_id": "HumanEval/139",
+  "problem_data": {
+    "task_id": "HumanEval/139",
+    "prompt": "\ndef special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n",
+    "canonical_solution": "    fact_i = 1\n    special_fact = 1\n    for i in range(1, n+1):\n        fact_i *= i\n        special_fact *= fact_i\n    return special_fact\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(4) == 288, \"Test 4\"\n    assert candidate(5) == 34560, \"Test 5\"\n    assert candidate(7) == 125411328000, \"Test 7\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(1) == 1, \"Test 1\"\n\n",
+    "entry_point": "special_factorial"
+  },
+  "path": "results/zs_cot_sc/0/139_4.json",
+  "method": "zs_cot_sc",
+  "trial": 0,
+  "time_taken": 9.826201,
+  "time_start": "2025-04-23T20:55:23.557926",
+  "time_end": "2025-04-23T20:55:33.384127",
+  "prompt_tokens": 156,
+  "completion_tokens": 726,
+  "total_tokens": 882,
+  "raw": {
+    "id": "chatcmpl-BPfA3rHTaV6ILS07ejndPrgoXxI83",
+    "object": "chat.completion",
+    "created": 1745456123,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def special_factorial(n):\n    from math import factorial\n    return factorial(n) * factorial(n - 1) * factorial(n - 2) * factorial(n - 3) * factorial(n - 4) * factorial(n - 5) * factorial(n - 6) * factorial(n - 7) * factorial(n - 8) * factorial(n - 9) * factorial(n - 10) * factorial(n - 11) * factorial(n - 12) * factorial(n - 13) * factorial(n - 14) * factorial(n - 15) * factorial(n - 16) * factorial(n - 17) * factorial(n - 18) * factorial(n - 19) * factorial(n - 20) * factorial(n - 21) * factorial(n - 22) * factorial(n - 23) * factorial(n - 24) * factorial(n - 25) * factorial(n - 26) * factorial(n - 27) * factorial(n - 28) * factorial(n - 29) * factorial(n - 30) * factorial(n - 31) * factorial(n - 32) * factorial(n - 33) * factorial(n - 34) * factorial(n - 35) * factorial(n - 36) * factorial(n - 37) * factorial(n - 38) * factorial(n - 39) * factorial(n - 40) * factorial(n - 41) * factorial(n - 42) * factorial(n - 43) * factorial(n - 44) * factorial(n - 45) * factorial(n - 46) * factorial(n - 47) * factorial(n - 48) * factorial(n - 49) * factorial(n - 50) * factorial(n - 51) * factorial(n - 52) * factorial(n - 53) * factorial(n - 54) * factorial(n - 55) * factorial(n - 56) * factorial(n - 57) * factorial(n - 58) * factorial(n - 59) * factorial(n - 60) * factorial(n - 61) * factorial(n - 62) * factorial(n - 63) * factorial(n - 64) * factorial(n - 65) * factorial(n - 66) * factorial(n - 67) * factorial(n - 68) * factorial(n - 69) * factorial(n - 70) * factorial(n - 71) * factorial(n - 72) * factorial(n - 73) * factorial(n - 74) * factorial(n - 75) * factorial(n - 76) * factorial(n - 77) * factorial(n - 78) * factorial(n - 79) * factorial(n - 80) * factorial(n - 81) * factorial(n - 82) * factorial(n - 83) * factorial(n - 84) * factorial(n - 85) * factorial(n - 86) * factorial(n - 87) * factorial(n - 88) * factorial(n - 89) * factorial(n - 90) * factorial(n - 91) * factorial(n - 92) * factorial(n - 93) * factorial(n - 94) * factorial(n - 95) * factorial(n - 96) * factorial(n - 97) * factorial(n - 98) * factorial(n - 99) * factorial(n - 100) if n > 0 else 1",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 156,
+      "completion_tokens": 726,
+      "total_tokens": 882,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00045,
+    "your_harvard_credits_still_available": 495.64765
+  }
+}

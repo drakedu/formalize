@@ -1,0 +1,60 @@
+{
+  "completion": "if n == 1:\n    return 1\ncount_start = 10**(n-1) - 10**(n-2)\ncount_end = 10**(n-1) - 10**(n-2)\ncount_both = 10**(n-2)\nreturn count_start + count_end - count_both",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n",
+  "problem_id": "HumanEval/83",
+  "problem_data": {
+    "task_id": "HumanEval/83",
+    "prompt": "\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n",
+    "canonical_solution": "    if n == 1: return 1\n    return 18 * (10 ** (n - 2))\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(1) == 1\n    assert candidate(2) == 18\n    assert candidate(3) == 180\n    assert candidate(4) == 1800\n    assert candidate(5) == 18000\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "starts_one_ends"
+  },
+  "path": "results/zs_cot_sc/24/083_4.json",
+  "method": "zs_cot_sc",
+  "trial": 24,
+  "time_taken": 1.495352,
+  "time_start": "2025-04-24T08:04:53.526976",
+  "time_end": "2025-04-24T08:04:55.022328",
+  "prompt_tokens": 106,
+  "completion_tokens": 74,
+  "total_tokens": 180,
+  "raw": {
+    "id": "chatcmpl-BPpbxYyKIRAqaqnDAdbW6YlnCQa9F",
+    "object": "chat.completion",
+    "created": 1745496293,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "if n == 1:\n    return 1\ncount_start = 10**(n-1) - 10**(n-2)\ncount_end = 10**(n-1) - 10**(n-2)\ncount_both = 10**(n-2)\nreturn count_start + count_end - count_both",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 106,
+      "completion_tokens": 74,
+      "total_tokens": 180,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 6e-05,
+    "your_harvard_credits_still_available": 494.39071
+  }
+}

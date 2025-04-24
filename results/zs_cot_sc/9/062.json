@@ -1,0 +1,63 @@
+{
+  "completion": "def derivative(xs: list):\n    return [i * coeff for i, coeff in enumerate(xs) if i > 0]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef derivative(xs: list):\n    \"\"\" xs represent coefficients of a polynomial.\n    xs[0] + xs[1] * x + xs[2] * x^2 + ....\n     Return derivative of this polynomial in the same form.\n    >>> derivative([3, 1, 2, 4, 5])\n    [1, 4, 12, 20]\n    >>> derivative([1, 2, 3])\n    [2, 6]\n    \"\"\"\n",
+  "problem_id": "HumanEval/62",
+  "problem_data": {
+    "task_id": "HumanEval/62",
+    "prompt": "\n\ndef derivative(xs: list):\n    \"\"\" xs represent coefficients of a polynomial.\n    xs[0] + xs[1] * x + xs[2] * x^2 + ....\n     Return derivative of this polynomial in the same form.\n    >>> derivative([3, 1, 2, 4, 5])\n    [1, 4, 12, 20]\n    >>> derivative([1, 2, 3])\n    [2, 6]\n    \"\"\"\n",
+    "canonical_solution": "    return [(i * x) for i, x in enumerate(xs)][1:]\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == [1, 4, 12, 20]\n    assert candidate([1, 2, 3]) == [2, 6]\n    assert candidate([3, 2, 1]) == [2, 2]\n    assert candidate([3, 2, 1, 0, 4]) == [2, 2, 0, 16]\n    assert candidate([1]) == []\n\n",
+    "entry_point": "derivative"
+  },
+  "path": "results/zs_cot_sc/9/062_2.json",
+  "method": "zs_cot_sc",
+  "trial": 9,
+  "time_taken": 0.645423,
+  "time_start": "2025-04-24T11:48:33.277255",
+  "time_end": "2025-04-24T11:48:33.922678",
+  "prompt_tokens": 168,
+  "completion_tokens": 27,
+  "total_tokens": 195,
+  "raw": {
+    "id": "chatcmpl-BPt6PdCdAZmywktLuV7U98TNYslqB",
+    "object": "chat.completion",
+    "created": 1745509713,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def derivative(xs: list):\n    return [i * coeff for i, coeff in enumerate(xs) if i > 0]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 168,
+      "completion_tokens": 27,
+      "total_tokens": 195,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 494.07709
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 2
+}

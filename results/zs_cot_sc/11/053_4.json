@@ -1,0 +1,60 @@
+{
+  "completion": "    return x + y",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef add(x: int, y: int):\n    \"\"\"Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \"\"\"\n",
+  "problem_id": "HumanEval/53",
+  "problem_data": {
+    "task_id": "HumanEval/53",
+    "prompt": "\n\ndef add(x: int, y: int):\n    \"\"\"Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \"\"\"\n",
+    "canonical_solution": "    return x + y\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    import random\n\n    assert candidate(0, 1) == 1\n    assert candidate(1, 0) == 1\n    assert candidate(2, 3) == 5\n    assert candidate(5, 7) == 12\n    assert candidate(7, 5) == 12\n\n    for i in range(100):\n        x, y = random.randint(0, 1000), random.randint(0, 1000)\n        assert candidate(x, y) == x + y\n\n",
+    "entry_point": "add"
+  },
+  "path": "results/zs_cot_sc/11/053_4.json",
+  "method": "zs_cot_sc",
+  "trial": 11,
+  "time_taken": 0.545791,
+  "time_start": "2025-04-24T02:02:16.586600",
+  "time_end": "2025-04-24T02:02:17.132391",
+  "prompt_tokens": 114,
+  "completion_tokens": 6,
+  "total_tokens": 120,
+  "raw": {
+    "id": "chatcmpl-BPjx2RvlLXxqfIKUdIUXO1gtCi3Rf",
+    "object": "chat.completion",
+    "created": 1745474536,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    return x + y",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 114,
+      "completion_tokens": 6,
+      "total_tokens": 120,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 2e-05,
+    "your_harvard_credits_still_available": 495.10621
+  }
+}

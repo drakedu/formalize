@@ -1,0 +1,60 @@
+{
+  "completion": "def next_smallest(lst):\n    unique_sorted = sorted(set(lst))\n    return unique_sorted[1] if len(unique_sorted) > 1 else None",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef next_smallest(lst):\n    \"\"\"\n    You are given a list of integers.\n    Write a function next_smallest() that returns the 2nd smallest element of the list.\n    Return None if there is no such element.\n    \n    next_smallest([1, 2, 3, 4, 5]) == 2\n    next_smallest([5, 1, 4, 3, 2]) == 2\n    next_smallest([]) == None\n    next_smallest([1, 1]) == None\n    \"\"\"\n",
+  "problem_id": "HumanEval/90",
+  "problem_data": {
+    "task_id": "HumanEval/90",
+    "prompt": "\ndef next_smallest(lst):\n    \"\"\"\n    You are given a list of integers.\n    Write a function next_smallest() that returns the 2nd smallest element of the list.\n    Return None if there is no such element.\n    \n    next_smallest([1, 2, 3, 4, 5]) == 2\n    next_smallest([5, 1, 4, 3, 2]) == 2\n    next_smallest([]) == None\n    next_smallest([1, 1]) == None\n    \"\"\"\n",
+    "canonical_solution": "    lst = sorted(set(lst))\n    return None if len(lst) < 2 else lst[1]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 2, 3, 4, 5]) == 2\n    assert candidate([5, 1, 4, 3, 2]) == 2\n    assert candidate([]) == None\n    assert candidate([1, 1]) == None\n    assert candidate([1,1,1,1,0]) == 1\n    assert candidate([1, 0**0]) == None\n    assert candidate([-35, 34, 12, -45]) == -35\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "next_smallest"
+  },
+  "path": "results/zs_cot_sc/21/090_2.json",
+  "method": "zs_cot_sc",
+  "trial": 21,
+  "time_taken": 0.861072,
+  "time_start": "2025-04-24T06:45:21.336973",
+  "time_end": "2025-04-24T06:45:22.198045",
+  "prompt_tokens": 185,
+  "completion_tokens": 32,
+  "total_tokens": 217,
+  "raw": {
+    "id": "chatcmpl-BPoMzHotH97WRLaI3ezBgdlO5qTps",
+    "object": "chat.completion",
+    "created": 1745491521,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def next_smallest(lst):\n    unique_sorted = sorted(set(lst))\n    return unique_sorted[1] if len(unique_sorted) > 1 else None",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 185,
+      "completion_tokens": 32,
+      "total_tokens": 217,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 494.54847
+  }
+}

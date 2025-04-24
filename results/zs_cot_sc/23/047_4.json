@@ -1,0 +1,60 @@
+{
+  "completion": "    l.sort()\n    n = len(l)\n    mid = n // 2\n    return (l[mid] + l[mid - 1]) / 2 if n % 2 == 0 else l[mid]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n",
+  "problem_id": "HumanEval/47",
+  "problem_data": {
+    "task_id": "HumanEval/47",
+    "prompt": "\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n",
+    "canonical_solution": "    l = sorted(l)\n    if len(l) % 2 == 1:\n        return l[len(l) // 2]\n    else:\n        return (l[len(l) // 2 - 1] + l[len(l) // 2]) / 2.0\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == 3\n    assert candidate([-10, 4, 6, 1000, 10, 20]) == 8.0\n    assert candidate([5]) == 5\n    assert candidate([6, 5]) == 5.5\n    assert candidate([8, 1, 3, 9, 9, 2, 7]) == 7 \n\n",
+    "entry_point": "median"
+  },
+  "path": "results/zs_cot_sc/23/047_4.json",
+  "method": "zs_cot_sc",
+  "trial": 23,
+  "time_taken": 0.938871,
+  "time_start": "2025-04-24T07:33:14.699021",
+  "time_end": "2025-04-24T07:33:15.637892",
+  "prompt_tokens": 136,
+  "completion_tokens": 47,
+  "total_tokens": 183,
+  "raw": {
+    "id": "chatcmpl-BPp7KlemVmOuA1kM6BMy1Sa3If50e",
+    "object": "chat.completion",
+    "created": 1745494394,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    l.sort()\n    n = len(l)\n    mid = n // 2\n    return (l[mid] + l[mid - 1]) / 2 if n % 2 == 0 else l[mid]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 136,
+      "completion_tokens": 47,
+      "total_tokens": 183,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 494.45503
+  }
+}

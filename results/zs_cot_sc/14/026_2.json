@@ -1,0 +1,60 @@
+{
+  "completion": "    from collections import Counter\n    count = Counter(numbers)\n    return [num for num in numbers if count[num] == 1]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+  "problem_id": "HumanEval/26",
+  "problem_data": {
+    "task_id": "HumanEval/26",
+    "prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+    "canonical_solution": "    import collections\n    c = collections.Counter(numbers)\n    return [n for n in numbers if c[n] <= 1]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([1, 2, 3, 2, 4, 3, 5]) == [1, 4, 5]\n",
+    "entry_point": "remove_duplicates"
+  },
+  "path": "results/zs_cot_sc/14/026_2.json",
+  "method": "zs_cot_sc",
+  "trial": 14,
+  "time_taken": 1.69499,
+  "time_start": "2025-04-24T03:27:05.153814",
+  "time_end": "2025-04-24T03:27:06.848804",
+  "prompt_tokens": 144,
+  "completion_tokens": 29,
+  "total_tokens": 173,
+  "raw": {
+    "id": "chatcmpl-BPlH7KvgpWT4tPH6Curl9PZEgNxbj",
+    "object": "chat.completion",
+    "created": 1745479625,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    from collections import Counter\n    count = Counter(numbers)\n    return [num for num in numbers if count[num] == 1]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 144,
+      "completion_tokens": 29,
+      "total_tokens": 173,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 494.9437
+  }
+}

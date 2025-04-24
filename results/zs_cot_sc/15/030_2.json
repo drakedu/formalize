@@ -1,0 +1,60 @@
+{
+  "completion": "return [x for x in l if x > 0]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n",
+  "problem_id": "HumanEval/30",
+  "problem_data": {
+    "task_id": "HumanEval/30",
+    "prompt": "\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n",
+    "canonical_solution": "    return [e for e in l if e > 0]\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([-1, -2, 4, 5, 6]) == [4, 5, 6]\n    assert candidate([5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10]) == [5, 3, 2, 3, 3, 9, 123, 1]\n    assert candidate([-1, -2]) == []\n    assert candidate([]) == []\n\n",
+    "entry_point": "get_positive"
+  },
+  "path": "results/zs_cot_sc/15/030_2.json",
+  "method": "zs_cot_sc",
+  "trial": 15,
+  "time_taken": 0.882738,
+  "time_start": "2025-04-24T03:56:18.761484",
+  "time_end": "2025-04-24T03:56:19.644222",
+  "prompt_tokens": 174,
+  "completion_tokens": 14,
+  "total_tokens": 188,
+  "raw": {
+    "id": "chatcmpl-BPljPdJhxbxaK8RE0zjN6g2NIBmPO",
+    "object": "chat.completion",
+    "created": 1745481379,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "return [x for x in l if x > 0]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 174,
+      "completion_tokens": 14,
+      "total_tokens": 188,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 494.8899
+  }
+}

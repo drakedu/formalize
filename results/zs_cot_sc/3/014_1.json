@@ -1,0 +1,60 @@
+{
+  "completion": "    return [string[:i] for i in range(1, len(string) + 1)]",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "from typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n",
+  "problem_id": "HumanEval/14",
+  "problem_data": {
+    "task_id": "HumanEval/14",
+    "prompt": "from typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n\n    for i in range(len(string)):\n        result.append(string[:i+1])\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('asdfgh') == ['a', 'as', 'asd', 'asdf', 'asdfg', 'asdfgh']\n    assert candidate('WWW') == ['W', 'WW', 'WWW']\n",
+    "entry_point": "all_prefixes"
+  },
+  "path": "results/zs_cot_sc/3/014_1.json",
+  "method": "zs_cot_sc",
+  "trial": 3,
+  "time_taken": 0.719989,
+  "time_start": "2025-04-23T21:56:44.860529",
+  "time_end": "2025-04-23T21:56:45.580518",
+  "prompt_tokens": 119,
+  "completion_tokens": 22,
+  "total_tokens": 141,
+  "raw": {
+    "id": "chatcmpl-BPg7RBtxkvnBKIMcC7diRMZKZ4Gb2",
+    "object": "chat.completion",
+    "created": 1745459805,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    return [string[:i] for i in range(1, len(string) + 1)]",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 119,
+      "completion_tokens": 22,
+      "total_tokens": 141,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 495.52483
+  }
+}

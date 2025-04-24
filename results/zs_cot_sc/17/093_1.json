@@ -1,0 +1,60 @@
+{
+  "completion": "    vowels = 'aeiouAEIOU'\n    encoded_message = []\n    \n    for char in message:\n        if char.isalpha():\n            if char in vowels:\n                new_char = chr(ord(char) + 2)\n                encoded_message.append(new_char)\n            else:\n                encoded_message.append(char.swapcase())\n        else:\n            encoded_message.append(char)\n    \n    return ''.join(encoded_message)",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+  "problem_id": "HumanEval/93",
+  "problem_data": {
+    "task_id": "HumanEval/93",
+    "prompt": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+    "canonical_solution": "    vowels = \"aeiouAEIOU\"\n    vowels_replace = dict([(i, chr(ord(i) + 2)) for i in vowels])\n    message = message.swapcase()\n    return ''.join([vowels_replace[i] if i in vowels else i for i in message])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "encode"
+  },
+  "path": "results/zs_cot_sc/17/093_1.json",
+  "method": "zs_cot_sc",
+  "trial": 17,
+  "time_taken": 1.723217,
+  "time_start": "2025-04-24T05:00:36.706880",
+  "time_end": "2025-04-24T05:00:38.430097",
+  "prompt_tokens": 170,
+  "completion_tokens": 82,
+  "total_tokens": 252,
+  "raw": {
+    "id": "chatcmpl-BPmjcNUK4n3VRTyLOV4scdeJNE7JN",
+    "object": "chat.completion",
+    "created": 1745485236,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    vowels = 'aeiouAEIOU'\n    encoded_message = []\n    \n    for char in message:\n        if char.isalpha():\n            if char in vowels:\n                new_char = chr(ord(char) + 2)\n                encoded_message.append(new_char)\n            else:\n                encoded_message.append(char.swapcase())\n        else:\n            encoded_message.append(char)\n    \n    return ''.join(encoded_message)",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 170,
+      "completion_tokens": 82,
+      "total_tokens": 252,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 494.76454
+  }
+}

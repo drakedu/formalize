@@ -1,0 +1,60 @@
+{
+  "completion": "    return lst == sorted(lst) and len(lst) == len(set(lst))",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef is_sorted(lst):\n    '''\n    Given a list of numbers, return whether or not they are sorted\n    in ascending order. If list has more than 1 duplicate of the same\n    number, return False. Assume no negative numbers and only integers.\n\n    Examples\n    is_sorted([5]) \u279e True\n    is_sorted([1, 2, 3, 4, 5]) \u279e True\n    is_sorted([1, 3, 2, 4, 5]) \u279e False\n    is_sorted([1, 2, 3, 4, 5, 6]) \u279e True\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) \u279e True\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) \u279e False\n    is_sorted([1, 2, 2, 3, 3, 4]) \u279e True\n    is_sorted([1, 2, 2, 2, 3, 4]) \u279e False\n    '''\n",
+  "problem_id": "HumanEval/126",
+  "problem_data": {
+    "task_id": "HumanEval/126",
+    "prompt": "\ndef is_sorted(lst):\n    '''\n    Given a list of numbers, return whether or not they are sorted\n    in ascending order. If list has more than 1 duplicate of the same\n    number, return False. Assume no negative numbers and only integers.\n\n    Examples\n    is_sorted([5]) \u279e True\n    is_sorted([1, 2, 3, 4, 5]) \u279e True\n    is_sorted([1, 3, 2, 4, 5]) \u279e False\n    is_sorted([1, 2, 3, 4, 5, 6]) \u279e True\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) \u279e True\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) \u279e False\n    is_sorted([1, 2, 2, 3, 3, 4]) \u279e True\n    is_sorted([1, 2, 2, 2, 3, 4]) \u279e False\n    '''\n",
+    "canonical_solution": "    count_digit = dict([(i, 0) for i in lst])\n    for i in lst:\n        count_digit[i]+=1 \n    if any(count_digit[i] > 2 for i in lst):\n        return False\n    if all(lst[i-1] <= lst[i] for i in range(1, len(lst))):\n        return True\n    else:\n        return False\n    \n    \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([5]) == True\n    assert candidate([1, 2, 3, 4, 5]) == True\n    assert candidate([1, 3, 2, 4, 5]) == False\n    assert candidate([1, 2, 3, 4, 5, 6]) == True\n    assert candidate([1, 2, 3, 4, 5, 6, 7]) == True\n    assert candidate([1, 3, 2, 4, 5, 6, 7]) == False, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([]) == True, \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate([1]) == True, \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate([3, 2, 1]) == False, \"This prints if this assert fails 4 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1, 2, 2, 2, 3, 4]) == False, \"This prints if this assert fails 5 (good for debugging!)\"\n    assert candidate([1, 2, 3, 3, 3, 4]) == False, \"This prints if this assert fails 6 (good for debugging!)\"\n    assert candidate([1, 2, 2, 3, 3, 4]) == True, \"This prints if this assert fails 7 (good for debugging!)\"\n    assert candidate([1, 2, 3, 4]) == True, \"This prints if this assert fails 8 (good for debugging!)\"\n\n",
+    "entry_point": "is_sorted"
+  },
+  "path": "results/zs_cot_sc/20/126_1.json",
+  "method": "zs_cot_sc",
+  "trial": 20,
+  "time_taken": 0.6546,
+  "time_start": "2025-04-24T06:26:25.744545",
+  "time_end": "2025-04-24T06:26:26.399145",
+  "prompt_tokens": 310,
+  "completion_tokens": 17,
+  "total_tokens": 327,
+  "raw": {
+    "id": "chatcmpl-BPo4fktZDDXqm2DCw1m7rsHIVeoNS",
+    "object": "chat.completion",
+    "created": 1745490385,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    return lst == sorted(lst) and len(lst) == len(set(lst))",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 310,
+      "completion_tokens": 17,
+      "total_tokens": 327,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 494.5887
+  }
+}

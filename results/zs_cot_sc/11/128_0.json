@@ -1,0 +1,60 @@
+{
+  "completion": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    product_sign = 1\n    total_magnitude = 0\n    for num in arr:\n        if num > 0:\n            total_magnitude += num\n        elif num < 0:\n            total_magnitude += -num\n            product_sign *= -1\n        else:\n            return 0\n    return product_sign * total_magnitude\n```",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n",
+  "problem_id": "HumanEval/128",
+  "problem_data": {
+    "task_id": "HumanEval/128",
+    "prompt": "\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n",
+    "canonical_solution": "    if not arr: return None\n    prod = 0 if 0 in arr else (-1) ** len(list(filter(lambda x: x < 0, arr)))\n    return prod * sum([abs(i) for i in arr])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([1, 2, 2, -4]) == -9\n    assert candidate([0, 1]) == 0\n    assert candidate([1, 1, 1, 2, 3, -1, 1]) == -10\n    assert candidate([]) == None\n    assert candidate([2, 4,1, 2, -1, -1, 9]) == 20\n    assert candidate([-1, 1, -1, 1]) == 4\n    assert candidate([-1, 1, 1, 1]) == -4\n    assert candidate([-1, 1, 1, 0]) == 0\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "prod_signs"
+  },
+  "path": "results/zs_cot_sc/11/128_0.json",
+  "method": "zs_cot_sc",
+  "trial": 11,
+  "time_taken": 2.049071,
+  "time_start": "2025-04-24T02:15:53.755953",
+  "time_end": "2025-04-24T02:15:55.805024",
+  "prompt_tokens": 183,
+  "completion_tokens": 94,
+  "total_tokens": 277,
+  "raw": {
+    "id": "chatcmpl-BPkAEgrWfqL0O0wTim5JeGDoM0GQ2",
+    "object": "chat.completion",
+    "created": 1745475354,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    product_sign = 1\n    total_magnitude = 0\n    for num in arr:\n        if num > 0:\n            total_magnitude += num\n        elif num < 0:\n            total_magnitude += -num\n            product_sign *= -1\n        else:\n            return 0\n    return product_sign * total_magnitude\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 183,
+      "completion_tokens": 94,
+      "total_tokens": 277,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 495.08033
+  }
+}

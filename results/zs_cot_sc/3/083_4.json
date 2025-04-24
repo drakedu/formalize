@@ -1,0 +1,60 @@
+{
+  "completion": "count = 0\nfor i in range(10**(n-1), 10**n):\n    if str(i).startswith('1') or str(i).endswith('1'):\n        count += 1\nreturn count",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n",
+  "problem_id": "HumanEval/83",
+  "problem_data": {
+    "task_id": "HumanEval/83",
+    "prompt": "\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n",
+    "canonical_solution": "    if n == 1: return 1\n    return 18 * (10 ** (n - 2))\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(1) == 1\n    assert candidate(2) == 18\n    assert candidate(3) == 180\n    assert candidate(4) == 1800\n    assert candidate(5) == 18000\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "starts_one_ends"
+  },
+  "path": "results/zs_cot_sc/3/083_4.json",
+  "method": "zs_cot_sc",
+  "trial": 3,
+  "time_taken": 1.416317,
+  "time_start": "2025-04-23T22:07:44.812508",
+  "time_end": "2025-04-23T22:07:46.228825",
+  "prompt_tokens": 106,
+  "completion_tokens": 49,
+  "total_tokens": 155,
+  "raw": {
+    "id": "chatcmpl-BPgI5LNMFKc1RpqSOq3L8ozMcbSHf",
+    "object": "chat.completion",
+    "created": 1745460465,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "count = 0\nfor i in range(10**(n-1), 10**n):\n    if str(i).startswith('1') or str(i).endswith('1'):\n        count += 1\nreturn count",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 106,
+      "completion_tokens": 49,
+      "total_tokens": 155,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 495.50431
+  }
+}

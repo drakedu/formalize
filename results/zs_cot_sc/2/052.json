@@ -1,0 +1,63 @@
+{
+  "completion": "return all(x < t for x in l)",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef below_threshold(l: list, t: int):\n    \"\"\"Return True if all numbers in the list l are below threshold t.\n    >>> below_threshold([1, 2, 4, 10], 100)\n    True\n    >>> below_threshold([1, 20, 4, 10], 5)\n    False\n    \"\"\"\n",
+  "problem_id": "HumanEval/52",
+  "problem_data": {
+    "task_id": "HumanEval/52",
+    "prompt": "\n\ndef below_threshold(l: list, t: int):\n    \"\"\"Return True if all numbers in the list l are below threshold t.\n    >>> below_threshold([1, 2, 4, 10], 100)\n    True\n    >>> below_threshold([1, 20, 4, 10], 5)\n    False\n    \"\"\"\n",
+    "canonical_solution": "    for e in l:\n        if e >= t:\n            return False\n    return True\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 2, 4, 10], 100)\n    assert not candidate([1, 20, 4, 10], 5)\n    assert candidate([1, 20, 4, 10], 21)\n    assert candidate([1, 20, 4, 10], 22)\n    assert candidate([1, 8, 4, 10], 11)\n    assert not candidate([1, 8, 4, 10], 10)\n\n",
+    "entry_point": "below_threshold"
+  },
+  "path": "results/zs_cot_sc/2/052_0.json",
+  "method": "zs_cot_sc",
+  "trial": 2,
+  "time_taken": 0.665982,
+  "time_start": "2025-04-23T21:34:49.626404",
+  "time_end": "2025-04-23T21:34:50.292386",
+  "prompt_tokens": 140,
+  "completion_tokens": 11,
+  "total_tokens": 151,
+  "raw": {
+    "id": "chatcmpl-BPfmDayvp9w5qw9OFFyQqPMOIJJhs",
+    "object": "chat.completion",
+    "created": 1745458489,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "return all(x < t for x in l)",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 140,
+      "completion_tokens": 11,
+      "total_tokens": 151,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 2e-05,
+    "your_harvard_credits_still_available": 495.56791
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 3
+}

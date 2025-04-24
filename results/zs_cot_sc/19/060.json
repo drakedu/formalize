@@ -1,0 +1,63 @@
+{
+  "completion": "    return n * (n + 1) // 2",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef sum_to_n(n: int):\n    \"\"\"sum_to_n is a function that sums numbers from 1 to n.\n    >>> sum_to_n(30)\n    465\n    >>> sum_to_n(100)\n    5050\n    >>> sum_to_n(5)\n    15\n    >>> sum_to_n(10)\n    55\n    >>> sum_to_n(1)\n    1\n    \"\"\"\n",
+  "problem_id": "HumanEval/60",
+  "problem_data": {
+    "task_id": "HumanEval/60",
+    "prompt": "\n\ndef sum_to_n(n: int):\n    \"\"\"sum_to_n is a function that sums numbers from 1 to n.\n    >>> sum_to_n(30)\n    465\n    >>> sum_to_n(100)\n    5050\n    >>> sum_to_n(5)\n    15\n    >>> sum_to_n(10)\n    55\n    >>> sum_to_n(1)\n    1\n    \"\"\"\n",
+    "canonical_solution": "    return sum(range(n + 1))\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(1) == 1\n    assert candidate(6) == 21\n    assert candidate(11) == 66\n    assert candidate(30) == 465\n    assert candidate(100) == 5050\n\n",
+    "entry_point": "sum_to_n"
+  },
+  "path": "results/zs_cot_sc/19/060_0.json",
+  "method": "zs_cot_sc",
+  "trial": 19,
+  "time_taken": 0.783308,
+  "time_start": "2025-04-24T05:50:28.935486",
+  "time_end": "2025-04-24T05:50:29.718794",
+  "prompt_tokens": 155,
+  "completion_tokens": 14,
+  "total_tokens": 169,
+  "raw": {
+    "id": "chatcmpl-BPnVtq1v8vQ7WEnK9Olvz9swtt7wn",
+    "object": "chat.completion",
+    "created": 1745488229,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    return n * (n + 1) // 2",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 155,
+      "completion_tokens": 14,
+      "total_tokens": 169,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 494.66514
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 5
+}

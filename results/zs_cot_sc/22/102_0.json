@@ -1,0 +1,60 @@
+{
+  "completion": "    if x > y:\n        return -1\n    if y % 2 != 0:\n        y -= 1\n    if x % 2 != 0:\n        x += 1\n    return y if y >= x else -1",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef choose_num(x, y):\n    \"\"\"This function takes two positive numbers x and y and returns the\n    biggest even integer number that is in the range [x, y] inclusive. If \n    there's no such number, then the function should return -1.\n\n    For example:\n    choose_num(12, 15) = 14\n    choose_num(13, 12) = -1\n    \"\"\"\n",
+  "problem_id": "HumanEval/102",
+  "problem_data": {
+    "task_id": "HumanEval/102",
+    "prompt": "\ndef choose_num(x, y):\n    \"\"\"This function takes two positive numbers x and y and returns the\n    biggest even integer number that is in the range [x, y] inclusive. If \n    there's no such number, then the function should return -1.\n\n    For example:\n    choose_num(12, 15) = 14\n    choose_num(13, 12) = -1\n    \"\"\"\n",
+    "canonical_solution": "    if x > y:\n        return -1\n    if y % 2 == 0:\n        return y\n    if x == y:\n        return -1\n    return y - 1\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(12, 15) == 14\n    assert candidate(13, 12) == -1\n    assert candidate(33, 12354) == 12354\n    assert candidate(5234, 5233) == -1\n    assert candidate(6, 29) == 28\n    assert candidate(27, 10) == -1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(7, 7) == -1\n    assert candidate(546, 546) == 546\n\n",
+    "entry_point": "choose_num"
+  },
+  "path": "results/zs_cot_sc/22/102_0.json",
+  "method": "zs_cot_sc",
+  "trial": 22,
+  "time_taken": 2.610851,
+  "time_start": "2025-04-24T07:15:48.211122",
+  "time_end": "2025-04-24T07:15:50.821973",
+  "prompt_tokens": 154,
+  "completion_tokens": 54,
+  "total_tokens": 208,
+  "raw": {
+    "id": "chatcmpl-BPoqSCi6CdikfJWNNP0i3viahMXhW",
+    "object": "chat.completion",
+    "created": 1745493348,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    if x > y:\n        return -1\n    if y % 2 != 0:\n        y -= 1\n    if x % 2 != 0:\n        x += 1\n    return y if y >= x else -1",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 154,
+      "completion_tokens": 54,
+      "total_tokens": 208,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 494.49176
+  }
+}

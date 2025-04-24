@@ -1,0 +1,60 @@
+{
+  "completion": "if n < 8 or n % 2 != 0:\n    return False\nreturn True",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef is_equal_to_sum_even(n):\n    \"\"\"Evaluate whether the given number n can be written as the sum of exactly 4 positive even numbers\n    Example\n    is_equal_to_sum_even(4) == False\n    is_equal_to_sum_even(6) == False\n    is_equal_to_sum_even(8) == True\n    \"\"\"\n",
+  "problem_id": "HumanEval/138",
+  "problem_data": {
+    "task_id": "HumanEval/138",
+    "prompt": "\ndef is_equal_to_sum_even(n):\n    \"\"\"Evaluate whether the given number n can be written as the sum of exactly 4 positive even numbers\n    Example\n    is_equal_to_sum_even(4) == False\n    is_equal_to_sum_even(6) == False\n    is_equal_to_sum_even(8) == True\n    \"\"\"\n",
+    "canonical_solution": "    return n%2 == 0 and n >= 8\n",
+    "test": "def check(candidate):\n    assert candidate(4) == False\n    assert candidate(6) == False\n    assert candidate(8) == True\n    assert candidate(10) == True\n    assert candidate(11) == False\n    assert candidate(12) == True\n    assert candidate(13) == False\n    assert candidate(16) == True\n",
+    "entry_point": "is_equal_to_sum_even"
+  },
+  "path": "results/zs_cot_sc/7/138_1.json",
+  "method": "zs_cot_sc",
+  "trial": 7,
+  "time_taken": 1.733238,
+  "time_start": "2025-04-24T00:42:25.248001",
+  "time_end": "2025-04-24T00:42:26.981239",
+  "prompt_tokens": 138,
+  "completion_tokens": 21,
+  "total_tokens": 159,
+  "raw": {
+    "id": "chatcmpl-BPihlzEqyVt5aRhgByL1dYMKMo3ii",
+    "object": "chat.completion",
+    "created": 1745469745,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "if n < 8 or n % 2 != 0:\n    return False\nreturn True",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 138,
+      "completion_tokens": 21,
+      "total_tokens": 159,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 495.26183
+  }
+}

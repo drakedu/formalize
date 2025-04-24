@@ -1,0 +1,63 @@
+{
+  "completion": "if not text:\n    return None\nimport hashlib\nreturn hashlib.md5(text.encode()).hexdigest()",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef string_to_md5(text):\n    \"\"\"\n    Given a string 'text', return its md5 hash equivalent string.\n    If 'text' is an empty string, return None.\n\n    >>> string_to_md5('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'\n    \"\"\"\n",
+  "problem_id": "HumanEval/162",
+  "problem_data": {
+    "task_id": "HumanEval/162",
+    "prompt": "\ndef string_to_md5(text):\n    \"\"\"\n    Given a string 'text', return its md5 hash equivalent string.\n    If 'text' is an empty string, return None.\n\n    >>> string_to_md5('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'\n    \"\"\"\n",
+    "canonical_solution": "    import hashlib\n    return hashlib.md5(text.encode('ascii')).hexdigest() if text else None\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Hello world') == '3e25960a79dbc69b674cd4ec67a72c62'\n    assert candidate('') == None\n    assert candidate('A B C') == '0ef78513b0cb8cef12743f5aeb35f888'\n    assert candidate('password') == '5f4dcc3b5aa765d61d8327deb882cf99'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "string_to_md5"
+  },
+  "path": "results/zs_cot_sc/10/162_0.json",
+  "method": "zs_cot_sc",
+  "trial": 10,
+  "time_taken": 0.847888,
+  "time_start": "2025-04-24T01:52:58.703070",
+  "time_end": "2025-04-24T01:52:59.550958",
+  "prompt_tokens": 137,
+  "completion_tokens": 22,
+  "total_tokens": 159,
+  "raw": {
+    "id": "chatcmpl-BPjo2XjGSP9rdHVH3O0NHPaiwnCpU",
+    "object": "chat.completion",
+    "created": 1745473978,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "if not text:\n    return None\nimport hashlib\nreturn hashlib.md5(text.encode()).hexdigest()",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 137,
+      "completion_tokens": 22,
+      "total_tokens": 159,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 3e-05,
+    "your_harvard_credits_still_available": 495.12072
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 4
+}
