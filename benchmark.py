@@ -1,11 +1,11 @@
 import os
 import json
-import argparse
 import tempfile
 import pandas as pd
 from datasets import load_dataset
 from human_eval.evaluation import evaluate_functional_correctness
 import config
+import utils
 
 def benchmark_method(approach: str):
     humaneval = load_dataset(config.DATASET, split="test")
@@ -36,7 +36,7 @@ def benchmark_method(approach: str):
                 continue
 
             success = False
-            for attempt in range(config.NUM_RETRIES):
+            for _ in range(config.NUM_RETRIES):
                 try:
                     with open(run_path) as f:
                         result_data = json.load(f)
@@ -71,19 +71,14 @@ def benchmark_method(approach: str):
             if not success:
                 trial_results.append(None)
                 msg = f"Method-trial-problem {approach}-{trial_index}-{problem_index} failed benchmarking after {config.NUM_RETRIES} retries."
-                print(msg)
-                with open(f"{config.FAILURES}.log", "a") as log:
-                    log.write(msg + "\n")
+                utils.log_failure(msg)
 
         df[col_name] = trial_results
         df.to_csv(output_path)
         print(f"Method-trial {approach}-{col_name} finished benchmarking.")
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("approach", type=str, help="Provide approach file.")
-    args = parser.parse_args()
-    approach = args.approach.split(".")[0]
+    approach = utils.parse_method_from_argv()
     benchmark_method(approach)
 
 if __name__ == "__main__":

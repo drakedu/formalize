@@ -7,6 +7,20 @@ from datasets import load_dataset
 from datetime import datetime
 import os
 
+def parse_method_from_argv() -> str:
+    if len(sys.argv) != 2:
+        print("Provide python <script>.py <method>.py")
+        sys.exit(1)
+
+    script_name = sys.argv[1]
+    method = os.path.splitext(os.path.basename(script_name))[0]
+    return method
+
+def log_failure(description: str):
+    print(description)
+    with open(f"{config.FAILURES}.log", "a") as log:
+        log.write(f"{description}\n")
+
 def get_completion(system_prompt: str, user_prompt: str) -> dict:
     headers = {
         "Content-Type": "application/json",

@@ -1,13 +1,9 @@
 import subprocess
 import sys
 import config
+import utils
 
-if len(sys.argv) != 2:
-    print("Enter python run.py <method>.py.")
-    sys.exit(1)
-
-script_name = sys.argv[1]
-method = script_name.split(".")[0]
+method = utils.parse_method_from_argv()
 
 for trial in range(config.NUM_TRIALS):
     print(f"Method {method} for trial {trial} has started.")
@@ -17,7 +13,7 @@ for trial in range(config.NUM_TRIALS):
 
         for attempt in range(config.NUM_RETRIES):
             try:
-                subprocess.run(["python", script_name, str(trial), str(problem)], check=True)
+                subprocess.run(["python", sys.argv[1], str(trial), str(problem)], check=True)
                 success = True
                 break
             except Exception as e:
@@ -25,8 +21,6 @@ for trial in range(config.NUM_TRIALS):
 
         if not success:
             description = f"Method-trial-problem {method}-{trial}-{problem} failed after {config.NUM_RETRIES} retries."
-            print(description)
-            with open(f"{config.FAILURES}.log", "a") as log:
-                log.write(f"{description}\n")
+            utils.log_failure(description)
 
     print(f"Method {method} for trial {trial} has finished.")
