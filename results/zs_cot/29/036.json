@@ -1,0 +1,60 @@
+{
+  "completion": "count = 0\nfor i in range(n):\n    if i % 11 == 0 or i % 13 == 0:\n        count += str(i).count('7')\nreturn count",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+  "problem_id": "HumanEval/36",
+  "problem_data": {
+    "task_id": "HumanEval/36",
+    "prompt": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+    "canonical_solution": "    ns = []\n    for i in range(n):\n        if i % 11 == 0 or i % 13 == 0:\n            ns.append(i)\n    s = ''.join(list(map(str, ns)))\n    ans = 0\n    for c in s:\n        ans += (c == '7')\n    return ans\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(50) == 0\n    assert candidate(78) == 2\n    assert candidate(79) == 3\n    assert candidate(100) == 3\n    assert candidate(200) == 6\n    assert candidate(4000) == 192\n    assert candidate(10000) == 639\n    assert candidate(100000) == 8026\n\n",
+    "entry_point": "fizz_buzz"
+  },
+  "path": "results/zs_cot/29/036.json",
+  "method": "zs_cot",
+  "trial": 29,
+  "time_taken": 0.994235,
+  "time_start": "2025-04-23T18:14:01.445423",
+  "time_end": "2025-04-23T18:14:02.439658",
+  "prompt_tokens": 140,
+  "completion_tokens": 42,
+  "total_tokens": 182,
+  "raw": {
+    "id": "chatcmpl-BPcdtkSZ164rzpeu5gwBwSLx6b8ql",
+    "object": "chat.completion",
+    "created": 1745446441,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "count = 0\nfor i in range(n):\n    if i % 11 == 0 or i % 13 == 0:\n        count += str(i).count('7')\nreturn count",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 140,
+      "completion_tokens": 42,
+      "total_tokens": 182,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 4e-05,
+    "your_harvard_credits_still_available": 495.70209
+  }
+}

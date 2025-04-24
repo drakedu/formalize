@@ -1,0 +1,60 @@
+{
+  "completion": "product = 1\nhas_odd = False\nfor digit in str(n):\n    if int(digit) % 2 != 0:\n        product *= int(digit)\n        has_odd = True\nreturn product if has_odd else 0",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n",
+  "problem_id": "HumanEval/131",
+  "problem_data": {
+    "task_id": "HumanEval/131",
+    "prompt": "\ndef digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n",
+    "canonical_solution": "    product = 1\n    odd_count = 0\n    for digit in str(n):\n        int_digit = int(digit)\n        if int_digit%2 == 1:\n            product= product*int_digit\n            odd_count+=1\n    if odd_count ==0:\n        return 0\n    else:\n        return product\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(5) == 5\n    assert candidate(54) == 5\n    assert candidate(120) ==1\n    assert candidate(5014) == 5\n    assert candidate(98765) == 315\n    assert candidate(5576543) == 2625\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(2468) == 0\n\n",
+    "entry_point": "digits"
+  },
+  "path": "results/zs_cot/22/131.json",
+  "method": "zs_cot",
+  "trial": 22,
+  "time_taken": 1.046557,
+  "time_start": "2025-04-23T17:17:44.271298",
+  "time_end": "2025-04-23T17:17:45.317855",
+  "prompt_tokens": 132,
+  "completion_tokens": 54,
+  "total_tokens": 186,
+  "raw": {
+    "id": "chatcmpl-BPblQceVKBU18sFVa7xMomIND2mS6",
+    "object": "chat.completion",
+    "created": 1745443064,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "product = 1\nhas_odd = False\nfor digit in str(n):\n    if int(digit) % 2 != 0:\n        product *= int(digit)\n        has_odd = True\nreturn product if has_odd else 0",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 132,
+      "completion_tokens": 54,
+      "total_tokens": 186,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 495.7702
+  }
+}

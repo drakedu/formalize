@@ -1,0 +1,60 @@
+{
+  "completion": "def even_odd_count(num):\n    num_str = str(abs(num))\n    even_count = sum(1 for digit in num_str if int(digit) % 2 == 0)\n    odd_count = len(num_str) - even_count\n    return (even_count, odd_count)",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef even_odd_count(num):\n    \"\"\"Given an integer. return a tuple that has the number of even and odd digits respectively.\n\n     Example:\n        even_odd_count(-12) ==> (1, 1)\n        even_odd_count(123) ==> (1, 2)\n    \"\"\"\n",
+  "problem_id": "HumanEval/155",
+  "problem_data": {
+    "task_id": "HumanEval/155",
+    "prompt": "\ndef even_odd_count(num):\n    \"\"\"Given an integer. return a tuple that has the number of even and odd digits respectively.\n\n     Example:\n        even_odd_count(-12) ==> (1, 1)\n        even_odd_count(123) ==> (1, 2)\n    \"\"\"\n",
+    "canonical_solution": "    even_count = 0\n    odd_count = 0\n    for i in str(abs(num)):\n        if int(i)%2==0:\n            even_count +=1\n        else:\n            odd_count +=1\n    return (even_count, odd_count)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(7) == (0, 1)\n    assert candidate(-78) == (1, 1)\n    assert candidate(3452) == (2, 2)\n    assert candidate(346211) == (3, 3)\n    assert candidate(-345821) == (3, 3)\n    assert candidate(-2) == (1, 0)\n    assert candidate(-45347) == (2, 3)\n    assert candidate(0) == (1, 0)\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "even_odd_count"
+  },
+  "path": "results/zs_cot/19/155.json",
+  "method": "zs_cot",
+  "trial": 19,
+  "time_taken": 5.19776,
+  "time_start": "2025-04-23T16:09:19.152665",
+  "time_end": "2025-04-23T16:09:24.350425",
+  "prompt_tokens": 129,
+  "completion_tokens": 61,
+  "total_tokens": 190,
+  "raw": {
+    "id": "chatcmpl-BPahDD9mdck4qA0IFuZnOAapQKXmQ",
+    "object": "chat.completion",
+    "created": 1745438959,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def even_odd_count(num):\n    num_str = str(abs(num))\n    even_count = sum(1 for digit in num_str if int(digit) % 2 == 0)\n    odd_count = len(num_str) - even_count\n    return (even_count, odd_count)",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 129,
+      "completion_tokens": 61,
+      "total_tokens": 190,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 495.81106
+  }
+}

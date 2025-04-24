@@ -1,0 +1,60 @@
+{
+  "completion": "    if file_name.count('.') != 1:\n        return 'No'\n    name, ext = file_name.split('.')\n    if not name or not name[0].isalpha() or sum(c.isdigit() for c in name) > 3:\n        return 'No'\n    if ext not in ['txt', 'exe', 'dll']:\n        return 'No'\n    return 'Yes'",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef file_name_check(file_name):\n    \"\"\"Create a function which takes a string representing a file's name, and returns\n    'Yes' if the the file's name is valid, and returns 'No' otherwise.\n    A file's name is considered to be valid if and only if all the following conditions \n    are met:\n    - There should not be more than three digits ('0'-'9') in the file's name.\n    - The file's name contains exactly one dot '.'\n    - The substring before the dot should not be empty, and it starts with a letter from \n    the latin alphapet ('a'-'z' and 'A'-'Z').\n    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']\n    Examples:\n    file_name_check(\"example.txt\") # => 'Yes'\n    file_name_check(\"1example.dll\") # => 'No' (the name should start with a latin alphapet letter)\n    \"\"\"\n",
+  "problem_id": "HumanEval/141",
+  "problem_data": {
+    "task_id": "HumanEval/141",
+    "prompt": "\ndef file_name_check(file_name):\n    \"\"\"Create a function which takes a string representing a file's name, and returns\n    'Yes' if the the file's name is valid, and returns 'No' otherwise.\n    A file's name is considered to be valid if and only if all the following conditions \n    are met:\n    - There should not be more than three digits ('0'-'9') in the file's name.\n    - The file's name contains exactly one dot '.'\n    - The substring before the dot should not be empty, and it starts with a letter from \n    the latin alphapet ('a'-'z' and 'A'-'Z').\n    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']\n    Examples:\n    file_name_check(\"example.txt\") # => 'Yes'\n    file_name_check(\"1example.dll\") # => 'No' (the name should start with a latin alphapet letter)\n    \"\"\"\n",
+    "canonical_solution": "    suf = ['txt', 'exe', 'dll']\n    lst = file_name.split(sep='.')\n    if len(lst) != 2:\n        return 'No'\n    if not lst[1] in suf:\n        return 'No'\n    if len(lst[0]) == 0:\n        return 'No'\n    if not lst[0][0].isalpha():\n        return 'No'\n    t = len([x for x in lst[0] if x.isdigit()])\n    if t > 3:\n        return 'No'\n    return 'Yes'\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"example.txt\") == 'Yes'\n    assert candidate(\"1example.dll\") == 'No'\n    assert candidate('s1sdf3.asd') == 'No'\n    assert candidate('K.dll') == 'Yes'\n    assert candidate('MY16FILE3.exe') == 'Yes'\n    assert candidate('His12FILE94.exe') == 'No'\n    assert candidate('_Y.txt') == 'No'\n    assert candidate('?aREYA.exe') == 'No'\n    assert candidate('/this_is_valid.dll') == 'No'\n    assert candidate('this_is_valid.wow') == 'No'\n    assert candidate('this_is_valid.txt') == 'Yes'\n    assert candidate('this_is_valid.txtexe') == 'No'\n    assert candidate('#this2_i4s_5valid.ten') == 'No'\n    assert candidate('@this1_is6_valid.exe') == 'No'\n    assert candidate('this_is_12valid.6exe4.txt') == 'No'\n    assert candidate('all.exe.txt') == 'No'\n    assert candidate('I563_No.exe') == 'Yes'\n    assert candidate('Is3youfault.txt') == 'Yes'\n    assert candidate('no_one#knows.dll') == 'Yes'\n    assert candidate('1I563_Yes3.exe') == 'No'\n    assert candidate('I563_Yes3.txtt') == 'No'\n    assert candidate('final..txt') == 'No'\n    assert candidate('final132') == 'No'\n    assert candidate('_f4indsartal132.') == 'No'\n    \n        \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('.txt') == 'No'\n    assert candidate('s.') == 'No'\n\n",
+    "entry_point": "file_name_check"
+  },
+  "path": "results/zs_cot/27/141.json",
+  "method": "zs_cot",
+  "trial": 27,
+  "time_taken": 1.840292,
+  "time_start": "2025-04-23T18:01:13.680531",
+  "time_end": "2025-04-23T18:01:15.520823",
+  "prompt_tokens": 275,
+  "completion_tokens": 83,
+  "total_tokens": 358,
+  "raw": {
+    "id": "chatcmpl-BPcRVrt0PIS6wCL1hFlDyG2vdIATJ",
+    "object": "chat.completion",
+    "created": 1745445673,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "    if file_name.count('.') != 1:\n        return 'No'\n    name, ext = file_name.split('.')\n    if not name or not name[0].isalpha() or sum(c.isdigit() for c in name) > 3:\n        return 'No'\n    if ext not in ['txt', 'exe', 'dll']:\n        return 'No'\n    return 'Yes'",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 275,
+      "completion_tokens": 83,
+      "total_tokens": 358,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 495.71623
+  }
+}

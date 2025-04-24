@@ -1,0 +1,60 @@
+{
+  "completion": "def tri(n):\n    sequence = []\n    for i in range(n + 1):\n        if i == 1:\n            sequence.append(3)\n        elif i % 2 == 0:\n            sequence.append(1 + i / 2)\n        else:\n            sequence.append(sequence[i - 1] + sequence[i - 2] + (sequence[i + 1] if i + 1 < len(sequence) else 3))\n    return sequence",
+  "system_prompt": "You are an expert Python programmer. Given a signature, a docstring, and examples, your job is to reason through the problem step by step and then provide just the body in correct, concise, and idiomatic Python. Do not include formatting, comments, or explanations.",
+  "user_prompt": "\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n",
+  "problem_id": "HumanEval/130",
+  "problem_data": {
+    "task_id": "HumanEval/130",
+    "prompt": "\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n",
+    "canonical_solution": "    if n == 0:\n        return [1]\n    my_tri = [1, 3]\n    for i in range(2, n + 1):\n        if i % 2 == 0:\n            my_tri.append(i / 2 + 1)\n        else:\n            my_tri.append(my_tri[i - 1] + my_tri[i - 2] + (i + 3) / 2)\n    return my_tri\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    \n    assert candidate(3) == [1, 3, 2.0, 8.0]\n    assert candidate(4) == [1, 3, 2.0, 8.0, 3.0]\n    assert candidate(5) == [1, 3, 2.0, 8.0, 3.0, 15.0]\n    assert candidate(6) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0]\n    assert candidate(7) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0]\n    assert candidate(8) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0]\n    assert candidate(9) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0]\n    assert candidate(20) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0, 6.0, 48.0, 7.0, 63.0, 8.0, 80.0, 9.0, 99.0, 10.0, 120.0, 11.0]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == [1]\n    assert candidate(1) == [1, 3]\n",
+    "entry_point": "tri"
+  },
+  "path": "results/zs_cot/5/130.json",
+  "method": "zs_cot",
+  "trial": 5,
+  "time_taken": 2.43247,
+  "time_start": "2025-04-23T14:04:33.858195",
+  "time_end": "2025-04-23T14:04:36.290665",
+  "prompt_tokens": 295,
+  "completion_tokens": 96,
+  "total_tokens": 391,
+  "raw": {
+    "id": "chatcmpl-BPYkUA03pDTN8weStf8mBBq2DZfCf",
+    "object": "chat.completion",
+    "created": 1745431474,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "def tri(n):\n    sequence = []\n    for i in range(n + 1):\n        if i == 1:\n            sequence.append(3)\n        elif i % 2 == 0:\n            sequence.append(1 + i / 2)\n        else:\n            sequence.append(sequence[i - 1] + sequence[i - 2] + (sequence[i + 1] if i + 1 < len(sequence) else 3))\n    return sequence",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 295,
+      "completion_tokens": 96,
+      "total_tokens": 391,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 495.98167
+  }
+}
