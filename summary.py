@@ -65,6 +65,26 @@ for i in range(config.NUM_TRIALS):
             total_tokens += tokens_sum
             total_latency += latency_sum
             num_problems += 1
+        elif method == "formalize":
+            tokens_sum, latency_sum = 0, 0
+            for k in range(config.K):
+                path_dafny = os.path.join(config.RESULTS, method, str(i), f"{problem:03d}_{k}_dafny.json")
+                path_python = os.path.join(config.RESULTS, method, str(i), f"{problem:03d}_{k}_python.json")
+
+                if not os.path.exists(path_dafny):
+                    raise FileNotFoundError(f"File {path_dafny} does not exist.")
+                if not os.path.exists(path_python):
+                    raise FileNotFoundError(f"File {path_python} does not exist.")
+
+                tokens_dafny, latency_dafny = parse_json_result(path_dafny)
+                tokens_python, latency_python = parse_json_result(path_python)
+
+                tokens_sum += tokens_dafny + tokens_python
+                latency_sum += latency_dafny + latency_python
+
+            total_tokens += tokens_sum
+            total_latency += latency_sum
+            num_problems += 1
         else:
             problem_file = os.path.join(config.RESULTS, method, str(i), f"{problem:03d}.json")
             if not os.path.exists(problem_file):
