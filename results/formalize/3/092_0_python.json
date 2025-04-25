@@ -1,0 +1,60 @@
+{
+  "completion": "def any_int(x, y, z):\n    if isinstance(x, int) and isinstance(y, int) and isinstance(z, int):\n        return x == y + z or y == x + z or z == x + y\n    return False",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) \u279e True\n    \n    any_int(3, 2, 2) \u279e False\n\n    any_int(3, -2, 1) \u279e True\n    \n    any_int(3.6, -2.2, 2) \u279e False\n  \n\n    \n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method any_int(x: int, y: int, z: int) returns (result: bool)\n    requires true\n    ensures result == (x == y + z || y == x + z || z == x + y)\n{\n    result := (x == y + z || y == x + z || z == x + y);\n}",
+  "problem_id": "HumanEval/92",
+  "problem_data": {
+    "task_id": "HumanEval/92",
+    "prompt": "\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) \u279e True\n    \n    any_int(3, 2, 2) \u279e False\n\n    any_int(3, -2, 1) \u279e True\n    \n    any_int(3.6, -2.2, 2) \u279e False\n  \n\n    \n    '''\n",
+    "canonical_solution": "    \n    if isinstance(x,int) and isinstance(y,int) and isinstance(z,int):\n        if (x+y==z) or (x+z==y) or (y+z==x):\n            return True\n        return False\n    return False\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(2, 3, 1)==True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(2.5, 2, 3)==False, \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate(1.5, 5, 3.5)==False, \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate(2, 6, 2)==False, \"This prints if this assert fails 4 (good for debugging!)\"\n    assert candidate(4, 2, 2)==True, \"This prints if this assert fails 5 (good for debugging!)\"\n    assert candidate(2.2, 2.2, 2.2)==False, \"This prints if this assert fails 6 (good for debugging!)\"\n    assert candidate(-4, 6, 2)==True, \"This prints if this assert fails 7 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(2,1,1)==True, \"This prints if this assert fails 8 (also good for debugging!)\"\n    assert candidate(3,4,7)==True, \"This prints if this assert fails 9 (also good for debugging!)\"\n    assert candidate(3.0,4,7)==False, \"This prints if this assert fails 10 (also good for debugging!)\"\n\n",
+    "entry_point": "any_int"
+  },
+  "path": "results/formalize/3/092_0_python.json",
+  "method": "formalize",
+  "trial": 3,
+  "time_taken": 1.632263,
+  "time_start": "2025-04-25T00:04:47.235481",
+  "time_end": "2025-04-25T00:04:48.867744",
+  "prompt_tokens": 338,
+  "completion_tokens": 57,
+  "total_tokens": 395,
+  "raw": {
+    "id": "chatcmpl-BQ4at7jf6ZwB72CNgNljK4eyPnniS",
+    "object": "chat.completion",
+    "created": 1745553887,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef any_int(x, y, z):\n    if isinstance(x, int) and isinstance(y, int) and isinstance(z, int):\n        return x == y + z or y == x + z or z == x + y\n    return False\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 338,
+      "completion_tokens": 57,
+      "total_tokens": 395,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_f7d56a8a2c",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 492.98131
+  }
+}

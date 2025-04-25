@@ -1,0 +1,60 @@
+{
+  "completion": "def encode(message):\n    def case_swap(c):\n        if 'A' <= c <= 'Z':\n            return chr(ord(c) + (ord('a') - ord('A')))\n        elif 'a' <= c <= 'z':\n            return chr(ord(c) + (ord('A') - ord('a')))\n        return c\n\n    def is_vowel(c):\n        return c in 'AEIOUaeiou'\n\n    def shift_vowel(c):\n        if c == 'A':\n            return 'C'\n        elif c == 'E':\n            return 'G'\n        elif c == 'I':\n            return 'K'\n        elif c == 'O':\n            return 'Q'\n        elif c == 'U':\n            return 'W'\n        elif c == 'a':\n            return 'c'\n        elif c == 'e':\n            return 'g'\n        elif c == 'i':\n            return 'k'\n        elif c == 'o':\n            return 'q'\n        elif c == 'u':\n            return 'w'\n        return c\n\n    encoded_message = ''.join(\n        shift_vowel(case_swap(char)) if is_vowel(char) else case_swap(char)\n        for char in message\n    )\n    return encoded_message",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method encode(message: string) returns (encodedMessage: string)\n    requires message != null\n    ensures forall i: int :: 0 <= i < message.Length ==> \n        (message[i] >= 'A' && message[i] <= 'Z' || message[i] >= 'a' && message[i] <= 'z') ==> \n        (encodedMessage[i] == caseSwap(message[i]) || \n         (isVowel(message[i]) ==> encodedMessage[i] == shiftVowel(message[i])))\n{\n    // Implementation will go here.\n}\n\nfunction caseSwap(c: char): char\n    ensures (c >= 'A' && c <= 'Z' ==> caseSwap(c) == c + 'a' - 'A') && \n            (c >= 'a' && c <= 'z' ==> caseSwap(c) == c + 'A' - 'a')\n{\n    if c >= 'A' && c <= 'Z' {\n        return c + 'a' - 'A';\n    } else if c >= 'a' && c <= 'z' {\n        return c + 'A' - 'a';\n    }\n    return c; // This line is just to satisfy the function's return type\n}\n\nfunction isVowel(c: char): bool\n{\n    return c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' ||\n           c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';\n}\n\nfunction shiftVowel(c: char): char\n    ensures (c == 'A' ==> shiftVowel(c) == 'C') && (c == 'E' ==> shiftVowel(c) == 'G') &&\n            (c == 'I' ==> shiftVowel(c) == 'K') && (c == 'O' ==> shiftVowel(c) == 'Q') &&\n            (c == 'U' ==> shiftVowel(c) == 'W') &&\n            (c == 'a' ==> shiftVowel(c) == 'c') && (c == 'e' ==> shiftVowel(c) == 'g') &&\n            (c == 'i' ==> shiftVowel(c) == 'k') && (c == 'o' ==> shiftVowel(c) == 'q') &&\n            (c == 'u' ==> shiftVowel(c) == 'w')\n{\n    if c == 'A' {\n        return 'C';\n    } else if c == 'E' {\n        return 'G';\n    } else if c == 'I' {\n        return 'K';\n    } else if c == 'O' {\n        return 'Q';\n    } else if c == 'U' {\n        return 'W';\n    } else if c == 'a' {\n        return 'c';\n    } else if c == 'e' {\n        return 'g';\n    } else if c == 'i' {\n        return 'k';\n    } else if c == 'o' {\n        return 'q';\n    } else if c == 'u' {\n        return 'w';\n    }\n    return c; // For non-vowel characters, return as is\n}",
+  "problem_id": "HumanEval/93",
+  "problem_data": {
+    "task_id": "HumanEval/93",
+    "prompt": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+    "canonical_solution": "    vowels = \"aeiouAEIOU\"\n    vowels_replace = dict([(i, chr(ord(i) + 2)) for i in vowels])\n    message = message.swapcase()\n    return ''.join([vowels_replace[i] if i in vowels else i for i in message])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "encode"
+  },
+  "path": "results/formalize/21/093_2_python.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 7.009408,
+  "time_start": "2025-04-25T07:13:41.410878",
+  "time_end": "2025-04-25T07:13:48.420286",
+  "prompt_tokens": 921,
+  "completion_tokens": 263,
+  "total_tokens": 1184,
+  "raw": {
+    "id": "chatcmpl-BQBHxguA7ybv41699CUAjWFywJj6X",
+    "object": "chat.completion",
+    "created": 1745579621,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef encode(message):\n    def case_swap(c):\n        if 'A' <= c <= 'Z':\n            return chr(ord(c) + (ord('a') - ord('A')))\n        elif 'a' <= c <= 'z':\n            return chr(ord(c) + (ord('A') - ord('a')))\n        return c\n\n    def is_vowel(c):\n        return c in 'AEIOUaeiou'\n\n    def shift_vowel(c):\n        if c == 'A':\n            return 'C'\n        elif c == 'E':\n            return 'G'\n        elif c == 'I':\n            return 'K'\n        elif c == 'O':\n            return 'Q'\n        elif c == 'U':\n            return 'W'\n        elif c == 'a':\n            return 'c'\n        elif c == 'e':\n            return 'g'\n        elif c == 'i':\n            return 'k'\n        elif c == 'o':\n            return 'q'\n        elif c == 'u':\n            return 'w'\n        return c\n\n    encoded_message = ''.join(\n        shift_vowel(case_swap(char)) if is_vowel(char) else case_swap(char)\n        for char in message\n    )\n    return encoded_message\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 921,
+      "completion_tokens": 263,
+      "total_tokens": 1184,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00029,
+    "your_harvard_credits_still_available": 489.34335
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "def find_max(words):\n    def unique_characters(s):\n        return len(set(s))\n\n    max_word = \"\"\n    max_unique_count = 0\n    \n    for word in words:\n        current_unique_count = unique_characters(word)\n        \n        if (current_unique_count > max_unique_count or\n            (current_unique_count == max_unique_count and word < max_word)):\n            max_word = word\n            max_unique_count = current_unique_count\n            \n    return max_word",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method find_max(words: seq<string>) returns (result: string)\n    requires |words| > 0\n    ensures result in words || result == \"\"\n    ensures forall w: string :: w in words ==> UniqueCharacters(w) >= UniqueCharacters(result)\n    ensures forall w: string :: w in words && UniqueCharacters(w) == UniqueCharacters(result) ==> w <= result\n{\n    // Implementation goes here\n}\n\nmethod UniqueCharacters(s: string) returns (count: int)\n    ensures count >= 0\n    ensures count == CountUnique(s)\n{\n    // Implementation of counting unique characters goes here\n}\n\nfunction CountUnique(s: string): int\n    reads s\n{\n    // Function to count unique characters in the string s\n}",
+  "problem_id": "HumanEval/158",
+  "problem_data": {
+    "task_id": "HumanEval/158",
+    "prompt": "\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n",
+    "canonical_solution": "    return sorted(words, key = lambda x: (-len(set(x)), x))[0]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert (candidate([\"name\", \"of\", \"string\"]) == \"string\"), \"t1\"\n    assert (candidate([\"name\", \"enam\", \"game\"]) == \"enam\"), 't2'\n    assert (candidate([\"aaaaaaa\", \"bb\", \"cc\"]) == \"aaaaaaa\"), 't3'\n    assert (candidate([\"abc\", \"cba\"]) == \"abc\"), 't4'\n    assert (candidate([\"play\", \"this\", \"game\", \"of\",\"footbott\"]) == \"footbott\"), 't5'\n    assert (candidate([\"we\", \"are\", \"gonna\", \"rock\"]) == \"gonna\"), 't6'\n    assert (candidate([\"we\", \"are\", \"a\", \"mad\", \"nation\"]) == \"nation\"), 't7'\n    assert (candidate([\"this\", \"is\", \"a\", \"prrk\"]) == \"this\"), 't8'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert (candidate([\"b\"]) == \"b\"), 't9'\n    assert (candidate([\"play\", \"play\", \"play\"]) == \"play\"), 't10'\n\n",
+    "entry_point": "find_max"
+  },
+  "path": "results/formalize/13/158_0_python.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 1.586355,
+  "time_start": "2025-04-25T05:55:35.049669",
+  "time_end": "2025-04-25T05:55:36.636024",
+  "prompt_tokens": 403,
+  "completion_tokens": 100,
+  "total_tokens": 503,
+  "raw": {
+    "id": "chatcmpl-BQA4N843v60kQtmUXL5lPiCCbAxiM",
+    "object": "chat.completion",
+    "created": 1745574935,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef find_max(words):\n    def unique_characters(s):\n        return len(set(s))\n\n    max_word = \"\"\n    max_unique_count = 0\n    \n    for word in words:\n        current_unique_count = unique_characters(word)\n        \n        if (current_unique_count > max_unique_count or\n            (current_unique_count == max_unique_count and word < max_word)):\n            max_word = word\n            max_unique_count = current_unique_count\n            \n    return max_word\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 403,
+      "completion_tokens": 100,
+      "total_tokens": 503,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 490.88911
+  }
+}

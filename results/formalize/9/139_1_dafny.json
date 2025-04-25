@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod special_factorial(n: int) returns (result: int)\n    requires n > 0\n    ensures result == (n * (n - 1) * (n - 2) * ... * 1)\n    ensures result == (factorial(n) * factorial(n - 1) * ... * factorial(1))\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n",
+  "problem_id": "HumanEval/139",
+  "problem_data": {
+    "task_id": "HumanEval/139",
+    "prompt": "\ndef special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n",
+    "canonical_solution": "    fact_i = 1\n    special_fact = 1\n    for i in range(1, n+1):\n        fact_i *= i\n        special_fact *= fact_i\n    return special_fact\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(4) == 288, \"Test 4\"\n    assert candidate(5) == 34560, \"Test 5\"\n    assert candidate(7) == 125411328000, \"Test 7\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(1) == 1, \"Test 1\"\n\n",
+    "entry_point": "special_factorial"
+  },
+  "path": "results/formalize/9/139_1_dafny.json",
+  "method": "formalize",
+  "trial": 9,
+  "time_taken": 2.091855,
+  "time_start": "2025-04-25T05:15:40.012010",
+  "time_end": "2025-04-25T05:15:42.103865",
+  "prompt_tokens": 182,
+  "completion_tokens": 84,
+  "total_tokens": 266,
+  "raw": {
+    "id": "chatcmpl-BQ9Rk5uWibywtJkhVFgE5EsKtxfyt",
+    "object": "chat.completion",
+    "created": 1745572540,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod special_factorial(n: int) returns (result: int)\n    requires n > 0\n    ensures result == (n * (n - 1) * (n - 2) * ... * 1)\n    ensures result == (factorial(n) * factorial(n - 1) * ... * factorial(1))\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 182,
+      "completion_tokens": 84,
+      "total_tokens": 266,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 491.71733
+  }
+}

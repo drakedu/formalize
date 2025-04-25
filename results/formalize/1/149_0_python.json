@@ -1,0 +1,60 @@
+{
+  "completion": "def sorted_list_sum(lst):\n    filtered = [s for s in lst if len(s) % 2 == 0]\n    return sorted(filtered, key=lambda x: (len(x), x))",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef sorted_list_sum(lst):\n    \"\"\"Write a function that accepts a list of strings as a parameter,\n    deletes the strings that have odd lengths from it,\n    and returns the resulted list with a sorted order,\n    The list is always a list of strings and never an array of numbers,\n    and it may contain duplicates.\n    The order of the list should be ascending by length of each word, and you\n    should return the list sorted by that rule.\n    If two words have the same length, sort the list alphabetically.\n    The function should return a list of strings in sorted order.\n    You may assume that all words will have the same length.\n    For example:\n    assert list_sort([\"aa\", \"a\", \"aaa\"]) => [\"aa\"]\n    assert list_sort([\"ab\", \"a\", \"aaa\", \"cd\"]) => [\"ab\", \"cd\"]\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method sorted_list_sum(lst: seq<string>) returns (result: seq<string>)\n    requires |lst| > 0 // The input list must be non-empty\n    ensures forall i :: 0 <= i < |result| ==> (result[i] in lst && |result[i]| % 2 == 0) // All strings in the result are from the input list and have even lengths\n    ensures forall i, j :: 0 <= i < j < |result| ==> (|result[i]| < |result[j]| || (|result[i]| == |result[j]| && result[i] <= result[j])) // The result is sorted by length and alphabetically\n    ensures |result| == CountEvenLengthStrings(lst) // The result's length equals the count of even-length strings in the input list\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/149",
+  "problem_data": {
+    "task_id": "HumanEval/149",
+    "prompt": "\ndef sorted_list_sum(lst):\n    \"\"\"Write a function that accepts a list of strings as a parameter,\n    deletes the strings that have odd lengths from it,\n    and returns the resulted list with a sorted order,\n    The list is always a list of strings and never an array of numbers,\n    and it may contain duplicates.\n    The order of the list should be ascending by length of each word, and you\n    should return the list sorted by that rule.\n    If two words have the same length, sort the list alphabetically.\n    The function should return a list of strings in sorted order.\n    You may assume that all words will have the same length.\n    For example:\n    assert list_sort([\"aa\", \"a\", \"aaa\"]) => [\"aa\"]\n    assert list_sort([\"ab\", \"a\", \"aaa\", \"cd\"]) => [\"ab\", \"cd\"]\n    \"\"\"\n",
+    "canonical_solution": "    lst.sort()\n    new_lst = []\n    for i in lst:\n        if len(i)%2 == 0:\n            new_lst.append(i)\n    return sorted(new_lst, key=len)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\"aa\", \"a\", \"aaa\"]) == [\"aa\"]\n    assert candidate([\"school\", \"AI\", \"asdf\", \"b\"]) == [\"AI\", \"asdf\", \"school\"]\n    assert candidate([\"d\", \"b\", \"c\", \"a\"]) == []\n    assert candidate([\"d\", \"dcba\", \"abcd\", \"a\"]) == [\"abcd\", \"dcba\"]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([\"AI\", \"ai\", \"au\"]) == [\"AI\", \"ai\", \"au\"]\n    assert candidate([\"a\", \"b\", \"b\", \"c\", \"c\", \"a\"]) == []\n    assert candidate(['aaaa', 'bbbb', 'dd', 'cc']) == [\"cc\", \"dd\", \"aaaa\", \"bbbb\"]\n\n",
+    "entry_point": "sorted_list_sum"
+  },
+  "path": "results/formalize/1/149_0_python.json",
+  "method": "formalize",
+  "trial": 1,
+  "time_taken": 1.116801,
+  "time_start": "2025-04-24T21:52:41.104547",
+  "time_end": "2025-04-24T21:52:42.221348",
+  "prompt_tokens": 494,
+  "completion_tokens": 46,
+  "total_tokens": 540,
+  "raw": {
+    "id": "chatcmpl-BQ2X3SvXT7u30eXs1WOaH08rRJ8n8",
+    "object": "chat.completion",
+    "created": 1745545961,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef sorted_list_sum(lst):\n    filtered = [s for s in lst if len(s) % 2 == 0]\n    return sorted(filtered, key=lambda x: (len(x), x))\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 494,
+      "completion_tokens": 46,
+      "total_tokens": 540,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 493.29949
+  }
+}

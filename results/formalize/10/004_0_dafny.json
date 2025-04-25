@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod mean_absolute_deviation(numbers: seq<real>) returns (mad: real)\n    requires |numbers| > 0\n    ensures mad >= 0\n    ensures mad == (Sum(|numbers[i] - (Sum(numbers) / |numbers|)| for i := 0 to |numbers| - 1)) / |numbers|\n{\n    // Method implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+  "problem_id": "HumanEval/4",
+  "problem_data": {
+    "task_id": "HumanEval/4",
+    "prompt": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+    "canonical_solution": "    mean = sum(numbers) / len(numbers)\n    return sum(abs(x - mean) for x in numbers) / len(numbers)\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert abs(candidate([1.0, 2.0, 3.0]) - 2.0/3.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0]) - 1.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0, 5.0]) - 6.0/5.0) < 1e-6\n\n",
+    "entry_point": "mean_absolute_deviation"
+  },
+  "path": "results/formalize/10/004_0_dafny.json",
+  "method": "formalize",
+  "trial": 10,
+  "time_taken": 2.178569,
+  "time_start": "2025-04-25T05:17:59.074175",
+  "time_end": "2025-04-25T05:18:01.252744",
+  "prompt_tokens": 204,
+  "completion_tokens": 86,
+  "total_tokens": 290,
+  "raw": {
+    "id": "chatcmpl-BQ9TzFYIuTWNavwAXRclnQuejVCKh",
+    "object": "chat.completion",
+    "created": 1745572679,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod mean_absolute_deviation(numbers: seq<real>) returns (mad: real)\n    requires |numbers| > 0\n    ensures mad >= 0\n    ensures mad == (Sum(|numbers[i] - (Sum(numbers) / |numbers|)| for i := 0 to |numbers| - 1)) / |numbers|\n{\n    // Method implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 204,
+      "completion_tokens": 86,
+      "total_tokens": 290,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 491.6796
+  }
+}

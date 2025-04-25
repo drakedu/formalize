@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod find_max(words: seq<string>) returns (result: string)\n    requires words != null\n    requires |words| > 0\n    ensures result in words || result == \"\"\n    ensures result == \"\"\n          || (forall w: string :: w in words ==> CountUniqueCharacters(w) <= CountUniqueCharacters(result))\n    ensures result == \"\"\n          || (forall w: string :: w in words && CountUniqueCharacters(w) == CountUniqueCharacters(result) ==> w >= result)\n{\n    // Implementation goes here\n}\n\nfunction CountUniqueCharacters(w: string): int\n{\n    // Function to count unique characters in the string w\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n",
+  "problem_id": "HumanEval/158",
+  "problem_data": {
+    "task_id": "HumanEval/158",
+    "prompt": "\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n",
+    "canonical_solution": "    return sorted(words, key = lambda x: (-len(set(x)), x))[0]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert (candidate([\"name\", \"of\", \"string\"]) == \"string\"), \"t1\"\n    assert (candidate([\"name\", \"enam\", \"game\"]) == \"enam\"), 't2'\n    assert (candidate([\"aaaaaaa\", \"bb\", \"cc\"]) == \"aaaaaaa\"), 't3'\n    assert (candidate([\"abc\", \"cba\"]) == \"abc\"), 't4'\n    assert (candidate([\"play\", \"this\", \"game\", \"of\",\"footbott\"]) == \"footbott\"), 't5'\n    assert (candidate([\"we\", \"are\", \"gonna\", \"rock\"]) == \"gonna\"), 't6'\n    assert (candidate([\"we\", \"are\", \"a\", \"mad\", \"nation\"]) == \"nation\"), 't7'\n    assert (candidate([\"this\", \"is\", \"a\", \"prrk\"]) == \"this\"), 't8'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert (candidate([\"b\"]) == \"b\"), 't9'\n    assert (candidate([\"play\", \"play\", \"play\"]) == \"play\"), 't10'\n\n",
+    "entry_point": "find_max"
+  },
+  "path": "results/formalize/6/158_3_dafny.json",
+  "method": "formalize",
+  "trial": 6,
+  "time_taken": 3.040759,
+  "time_start": "2025-04-25T04:47:05.870114",
+  "time_end": "2025-04-25T04:47:08.910873",
+  "prompt_tokens": 207,
+  "completion_tokens": 137,
+  "total_tokens": 344,
+  "raw": {
+    "id": "chatcmpl-BQ906SeWHIGTl6FIc5V74aUHj5v2Y",
+    "object": "chat.completion",
+    "created": 1745570826,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod find_max(words: seq<string>) returns (result: string)\n    requires words != null\n    requires |words| > 0\n    ensures result in words || result == \"\"\n    ensures result == \"\"\n          || (forall w: string :: w in words ==> CountUniqueCharacters(w) <= CountUniqueCharacters(result))\n    ensures result == \"\"\n          || (forall w: string :: w in words && CountUniqueCharacters(w) == CountUniqueCharacters(result) ==> w >= result)\n{\n    // Implementation goes here\n}\n\nfunction CountUniqueCharacters(w: string): int\n{\n    // Function to count unique characters in the string w\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 207,
+      "completion_tokens": 137,
+      "total_tokens": 344,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00011,
+    "your_harvard_credits_still_available": 492.28857
+  }
+}

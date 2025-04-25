@@ -1,0 +1,60 @@
+{
+  "completion": "from typing import List\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    return [s for s in strings if substring in s]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method filter_by_substring(strings: seq<string>, substring: string) returns (result: seq<string>)\n    requires strings != null // Ensure the input list is not null\n    requires substring != null // Ensure the substring is not null\n    ensures forall s :: s in result ==> s in strings && substring in s // Every string in the result is from the input and contains the substring\n    ensures result == [s | s in strings | substring in s] // The result is the filtered list containing only strings that have the substring\n{\n    // Implementation would go here\n}",
+  "problem_id": "HumanEval/7",
+  "problem_data": {
+    "task_id": "HumanEval/7",
+    "prompt": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+    "canonical_solution": "    return [x for x in strings if substring in x]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n    assert candidate(['xxx', 'asd', 'aaaxxy', 'john doe', 'xxxAAA', 'xxx'], 'xx') == ['xxx', 'aaaxxy', 'xxxAAA', 'xxx']\n    assert candidate(['grunt', 'trumpet', 'prune', 'gruesome'], 'run') == ['grunt', 'prune']\n",
+    "entry_point": "filter_by_substring"
+  },
+  "path": "results/formalize/28/007_3_python.json",
+  "method": "formalize",
+  "trial": 28,
+  "time_taken": 1.105854,
+  "time_start": "2025-04-25T08:27:39.974648",
+  "time_end": "2025-04-25T08:27:41.080502",
+  "prompt_tokens": 341,
+  "completion_tokens": 41,
+  "total_tokens": 382,
+  "raw": {
+    "id": "chatcmpl-BQCRYmbTM7cV5RHQctBszIMd4AGOq",
+    "object": "chat.completion",
+    "created": 1745584060,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    return [s for s in strings if substring in s]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 341,
+      "completion_tokens": 41,
+      "total_tokens": 382,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 488.00574
+  }
+}

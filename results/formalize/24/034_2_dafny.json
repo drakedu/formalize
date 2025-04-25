@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique(l: seq<int>) returns (result: seq<int>)\n    requires |l| > 0\n    ensures result == DistinctSorted(l)\n{\n    // Method implementation goes here\n}\n\n// Helper function to compute sorted unique elements\nfunction DistinctSorted(l: seq<int>) : seq<int>\n    requires |l| > 0\n    ensures |result| == |DistinctElements(l)| && IsSorted(result)\n{\n    // Helper implementation here\n}\n\n// Helper function to get distinct elements from a sequence\nfunction DistinctElements(l: seq<int>) : seq<int>\n    requires |l| > 0\n{\n    // Implementation that finds distinct elements\n}\n\n// Helper function to check if a sequence is sorted\nfunction IsSorted(s: seq<int>) : bool\n{\n    // Implementation to verify if the sequence is sorted\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n",
+  "problem_id": "HumanEval/34",
+  "problem_data": {
+    "task_id": "HumanEval/34",
+    "prompt": "\n\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n",
+    "canonical_solution": "    return sorted(list(set(l)))\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([5, 3, 5, 2, 3, 3, 9, 0, 123]) == [0, 2, 3, 5, 9, 123]\n\n",
+    "entry_point": "unique"
+  },
+  "path": "results/formalize/24/034_2_dafny.json",
+  "method": "formalize",
+  "trial": 24,
+  "time_taken": 4.084388,
+  "time_start": "2025-04-25T07:41:53.324720",
+  "time_end": "2025-04-25T07:41:57.409108",
+  "prompt_tokens": 160,
+  "completion_tokens": 177,
+  "total_tokens": 337,
+  "raw": {
+    "id": "chatcmpl-BQBjF5E4jI9JVXVLZz93vnzitdIbt",
+    "object": "chat.completion",
+    "created": 1745581313,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique(l: seq<int>) returns (result: seq<int>)\n    requires |l| > 0\n    ensures result == DistinctSorted(l)\n{\n    // Method implementation goes here\n}\n\n// Helper function to compute sorted unique elements\nfunction DistinctSorted(l: seq<int>) : seq<int>\n    requires |l| > 0\n    ensures |result| == |DistinctElements(l)| && IsSorted(result)\n{\n    // Helper implementation here\n}\n\n// Helper function to get distinct elements from a sequence\nfunction DistinctElements(l: seq<int>) : seq<int>\n    requires |l| > 0\n{\n    // Implementation that finds distinct elements\n}\n\n// Helper function to check if a sequence is sorted\nfunction IsSorted(s: seq<int>) : bool\n{\n    // Implementation to verify if the sequence is sorted\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 160,
+      "completion_tokens": 177,
+      "total_tokens": 337,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00013,
+    "your_harvard_credits_still_available": 488.81506
+  }
+}

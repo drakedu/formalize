@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod digitSum(s: string) returns (sum: int)\n    // Precondition: s is a valid string\n    requires s != null\n    // Postcondition: sum is the sum of ASCII values of uppercase characters in s\n    ensures sum == (if s == \"\" then 0 else \n                    sum(i | i in 0 .. s.Length && 'A' <= s[i] && s[i] <= 'Z' | s[i].Ascii()));\n{\n    sum := 0;\n    var i := 0;\n    while i < s.Length\n        // Invariant: sum is the sum of ASCII values of uppercase characters in s[0..i)\n        invariant 0 <= i <= s.Length\n        invariant sum == (if i == 0 then 0 else \n                          sum(j | j in 0 .. i && 'A' <= s[j] && s[j] <= 'Z' | s[j].Ascii()));\n    {\n        if 'A' <= s[i] && s[i] <= 'Z' {\n            sum := sum + s[i].Ascii();\n        }\n        i := i + 1;\n    }\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef digitSum(s):\n    \"\"\"Task\n    Write a function that takes a string as input and returns the sum of the upper characters only'\n    ASCII codes.\n\n    Examples:\n        digitSum(\"\") => 0\n        digitSum(\"abAB\") => 131\n        digitSum(\"abcCd\") => 67\n        digitSum(\"helloE\") => 69\n        digitSum(\"woArBld\") => 131\n        digitSum(\"aAaaaXa\") => 153\n    \"\"\"\n",
+  "problem_id": "HumanEval/66",
+  "problem_data": {
+    "task_id": "HumanEval/66",
+    "prompt": "\ndef digitSum(s):\n    \"\"\"Task\n    Write a function that takes a string as input and returns the sum of the upper characters only'\n    ASCII codes.\n\n    Examples:\n        digitSum(\"\") => 0\n        digitSum(\"abAB\") => 131\n        digitSum(\"abcCd\") => 67\n        digitSum(\"helloE\") => 69\n        digitSum(\"woArBld\") => 131\n        digitSum(\"aAaaaXa\") => 153\n    \"\"\"\n",
+    "canonical_solution": "    if s == \"\": return 0\n    return sum(ord(char) if char.isupper() else 0 for char in s)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(\"\") == 0, \"Error\"\n    assert candidate(\"abAB\") == 131, \"Error\"\n    assert candidate(\"abcCd\") == 67, \"Error\"\n    assert candidate(\"helloE\") == 69, \"Error\"\n    assert candidate(\"woArBld\") == 131, \"Error\"\n    assert candidate(\"aAaaaXa\") == 153, \"Error\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\" How are yOu?\") == 151, \"Error\"\n    assert candidate(\"You arE Very Smart\") == 327, \"Error\"\n\n",
+    "entry_point": "digitSum"
+  },
+  "path": "results/formalize/17/066_4_dafny.json",
+  "method": "formalize",
+  "trial": 17,
+  "time_taken": 4.156339,
+  "time_start": "2025-04-25T06:28:28.330535",
+  "time_end": "2025-04-25T06:28:32.486874",
+  "prompt_tokens": 198,
+  "completion_tokens": 245,
+  "total_tokens": 443,
+  "raw": {
+    "id": "chatcmpl-BQAaCwKhRILrgGTemIQPuc80tPSpu",
+    "object": "chat.completion",
+    "created": 1745576908,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod digitSum(s: string) returns (sum: int)\n    // Precondition: s is a valid string\n    requires s != null\n    // Postcondition: sum is the sum of ASCII values of uppercase characters in s\n    ensures sum == (if s == \"\" then 0 else \n                    sum(i | i in 0 .. s.Length && 'A' <= s[i] && s[i] <= 'Z' | s[i].Ascii()));\n{\n    sum := 0;\n    var i := 0;\n    while i < s.Length\n        // Invariant: sum is the sum of ASCII values of uppercase characters in s[0..i)\n        invariant 0 <= i <= s.Length\n        invariant sum == (if i == 0 then 0 else \n                          sum(j | j in 0 .. i && 'A' <= s[j] && s[j] <= 'Z' | s[j].Ascii()));\n    {\n        if 'A' <= s[i] && s[i] <= 'Z' {\n            sum := sum + s[i].Ascii();\n        }\n        i := i + 1;\n    }\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 198,
+      "completion_tokens": 245,
+      "total_tokens": 443,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00017,
+    "your_harvard_credits_still_available": 490.20301
+  }
+}

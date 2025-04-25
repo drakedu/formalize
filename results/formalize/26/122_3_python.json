@@ -1,0 +1,60 @@
+{
+  "completion": "def add_elements(arr, k):\n    total = 0\n    for i in range(k):\n        if -99 <= arr[i] <= 99:\n            total += arr[i]\n    return total",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef add_elements(arr, k):\n    \"\"\"\n    Given a non-empty array of integers arr and an integer k, return\n    the sum of the elements with at most two digits from the first k elements of arr.\n\n    Example:\n\n        Input: arr = [111,21,3,4000,5,6,7,8,9], k = 4\n        Output: 24 # sum of 21 + 3\n\n    Constraints:\n        1. 1 <= len(arr) <= 100\n        2. 1 <= k <= len(arr)\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method add_elements(arr: array<int>, k: int) returns (sum: int)\n    requires arr != []\n    requires 1 <= |arr| <= 100\n    requires 1 <= k <= |arr|\n    ensures sum == SumElementsWithAtMostTwoDigits(arr, k)\n{\n    // Method body would go here, but it is not required for the specification.\n}\n\nfunction SumElementsWithAtMostTwoDigits(arr: array<int>, k: int): int\n    requires arr != []\n    requires 1 <= |arr| <= 100\n    requires 1 <= k <= |arr|\n{\n    var total := 0;\n    var count := 0;\n    \n    // Loop over the first k elements of arr\n    for i := 0 to k - 1 {\n        if arr[i] >= -99 && arr[i] <= 99 {\n            total := total + arr[i];\n        }\n    }\n    \n    return total;\n}",
+  "problem_id": "HumanEval/122",
+  "problem_data": {
+    "task_id": "HumanEval/122",
+    "prompt": "\ndef add_elements(arr, k):\n    \"\"\"\n    Given a non-empty array of integers arr and an integer k, return\n    the sum of the elements with at most two digits from the first k elements of arr.\n\n    Example:\n\n        Input: arr = [111,21,3,4000,5,6,7,8,9], k = 4\n        Output: 24 # sum of 21 + 3\n\n    Constraints:\n        1. 1 <= len(arr) <= 100\n        2. 1 <= k <= len(arr)\n    \"\"\"\n",
+    "canonical_solution": "    return sum(elem for elem in arr[:k] if len(str(elem)) <= 2)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1,-2,-3,41,57,76,87,88,99], 3) == -4\n    assert candidate([111,121,3,4000,5,6], 2) == 0\n    assert candidate([11,21,3,90,5,6,7,8,9], 4) == 125\n    assert candidate([111,21,3,4000,5,6,7,8,9], 4) == 24, \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1], 1) == 1, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "add_elements"
+  },
+  "path": "results/formalize/26/122_3_python.json",
+  "method": "formalize",
+  "trial": 26,
+  "time_taken": 1.679564,
+  "time_start": "2025-04-25T08:13:09.705064",
+  "time_end": "2025-04-25T08:13:11.384628",
+  "prompt_tokens": 457,
+  "completion_tokens": 47,
+  "total_tokens": 504,
+  "raw": {
+    "id": "chatcmpl-BQCDVq0CPNZVTvG19wVp1VxA1Sdj7",
+    "object": "chat.completion",
+    "created": 1745583189,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef add_elements(arr, k):\n    total = 0\n    for i in range(k):\n        if -99 <= arr[i] <= 99:\n            total += arr[i]\n    return total\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 457,
+      "completion_tokens": 47,
+      "total_tokens": 504,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 488.27891
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod words_in_sentence(sentence: string) returns (result: string)\n    requires 1 <= |sentence| <= 100\n    requires forall i :: 0 <= i < |sentence| ==> (sentence[i] == ' ' || ('a' <= sentence[i] && sentence[i] <= 'z') || ('A' <= sentence[i] && sentence[i] <= 'Z'))\n    ensures forall word :: word in result.Split(' ') ==> is_prime_length(word)\n    ensures result == original_words_with_prime_length(sentence)\n{\n    // Implementation would go here\n}\n\nfunction is_prime_length(word: string) : bool\n{\n    var length := |word|;\n    if length <= 1 then\n        return false;\n    var i := 2;\n    while i * i <= length\n        invariant 2 <= i <= length\n        invariant forall j :: 2 <= j < i ==> length % j != 0\n    {\n        if length % i == 0 then\n            return false;\n        i := i + 1;\n    }\n    return true;\n}\n\nfunction original_words_with_prime_length(sentence: string) : string\n{\n    // A function that reconstructs the string with only words of prime length\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef words_in_sentence(sentence):\n    \"\"\"\n    You are given a string representing a sentence,\n    the sentence contains some words separated by a space,\n    and you have to return a string that contains the words from the original sentence,\n    whose lengths are prime numbers,\n    the order of the words in the new string should be the same as the original one.\n\n    Example 1:\n        Input: sentence = \"This is a test\"\n        Output: \"is\"\n\n    Example 2:\n        Input: sentence = \"lets go for swimming\"\n        Output: \"go for\"\n\n    Constraints:\n        * 1 <= len(sentence) <= 100\n        * sentence contains only letters\n    \"\"\"\n",
+  "problem_id": "HumanEval/143",
+  "problem_data": {
+    "task_id": "HumanEval/143",
+    "prompt": "\ndef words_in_sentence(sentence):\n    \"\"\"\n    You are given a string representing a sentence,\n    the sentence contains some words separated by a space,\n    and you have to return a string that contains the words from the original sentence,\n    whose lengths are prime numbers,\n    the order of the words in the new string should be the same as the original one.\n\n    Example 1:\n        Input: sentence = \"This is a test\"\n        Output: \"is\"\n\n    Example 2:\n        Input: sentence = \"lets go for swimming\"\n        Output: \"go for\"\n\n    Constraints:\n        * 1 <= len(sentence) <= 100\n        * sentence contains only letters\n    \"\"\"\n",
+    "canonical_solution": "    new_lst = []\n    for word in sentence.split():\n        flg = 0\n        if len(word) == 1:\n            flg = 1\n        for i in range(2, len(word)):\n            if len(word)%i == 0:\n                flg = 1\n        if flg == 0 or len(word) == 2:\n            new_lst.append(word)\n    return \" \".join(new_lst)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"This is a test\") == \"is\"\n    assert candidate(\"lets go for swimming\") == \"go for\"\n    assert candidate(\"there is no place available here\") == \"there is no place\"\n    assert candidate(\"Hi I am Hussein\") == \"Hi am Hussein\"\n    assert candidate(\"go for it\") == \"go for it\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"here\") == \"\"\n    assert candidate(\"here is\") == \"is\"\n\n",
+    "entry_point": "words_in_sentence"
+  },
+  "path": "results/formalize/3/143_0_dafny.json",
+  "method": "formalize",
+  "trial": 3,
+  "time_taken": 4.985737,
+  "time_start": "2025-04-25T00:34:09.476508",
+  "time_end": "2025-04-25T00:34:14.462245",
+  "prompt_tokens": 234,
+  "completion_tokens": 258,
+  "total_tokens": 492,
+  "raw": {
+    "id": "chatcmpl-BQ53Jr2XJgUYZIUh5VoLBlM8LCkid",
+    "object": "chat.completion",
+    "created": 1745555649,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod words_in_sentence(sentence: string) returns (result: string)\n    requires 1 <= |sentence| <= 100\n    requires forall i :: 0 <= i < |sentence| ==> (sentence[i] == ' ' || ('a' <= sentence[i] && sentence[i] <= 'z') || ('A' <= sentence[i] && sentence[i] <= 'Z'))\n    ensures forall word :: word in result.Split(' ') ==> is_prime_length(word)\n    ensures result == original_words_with_prime_length(sentence)\n{\n    // Implementation would go here\n}\n\nfunction is_prime_length(word: string) : bool\n{\n    var length := |word|;\n    if length <= 1 then\n        return false;\n    var i := 2;\n    while i * i <= length\n        invariant 2 <= i <= length\n        invariant forall j :: 2 <= j < i ==> length % j != 0\n    {\n        if length % i == 0 then\n            return false;\n        i := i + 1;\n    }\n    return true;\n}\n\nfunction original_words_with_prime_length(sentence: string) : string\n{\n    // A function that reconstructs the string with only words of prime length\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 234,
+      "completion_tokens": 258,
+      "total_tokens": 492,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00018,
+    "your_harvard_credits_still_available": 492.91051
+  }
+}

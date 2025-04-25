@@ -1,0 +1,60 @@
+{
+  "completion": "def count_nums(arr):\n    def sum_of_digits(n):\n        if n < 0:\n            return -sum_of_digits(-n)\n        if n == 0:\n            return 0\n        return n % 10 + sum_of_digits(n // 10)\n\n    count = 0\n    for num in arr:\n        if sum_of_digits(num) > 0:\n            count += 1\n    return count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method count_nums(arr: seq<int>) returns (count: int)\n    requires arr != null\n    ensures count >= 0\n    ensures count == |{x | x <- arr, sum_of_digits(x) > 0}|\n{\n    // Implementation will go here\n}\n\nfunction sum_of_digits(n: int): int\n    requires n == 0 || n != 0\n    ensures sum_of_digits(n) == sum_digits_helper(n, 0)\n{\n    if n < 0 then\n        return -sum_digits_helper(-n, 0);\n    else\n        return sum_digits_helper(n, 0);\n}\n\nfunction sum_digits_helper(n: int, acc: int): int\n    requires n >= 0 && acc >= 0\n    ensures sum_digits_helper(n, acc) == acc + (if n == 0 then 0 else sum_digits_helper(n / 10, acc + n % 10))\n{\n    if n == 0 then\n        return acc;\n    else\n        return sum_digits_helper(n / 10, acc + n % 10);\n}",
+  "problem_id": "HumanEval/108",
+  "problem_data": {
+    "task_id": "HumanEval/108",
+    "prompt": "\ndef count_nums(arr):\n    \"\"\"\n    Write a function count_nums which takes an array of integers and returns\n    the number of elements which has a sum of digits > 0.\n    If a number is negative, then its first signed digit will be negative:\n    e.g. -123 has signed digits -1, 2, and 3.\n    >>> count_nums([]) == 0\n    >>> count_nums([-1, 11, -11]) == 1\n    >>> count_nums([1, 1, 2]) == 3\n    \"\"\"\n",
+    "canonical_solution": "    def digits_sum(n):\n        neg = 1\n        if n < 0: n, neg = -1 * n, -1 \n        n = [int(i) for i in str(n)]\n        n[0] = n[0] * neg\n        return sum(n)\n    return len(list(filter(lambda x: x > 0, [digits_sum(i) for i in arr])))\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0\n    assert candidate([-1, -2, 0]) == 0\n    assert candidate([1, 1, 2, -2, 3, 4, 5]) == 6\n    assert candidate([1, 6, 9, -6, 0, 1, 5]) == 5\n    assert candidate([1, 100, 98, -7, 1, -1]) == 4\n    assert candidate([12, 23, 34, -45, -56, 0]) == 5\n    assert candidate([-0, 1**0]) == 1\n    assert candidate([1]) == 1\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "count_nums"
+  },
+  "path": "results/formalize/15/108_0_python.json",
+  "method": "formalize",
+  "trial": 15,
+  "time_taken": 1.845557,
+  "time_start": "2025-04-25T06:12:06.581625",
+  "time_end": "2025-04-25T06:12:08.427182",
+  "prompt_tokens": 483,
+  "completion_tokens": 93,
+  "total_tokens": 576,
+  "raw": {
+    "id": "chatcmpl-BQAKMUyIQZNLrsUJsvF8UvAoOM0cw",
+    "object": "chat.completion",
+    "created": 1745575926,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef count_nums(arr):\n    def sum_of_digits(n):\n        if n < 0:\n            return -sum_of_digits(-n)\n        if n == 0:\n            return 0\n        return n % 10 + sum_of_digits(n // 10)\n\n    count = 0\n    for num in arr:\n        if sum_of_digits(num) > 0:\n            count += 1\n    return count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 483,
+      "completion_tokens": 93,
+      "total_tokens": 576,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 490.55792
+  }
+}

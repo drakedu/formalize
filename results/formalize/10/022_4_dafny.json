@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod filter_integers(values: seq<object>) returns (result: seq<int>)\n    requires |values| > 0 // The input list should not be empty\n    ensures forall i :: 0 <= i < |result| ==> (result[i] is int) // All elements in the result are integers\n    ensures |result| == CountInt(values) // The count of integers in the result is correct\n{\n    // Implementation would go here\n}\n\n// Helper function to count integers in the input sequence\nfunction CountInt(values: seq<object>): int\n    reads values\n{\n    var count := 0;\n    var i := 0;\n    while i < |values|\n        invariant 0 <= count <= i // Count of integers is non-negative and does not exceed the current index\n        invariant i <= |values| // Index does not exceed the length of the input\n    {\n        if values[i] is int {\n            count := count + 1; // Increment count if the current value is an integer\n        }\n        i := i + 1; // Move to the next element\n    }\n    count // Return the count of integers found\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+  "problem_id": "HumanEval/22",
+  "problem_data": {
+    "task_id": "HumanEval/22",
+    "prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+    "canonical_solution": "    return [x for x in values if isinstance(x, int)]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([4, {}, [], 23.2, 9, 'adasd']) == [4, 9]\n    assert candidate([3, 'c', 3, 3, 'a', 'b']) == [3, 3, 3]\n",
+    "entry_point": "filter_integers"
+  },
+  "path": "results/formalize/10/022_4_dafny.json",
+  "method": "formalize",
+  "trial": 10,
+  "time_taken": 4.98937,
+  "time_start": "2025-04-25T05:19:14.471775",
+  "time_end": "2025-04-25T05:19:19.461145",
+  "prompt_tokens": 180,
+  "completion_tokens": 246,
+  "total_tokens": 426,
+  "raw": {
+    "id": "chatcmpl-BQ9VCZnH0pKbyoBnpueSqoq863RGd",
+    "object": "chat.completion",
+    "created": 1745572754,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod filter_integers(values: seq<object>) returns (result: seq<int>)\n    requires |values| > 0 // The input list should not be empty\n    ensures forall i :: 0 <= i < |result| ==> (result[i] is int) // All elements in the result are integers\n    ensures |result| == CountInt(values) // The count of integers in the result is correct\n{\n    // Implementation would go here\n}\n\n// Helper function to count integers in the input sequence\nfunction CountInt(values: seq<object>): int\n    reads values\n{\n    var count := 0;\n    var i := 0;\n    while i < |values|\n        invariant 0 <= count <= i // Count of integers is non-negative and does not exceed the current index\n        invariant i <= |values| // Index does not exceed the length of the input\n    {\n        if values[i] is int {\n            count := count + 1; // Increment count if the current value is an integer\n        }\n        i := i + 1; // Move to the next element\n    }\n    count // Return the count of integers found\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 180,
+      "completion_tokens": 246,
+      "total_tokens": 426,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00017,
+    "your_harvard_credits_still_available": 491.65281
+  }
+}

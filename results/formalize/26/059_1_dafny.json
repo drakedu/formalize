@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\n// Returns the largest prime factor of n.\n// Requires that n is greater than 1 and not a prime number.\n// Ensures that the returned value is a prime factor of n and is the largest among all prime factors.\n\nmethod largest_prime_factor(n: int) returns (result: int)\n    requires n > 1\n    requires !is_prime(n)\n    ensures result > 1\n    ensures is_prime(result)\n    ensures forall (p: int :: p > 1 && is_prime(p) && p divides n ==> p <= result)\n{\n    // Method implementation goes here\n}\n\n// Helper function to check if a number is prime.\nfunction is_prime(x: int) : bool\n    requires x > 1\n{\n    // Implementation of prime checking logic.\n}\n\n// Helper function to check if a number divides another.\nfunction divides(a: int, b: int) : bool\n{\n    // Implementation of division logic.\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n",
+  "problem_id": "HumanEval/59",
+  "problem_data": {
+    "task_id": "HumanEval/59",
+    "prompt": "\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n",
+    "canonical_solution": "    def is_prime(k):\n        if k < 2:\n            return False\n        for i in range(2, k - 1):\n            if k % i == 0:\n                return False\n        return True\n    largest = 1\n    for j in range(2, n + 1):\n        if n % j == 0 and is_prime(j):\n            largest = max(largest, j)\n    return largest\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n",
+    "entry_point": "largest_prime_factor"
+  },
+  "path": "results/formalize/26/059_1_dafny.json",
+  "method": "formalize",
+  "trial": 26,
+  "time_taken": 3.777625,
+  "time_start": "2025-04-25T08:08:47.091634",
+  "time_end": "2025-04-25T08:08:50.869259",
+  "prompt_tokens": 150,
+  "completion_tokens": 195,
+  "total_tokens": 345,
+  "raw": {
+    "id": "chatcmpl-BQC9Haf4z4MOnkdhurFjOcESxKc5r",
+    "object": "chat.completion",
+    "created": 1745582927,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\n// Returns the largest prime factor of n.\n// Requires that n is greater than 1 and not a prime number.\n// Ensures that the returned value is a prime factor of n and is the largest among all prime factors.\n\nmethod largest_prime_factor(n: int) returns (result: int)\n    requires n > 1\n    requires !is_prime(n)\n    ensures result > 1\n    ensures is_prime(result)\n    ensures forall (p: int :: p > 1 && is_prime(p) && p divides n ==> p <= result)\n{\n    // Method implementation goes here\n}\n\n// Helper function to check if a number is prime.\nfunction is_prime(x: int) : bool\n    requires x > 1\n{\n    // Implementation of prime checking logic.\n}\n\n// Helper function to check if a number divides another.\nfunction divides(a: int, b: int) : bool\n{\n    // Implementation of division logic.\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 150,
+      "completion_tokens": 195,
+      "total_tokens": 345,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00013,
+    "your_harvard_credits_still_available": 488.36603
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "completion": "def is_prime(x: int) -> bool:\n    if x <= 1:\n        return False\n    for i in range(2, int(x**0.5) + 1):\n        if x % i == 0:\n            return False\n    return True\n\ndef fibonacci_up_to(n: int):\n    fibs = []\n    a, b = 0, 1\n    while a <= n:\n        fibs.append(a)\n        a, b = b, a + b\n    return fibs\n\ndef prime_fib(n: int) -> int:\n    fib_primes = []\n    fibs = fibonacci_up_to(1000000)  # Generate a large number of Fibonacci numbers\n    for fib in fibs:\n        if is_prime(fib):\n            fib_primes.append(fib)\n            if len(fib_primes) == n:\n                return fib_primes[-1]\n    return None",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method prime_fib(n: int) returns (result: int)\n    requires n > 0\n    ensures result == FibonacciPrime(n)\n{\n    // Implementation goes here\n}\n\nfunction FibonacciPrime(n: int): int\n    requires n > 0\n    ensures is_prime(result) && is_fibonacci(result) && count_fibonacci_primes_up_to(result) == n\n{\n    // Helper function to find the n-th Fibonacci prime\n}\n\nfunction is_prime(x: int): bool\n{\n    // Determine if x is a prime number\n}\n\nfunction is_fibonacci(x: int): bool\n{\n    // Determine if x is a Fibonacci number\n}\n\nfunction count_fibonacci_primes_up_to(x: int): int\n{\n    // Count Fibonacci primes up to x\n}",
+  "problem_id": "HumanEval/39",
+  "problem_data": {
+    "task_id": "HumanEval/39",
+    "prompt": "\n\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n",
+    "canonical_solution": "    import math\n\n    def is_prime(p):\n        if p < 2:\n            return False\n        for k in range(2, min(int(math.sqrt(p)) + 1, p - 1)):\n            if p % k == 0:\n                return False\n        return True\n    f = [0, 1]\n    while True:\n        f.append(f[-1] + f[-2])\n        if is_prime(f[-1]):\n            n -= 1\n        if n == 0:\n            return f[-1]\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(1) == 2\n    assert candidate(2) == 3\n    assert candidate(3) == 5\n    assert candidate(4) == 13\n    assert candidate(5) == 89\n    assert candidate(6) == 233\n    assert candidate(7) == 1597\n    assert candidate(8) == 28657\n    assert candidate(9) == 514229\n    assert candidate(10) == 433494437\n\n",
+    "entry_point": "prime_fib"
+  },
+  "path": "results/formalize/9/039_4_python.json",
+  "method": "formalize",
+  "trial": 9,
+  "time_taken": 3.986726,
+  "time_start": "2025-04-25T05:10:10.012372",
+  "time_end": "2025-04-25T05:10:13.999098",
+  "prompt_tokens": 387,
+  "completion_tokens": 198,
+  "total_tokens": 585,
+  "raw": {
+    "id": "chatcmpl-BQ9MQnUPkHoNxTZIqg7QMaFIO8LHg",
+    "object": "chat.completion",
+    "created": 1745572210,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef is_prime(x: int) -> bool:\n    if x <= 1:\n        return False\n    for i in range(2, int(x**0.5) + 1):\n        if x % i == 0:\n            return False\n    return True\n\ndef fibonacci_up_to(n: int):\n    fibs = []\n    a, b = 0, 1\n    while a <= n:\n        fibs.append(a)\n        a, b = b, a + b\n    return fibs\n\ndef prime_fib(n: int) -> int:\n    fib_primes = []\n    fibs = fibonacci_up_to(1000000)  # Generate a large number of Fibonacci numbers\n    for fib in fibs:\n        if is_prime(fib):\n            fib_primes.append(fib)\n            if len(fib_primes) == n:\n                return fib_primes[-1]\n    return None\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 387,
+      "completion_tokens": 198,
+      "total_tokens": 585,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_129a36352a",
+    "your_harvard_credits_used_this_transaction": 0.00017,
+    "your_harvard_credits_still_available": 491.83083
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 1
+}

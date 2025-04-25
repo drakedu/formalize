@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod parse_nested_parens(paren_string: string) returns (result: seq<int>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures result.Length == CountGroups(paren_string)\n    ensures forall i :: 0 <= i < result.Length ==> result[i] >= 0\n    ensures forall i :: 0 <= i < result.Length ==> result[i] == MaxNestingDepth(GetGroup(paren_string, i))\n{\n    // Implementation goes here\n}\n\n// Helper function to count the number of groups based on space separation\nfunction CountGroups(paren_string: string): int\n    requires paren_string != null\n    ensures 0 <= CountGroups(paren_string)\n{\n    // Implementation goes here\n}\n\n// Helper function to get a specific group of parentheses\nfunction GetGroup(paren_string: string, index: int): string\n    requires paren_string != null\n    requires 0 <= index < CountGroups(paren_string)\n    ensures result == ExtractGroup(paren_string, index)\n{\n    // Implementation goes here\n}\n\n// Helper function to calculate the maximum nesting depth of a single group\nfunction MaxNestingDepth(group: string): int\n    requires group != null\n    requires forall i :: 0 <= i < group.Length ==> (group[i] == '(' || group[i] == ')' || group[i] == ' ')\n    ensures result >= 0\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+  "problem_id": "HumanEval/6",
+  "problem_data": {
+    "task_id": "HumanEval/6",
+    "prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+    "canonical_solution": "    def parse_paren_group(s):\n        depth = 0\n        max_depth = 0\n        for c in s:\n            if c == '(':\n                depth += 1\n                max_depth = max(depth, max_depth)\n            else:\n                depth -= 1\n\n        return max_depth\n\n    return [parse_paren_group(x) for x in paren_string.split(' ') if x]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [2, 3, 1, 3]\n    assert candidate('() (()) ((())) (((())))') == [1, 2, 3, 4]\n    assert candidate('(()(())((())))') == [4]\n",
+    "entry_point": "parse_nested_parens"
+  },
+  "path": "results/formalize/28/006_4_dafny.json",
+  "method": "formalize",
+  "trial": 28,
+  "time_taken": 5.458662,
+  "time_start": "2025-04-25T08:27:53.660792",
+  "time_end": "2025-04-25T08:27:59.119454",
+  "prompt_tokens": 196,
+  "completion_tokens": 325,
+  "total_tokens": 521,
+  "raw": {
+    "id": "chatcmpl-BQCRl8QQKqjp5wvKKtIrxfsHgiHPE",
+    "object": "chat.completion",
+    "created": 1745584073,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod parse_nested_parens(paren_string: string) returns (result: seq<int>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures result.Length == CountGroups(paren_string)\n    ensures forall i :: 0 <= i < result.Length ==> result[i] >= 0\n    ensures forall i :: 0 <= i < result.Length ==> result[i] == MaxNestingDepth(GetGroup(paren_string, i))\n{\n    // Implementation goes here\n}\n\n// Helper function to count the number of groups based on space separation\nfunction CountGroups(paren_string: string): int\n    requires paren_string != null\n    ensures 0 <= CountGroups(paren_string)\n{\n    // Implementation goes here\n}\n\n// Helper function to get a specific group of parentheses\nfunction GetGroup(paren_string: string, index: int): string\n    requires paren_string != null\n    requires 0 <= index < CountGroups(paren_string)\n    ensures result == ExtractGroup(paren_string, index)\n{\n    // Implementation goes here\n}\n\n// Helper function to calculate the maximum nesting depth of a single group\nfunction MaxNestingDepth(group: string): int\n    requires group != null\n    requires forall i :: 0 <= i < group.Length ==> (group[i] == '(' || group[i] == ')' || group[i] == ' ')\n    ensures result >= 0\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 196,
+      "completion_tokens": 325,
+      "total_tokens": 521,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00022,
+    "your_harvard_credits_still_available": 488.00024
+  }
+}

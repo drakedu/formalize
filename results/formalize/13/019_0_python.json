@@ -1,0 +1,60 @@
+{
+  "completion": "from typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    valid_numbers = [\"zero\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"]\n    words = numbers.split()\n    \n    for word in words:\n        if word not in valid_numbers:\n            raise ValueError(f\"Invalid input: {word} is not a valid number word.\")\n    \n    sorted_words = sorted(words, key=lambda x: valid_numbers.index(x))\n    return ' '.join(sorted_words)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method SortNumbers(numbers: string) returns (result: string)\n    requires IsValidInput(numbers)\n    ensures IsSortedOutput(result, numbers)\n\n    // Helper function to check if the input string is valid\n    function IsValidInput(s: string) : bool\n        reads {}\n    {\n        var validNumbers := [\"zero\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"];\n        var words := Split(s, \" \");\n        // Check all words are in validNumbers\n        forall i :: 0 <= i < words.Length ==> words[i] in validNumbers\n    }\n\n    // Helper function to check if the output is a sorted version of input\n    function IsSortedOutput(output: string, input: string) : bool\n        reads {}\n    {\n        var inputWords := Split(input, \" \");\n        var outputWords := Split(output, \" \");\n        // Check the output contains the same words as the input\n        inputWords.Length == outputWords.Length && \n        forall i :: 0 <= i < outputWords.Length ==> outputWords[i] in inputWords &&\n        IsSorted(outputWords)\n    }\n\n    // Helper function to check if a list of strings is sorted\n    function IsSorted(words: seq<string>) : bool\n        reads {}\n    {\n        forall i :: 0 <= i < words.Length - 1 ==> words[i] <= words[i + 1]\n    }",
+  "problem_id": "HumanEval/19",
+  "problem_data": {
+    "task_id": "HumanEval/19",
+    "prompt": "from typing import List\n\n\ndef sort_numbers(numbers: str) -> str:\n    \"\"\" Input is a space-delimited string of numberals from 'zero' to 'nine'.\n    Valid choices are 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight' and 'nine'.\n    Return the string with numbers sorted from smallest to largest\n    >>> sort_numbers('three one five')\n    'one three five'\n    \"\"\"\n",
+    "canonical_solution": "    value_map = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n        'five': 5,\n        'six': 6,\n        'seven': 7,\n        'eight': 8,\n        'nine': 9\n    }\n    return ' '.join(sorted([x for x in numbers.split(' ') if x], key=lambda x: value_map[x]))\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('three') == 'three'\n    assert candidate('three five nine') == 'three five nine'\n    assert candidate('five zero four seven nine eight') == 'zero four five seven eight nine'\n    assert candidate('six five four three two one zero') == 'zero one two three four five six'\n",
+    "entry_point": "sort_numbers"
+  },
+  "path": "results/formalize/13/019_0_python.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 2.391345,
+  "time_start": "2025-04-25T05:47:59.051963",
+  "time_end": "2025-04-25T05:48:01.443308",
+  "prompt_tokens": 536,
+  "completion_tokens": 119,
+  "total_tokens": 655,
+  "raw": {
+    "id": "chatcmpl-BQ9x1FcpSeA6TedIJiQRMz5jveazQ",
+    "object": "chat.completion",
+    "created": 1745574479,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef sort_numbers(numbers: str) -> str:\n    valid_numbers = [\"zero\", \"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"]\n    words = numbers.split()\n    \n    for word in words:\n        if word not in valid_numbers:\n            raise ValueError(f\"Invalid input: {word} is not a valid number word.\")\n    \n    sorted_words = sorted(words, key=lambda x: valid_numbers.index(x))\n    return ' '.join(sorted_words)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 536,
+      "completion_tokens": 119,
+      "total_tokens": 655,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 491.05687
+  }
+}

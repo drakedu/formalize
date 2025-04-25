@@ -1,0 +1,60 @@
+{
+  "completion": "def largest_smallest_integers(lst):\n    largest_negative = None\n    smallest_positive = None\n    \n    for num in lst:\n        if num < 0:\n            if largest_negative is None or num > largest_negative:\n                largest_negative = num\n        elif num > 0:\n            if smallest_positive is None or num < smallest_positive:\n                smallest_positive = num\n\n    return (largest_negative, smallest_positive)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method largest_smallest_integers(lst: seq<int>) returns (a: int?, b: int?)\n    requires lst != null\n    ensures (a == null implies forall x :: x in lst ==> x >= 0) && (b == null implies forall x :: x in lst ==> x <= 0)\n    ensures (a != null ==> exists x :: x in lst && x < 0 && x == a) && (b != null ==> exists x :: x in lst && x > 0 && x == b)\n    ensures (a == null && b == null ==> lst == []) || (a == null && b != null ==> forall x :: x in lst ==> x > 0) || (a != null && b == null ==> forall x :: x in lst ==> x < 0)\n{\n    // Implementation will go here\n}",
+  "problem_id": "HumanEval/136",
+  "problem_data": {
+    "task_id": "HumanEval/136",
+    "prompt": "\ndef largest_smallest_integers(lst):\n    '''\n    Create a function that returns a tuple (a, b), where 'a' is\n    the largest of negative integers, and 'b' is the smallest\n    of positive integers in a list.\n    If there is no negative or positive integers, return them as None.\n\n    Examples:\n    largest_smallest_integers([2, 4, 1, 3, 5, 7]) == (None, 1)\n    largest_smallest_integers([]) == (None, None)\n    largest_smallest_integers([0]) == (None, None)\n    '''\n",
+    "canonical_solution": "    smallest = list(filter(lambda x: x < 0, lst))\n    largest = list(filter(lambda x: x > 0, lst))\n    return (max(smallest) if smallest else None, min(largest) if largest else None)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([2, 4, 1, 3, 5, 7]) == (None, 1)\n    assert candidate([2, 4, 1, 3, 5, 7, 0]) == (None, 1)\n    assert candidate([1, 3, 2, 4, 5, 6, -2]) == (-2, 1)\n    assert candidate([4, 5, 3, 6, 2, 7, -7]) == (-7, 2)\n    assert candidate([7, 3, 8, 4, 9, 2, 5, -9]) == (-9, 2)\n    assert candidate([]) == (None, None)\n    assert candidate([0]) == (None, None)\n    assert candidate([-1, -3, -5, -6]) == (-1, None)\n    assert candidate([-1, -3, -5, -6, 0]) == (-1, None)\n    assert candidate([-6, -4, -4, -3, 1]) == (-3, 1)\n    assert candidate([-6, -4, -4, -3, -100, 1]) == (-3, 1)\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n",
+    "entry_point": "largest_smallest_integers"
+  },
+  "path": "results/formalize/22/136_1_python.json",
+  "method": "formalize",
+  "trial": 22,
+  "time_taken": 2.527092,
+  "time_start": "2025-04-25T07:26:46.686276",
+  "time_end": "2025-04-25T07:26:49.213368",
+  "prompt_tokens": 450,
+  "completion_tokens": 91,
+  "total_tokens": 541,
+  "raw": {
+    "id": "chatcmpl-BQBUcZS4yVMZgGzG2zpRWmDQiM541",
+    "object": "chat.completion",
+    "created": 1745580406,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef largest_smallest_integers(lst):\n    largest_negative = None\n    smallest_positive = None\n    \n    for num in lst:\n        if num < 0:\n            if largest_negative is None or num > largest_negative:\n                largest_negative = num\n        elif num > 0:\n            if smallest_positive is None or num < smallest_positive:\n                smallest_positive = num\n\n    return (largest_negative, smallest_positive)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 450,
+      "completion_tokens": 91,
+      "total_tokens": 541,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 489.09047
+  }
+}

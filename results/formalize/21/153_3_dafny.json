@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod Strongest_Extension(class_name: string, extensions: seq<string>) returns (result: string)\n    requires class_name != \"\"\n    requires extensions != []\n    ensures result == class_name + \".\" + strongest_extension\n    ensures strongest_extension in extensions\n    ensures forall e: string :: e in extensions && strength(e) == max_strength ==> e == strongest_extension\n{\n    var max_strength := -999; // Initialize to a very low value\n    var strongest_extension := \"\"; // Variable to store the name of the strongest extension\n\n    // Iterate through each extension to determine its strength\n    var i := 0;\n    while i < |extensions|\n        invariant 0 <= i <= |extensions|\n        invariant strongest_extension in extensions || strongest_extension == \"\"\n        invariant max_strength >= -999\n    {\n        var current_extension := extensions[i];\n        var cap := CountUpperCase(current_extension);\n        var sm := CountLowerCase(current_extension);\n        var strength := cap - sm;\n\n        if strength > max_strength {\n            max_strength := strength;\n            strongest_extension := current_extension;\n        }\n\n        i := i + 1;\n    }\n\n    result := class_name + \".\" + strongest_extension;\n}\n\n// Helper function to count uppercase letters in a string\nfunction CountUpperCase(s: string): int\n    requires s != \"\"\n    ensures 0 <= CountUpperCase(s) <= |s|\n{\n    var count := 0;\n    var i := 0;\n    while i < |s|\n        invariant 0 <= i <= |s|\n        invariant count == CountUpperCase(s[..i])\n    {\n        if s[i] >= 'A' && s[i] <= 'Z' {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\n// Helper function to count lowercase letters in a string\nfunction CountLowerCase(s: string): int\n    requires s != \"\"\n    ensures 0 <= CountLowerCase(s) <= |s|\n{\n    var count := 0;\n    var i := 0;\n    while i < |s|\n        invariant 0 <= i <= |s|\n        invariant count == CountLowerCase(s[..i])\n    {\n        if s[i] >= 'a' && s[i] <= 'z' {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef Strongest_Extension(class_name, extensions):\n    \"\"\"You will be given the name of a class (a string) and a list of extensions.\n    The extensions are to be used to load additional classes to the class. The\n    strength of the extension is as follows: Let CAP be the number of the uppercase\n    letters in the extension's name, and let SM be the number of lowercase letters \n    in the extension's name, the strength is given by the fraction CAP - SM. \n    You should find the strongest extension and return a string in this \n    format: ClassName.StrongestExtensionName.\n    If there are two or more extensions with the same strength, you should\n    choose the one that comes first in the list.\n    For example, if you are given \"Slices\" as the class and a list of the\n    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should\n    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension \n    (its strength is -1).\n    Example:\n    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'\n    \"\"\"\n",
+  "problem_id": "HumanEval/153",
+  "problem_data": {
+    "task_id": "HumanEval/153",
+    "prompt": "\ndef Strongest_Extension(class_name, extensions):\n    \"\"\"You will be given the name of a class (a string) and a list of extensions.\n    The extensions are to be used to load additional classes to the class. The\n    strength of the extension is as follows: Let CAP be the number of the uppercase\n    letters in the extension's name, and let SM be the number of lowercase letters \n    in the extension's name, the strength is given by the fraction CAP - SM. \n    You should find the strongest extension and return a string in this \n    format: ClassName.StrongestExtensionName.\n    If there are two or more extensions with the same strength, you should\n    choose the one that comes first in the list.\n    For example, if you are given \"Slices\" as the class and a list of the\n    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should\n    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension \n    (its strength is -1).\n    Example:\n    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'\n    \"\"\"\n",
+    "canonical_solution": "    strong = extensions[0]\n    my_val = len([x for x in extensions[0] if x.isalpha() and x.isupper()]) - len([x for x in extensions[0] if x.isalpha() and x.islower()])\n    for s in extensions:\n        val = len([x for x in s if x.isalpha() and x.isupper()]) - len([x for x in s if x.isalpha() and x.islower()])\n        if val > my_val:\n            strong = s\n            my_val = val\n\n    ans = class_name + \".\" + strong\n    return ans\n\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Watashi', ['tEN', 'niNE', 'eIGHt8OKe']) == 'Watashi.eIGHt8OKe'\n    assert candidate('Boku123', ['nani', 'NazeDa', 'YEs.WeCaNe', '32145tggg']) == 'Boku123.YEs.WeCaNe'\n    assert candidate('__YESIMHERE', ['t', 'eMptY', 'nothing', 'zeR00', 'NuLl__', '123NoooneB321']) == '__YESIMHERE.NuLl__'\n    assert candidate('K', ['Ta', 'TAR', 't234An', 'cosSo']) == 'K.TAR'\n    assert candidate('__HAHA', ['Tab', '123', '781345', '-_-']) == '__HAHA.123'\n    assert candidate('YameRore', ['HhAas', 'okIWILL123', 'WorkOut', 'Fails', '-_-']) == 'YameRore.okIWILL123'\n    assert candidate('finNNalLLly', ['Die', 'NowW', 'Wow', 'WoW']) == 'finNNalLLly.WoW'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('_', ['Bb', '91245']) == '_.Bb'\n    assert candidate('Sp', ['671235', 'Bb']) == 'Sp.671235'\n    \n",
+    "entry_point": "Strongest_Extension"
+  },
+  "path": "results/formalize/21/153_3_dafny.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 11.151061,
+  "time_start": "2025-04-25T07:17:45.171897",
+  "time_end": "2025-04-25T07:17:56.322958",
+  "prompt_tokens": 359,
+  "completion_tokens": 504,
+  "total_tokens": 863,
+  "raw": {
+    "id": "chatcmpl-BQBLtH78FvXIZNKepUSqGgGHE7qF5",
+    "object": "chat.completion",
+    "created": 1745579865,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod Strongest_Extension(class_name: string, extensions: seq<string>) returns (result: string)\n    requires class_name != \"\"\n    requires extensions != []\n    ensures result == class_name + \".\" + strongest_extension\n    ensures strongest_extension in extensions\n    ensures forall e: string :: e in extensions && strength(e) == max_strength ==> e == strongest_extension\n{\n    var max_strength := -999; // Initialize to a very low value\n    var strongest_extension := \"\"; // Variable to store the name of the strongest extension\n\n    // Iterate through each extension to determine its strength\n    var i := 0;\n    while i < |extensions|\n        invariant 0 <= i <= |extensions|\n        invariant strongest_extension in extensions || strongest_extension == \"\"\n        invariant max_strength >= -999\n    {\n        var current_extension := extensions[i];\n        var cap := CountUpperCase(current_extension);\n        var sm := CountLowerCase(current_extension);\n        var strength := cap - sm;\n\n        if strength > max_strength {\n            max_strength := strength;\n            strongest_extension := current_extension;\n        }\n\n        i := i + 1;\n    }\n\n    result := class_name + \".\" + strongest_extension;\n}\n\n// Helper function to count uppercase letters in a string\nfunction CountUpperCase(s: string): int\n    requires s != \"\"\n    ensures 0 <= CountUpperCase(s) <= |s|\n{\n    var count := 0;\n    var i := 0;\n    while i < |s|\n        invariant 0 <= i <= |s|\n        invariant count == CountUpperCase(s[..i])\n    {\n        if s[i] >= 'A' && s[i] <= 'Z' {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\n// Helper function to count lowercase letters in a string\nfunction CountLowerCase(s: string): int\n    requires s != \"\"\n    ensures 0 <= CountLowerCase(s) <= |s|\n{\n    var count := 0;\n    var i := 0;\n    while i < |s|\n        invariant 0 <= i <= |s|\n        invariant count == CountLowerCase(s[..i])\n    {\n        if s[i] >= 'a' && s[i] <= 'z' {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 359,
+      "completion_tokens": 504,
+      "total_tokens": 863,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00035,
+    "your_harvard_credits_still_available": 489.26047
+  }
+}

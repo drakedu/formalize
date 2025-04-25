@@ -1,0 +1,63 @@
+{
+  "completion": "def unique_digits(x):\n    def has_even_digit(y):\n        return any(int(d) % 2 == 0 for d in str(y))\n\n    result = [num for num in x if num > 0 and not has_even_digit(num)]\n    return sorted(result)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires |x| > 0 // x must be a non-empty sequence\n    ensures forall i, j: int :: 0 <= i < |result| && 0 <= j < |result| ==> result[i] <= result[j] // result is sorted in non-decreasing order\n    ensures forall y: int :: y in result ==> y > 0 && !has_even_digit(y) // all elements in result are positive integers without even digits\n{\n    // Implementation goes here\n}\n\nmethod has_even_digit(y: int) returns (hasEven: bool)\n    requires y >= 0 // y must be a non-negative integer\n    ensures hasEven ==> exists d: int :: d in digits(y) && d % 2 == 0 // if hasEven is true, then y has at least one even digit\n    ensures !hasEven ==> forall d: int :: d in digits(y) ==> d % 2 != 0 // if hasEven is false, then all digits of y are odd\n{\n    // Implementation goes here\n}\n\nmethod digits(y: int) returns (d: seq<int>)\n    requires y >= 0 // y must be a non-negative integer\n    ensures |d| > 0 ==> forall i: int :: 0 <= i < |d| ==> d[i] >= 0 && d[i] < 10 // all digits are valid (0 to 9)\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/21/104_1_python.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 1.254383,
+  "time_start": "2025-04-25T07:14:08.009627",
+  "time_end": "2025-04-25T07:14:09.264010",
+  "prompt_tokens": 549,
+  "completion_tokens": 61,
+  "total_tokens": 610,
+  "raw": {
+    "id": "chatcmpl-BQBIO0VuumzELpLBA5EIIMoNMl31o",
+    "object": "chat.completion",
+    "created": 1745579648,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef unique_digits(x):\n    def has_even_digit(y):\n        return any(int(d) % 2 == 0 for d in str(y))\n\n    result = [num for num in x if num > 0 and not has_even_digit(num)]\n    return sorted(result)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 549,
+      "completion_tokens": 61,
+      "total_tokens": 610,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00011,
+    "your_harvard_credits_still_available": 489.33696
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 1
+}

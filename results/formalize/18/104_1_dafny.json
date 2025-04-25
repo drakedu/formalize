@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0  // All integers in the list must be positive\n    ensures forall y :: y in result ==> y in x // All elements in result are from the input list\n    ensures forall a, b :: a in result && b in result && a < b ==> a < b // Result is sorted in increasing order\n    ensures result == [y | y in x && no_even_digits(y)] // Result contains only elements with no even digits\n    \n    // Helper method to determine if a number has no even digits\n    method no_even_digits(n: int) returns (has_no_even: bool)\n        requires n >= 0\n        ensures has_no_even <==> forall d :: d in digits(n) ==> d % 2 != 0 // Every digit is odd\n\n    // Helper method to extract digits from a number\n    method digits(n: int) returns (d: seq<int>)\n        requires n >= 0\n        ensures |d| > 0 ==> d[0] == n % 10 // Last digit of n\n        ensures |d| == 0 <==> n == 0 // If n is 0, the digits sequence is empty\n        // More specifications can be added as needed for digits extraction\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/18/104_1_dafny.json",
+  "method": "formalize",
+  "trial": 18,
+  "time_taken": 5.77996,
+  "time_start": "2025-04-25T06:43:25.493552",
+  "time_end": "2025-04-25T06:43:31.273512",
+  "prompt_tokens": 188,
+  "completion_tokens": 296,
+  "total_tokens": 484,
+  "raw": {
+    "id": "chatcmpl-BQAofMAEJzKCTSfeRys361SXOSN5l",
+    "object": "chat.completion",
+    "created": 1745577805,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0  // All integers in the list must be positive\n    ensures forall y :: y in result ==> y in x // All elements in result are from the input list\n    ensures forall a, b :: a in result && b in result && a < b ==> a < b // Result is sorted in increasing order\n    ensures result == [y | y in x && no_even_digits(y)] // Result contains only elements with no even digits\n    \n    // Helper method to determine if a number has no even digits\n    method no_even_digits(n: int) returns (has_no_even: bool)\n        requires n >= 0\n        ensures has_no_even <==> forall d :: d in digits(n) ==> d % 2 != 0 // Every digit is odd\n\n    // Helper method to extract digits from a number\n    method digits(n: int) returns (d: seq<int>)\n        requires n >= 0\n        ensures |d| > 0 ==> d[0] == n % 10 // Last digit of n\n        ensures |d| == 0 <==> n == 0 // If n is 0, the digits sequence is empty\n        // More specifications can be added as needed for digits extraction\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 188,
+      "completion_tokens": 296,
+      "total_tokens": 484,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0002,
+    "your_harvard_credits_still_available": 489.9467
+  }
+}

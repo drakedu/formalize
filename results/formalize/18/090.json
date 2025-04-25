@@ -1,0 +1,63 @@
+{
+  "completion": "def next_smallest(lst):\n    unique_values = list(set(lst))\n    if len(unique_values) < 2:\n        return None\n    unique_values.sort()\n    return unique_values[1]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef next_smallest(lst):\n    \"\"\"\n    You are given a list of integers.\n    Write a function next_smallest() that returns the 2nd smallest element of the list.\n    Return None if there is no such element.\n    \n    next_smallest([1, 2, 3, 4, 5]) == 2\n    next_smallest([5, 1, 4, 3, 2]) == 2\n    next_smallest([]) == None\n    next_smallest([1, 1]) == None\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method next_smallest(lst: seq<int>) returns (result: int?)\n    requires |lst| > 0\n    requires |lst| > 1 ==> exists i, j: int :: 0 <= i < |lst| && 0 <= j < |lst| && i != j && lst[i] != lst[j]\n    ensures result == None ==> |lst| <= 1 || forall i, j: int :: 0 <= i < |lst| && 0 <= j < |lst| && i != j ==> lst[i] == lst[j] || lst[i] > lst[j]\n    ensures result != None ==> result == Min({x: int | x in lst}) || result == Min({x: int | x in lst && x > Min(lst)})",
+  "problem_id": "HumanEval/90",
+  "problem_data": {
+    "task_id": "HumanEval/90",
+    "prompt": "\ndef next_smallest(lst):\n    \"\"\"\n    You are given a list of integers.\n    Write a function next_smallest() that returns the 2nd smallest element of the list.\n    Return None if there is no such element.\n    \n    next_smallest([1, 2, 3, 4, 5]) == 2\n    next_smallest([5, 1, 4, 3, 2]) == 2\n    next_smallest([]) == None\n    next_smallest([1, 1]) == None\n    \"\"\"\n",
+    "canonical_solution": "    lst = sorted(set(lst))\n    return None if len(lst) < 2 else lst[1]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 2, 3, 4, 5]) == 2\n    assert candidate([5, 1, 4, 3, 2]) == 2\n    assert candidate([]) == None\n    assert candidate([1, 1]) == None\n    assert candidate([1,1,1,1,0]) == 1\n    assert candidate([1, 0**0]) == None\n    assert candidate([-35, 34, 12, -45]) == -35\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "next_smallest"
+  },
+  "path": "results/formalize/18/090_1_python.json",
+  "method": "formalize",
+  "trial": 18,
+  "time_taken": 1.135454,
+  "time_start": "2025-04-25T06:42:19.755952",
+  "time_end": "2025-04-25T06:42:20.891406",
+  "prompt_tokens": 418,
+  "completion_tokens": 45,
+  "total_tokens": 463,
+  "raw": {
+    "id": "chatcmpl-BQAnbHJeYblWngrbnS0PENdz6Mv9e",
+    "object": "chat.completion",
+    "created": 1745577739,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef next_smallest(lst):\n    unique_values = list(set(lst))\n    if len(unique_values) < 2:\n        return None\n    unique_values.sort()\n    return unique_values[1]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 418,
+      "completion_tokens": 45,
+      "total_tokens": 463,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 489.97022
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 1
+}

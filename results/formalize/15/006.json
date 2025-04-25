@@ -1,0 +1,63 @@
+{
+  "completion": "from typing import List\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    def max_nesting_level(group: str) -> int:\n        max_level = 0\n        current_level = 0\n        for char in group:\n            if char == '(':\n                current_level += 1\n                max_level = max(max_level, current_level)\n            elif char == ')':\n                current_level -= 1\n        return max_level\n\n    groups = paren_string.split()\n    return [max_nesting_level(group) for group in groups]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method parse_nested_parens(paren_string: string) returns (result: seq<int>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures result != null\n    ensures result.Length == CountGroups(paren_string)\n    ensures forall i :: 0 <= i < result.Length ==> result[i] >= 0\n    ensures result == [MaxNestingLevel(group) | group in SplitGroups(paren_string)]\n{\n    // Implementation goes here\n}\n\n// Helper method to count the number of groups separated by spaces\nmethod CountGroups(paren_string: string) returns (count: int)\n    requires paren_string != null\n    ensures count >= 0\n{\n    // Implementation goes here\n}\n\n// Helper method to split the input string into groups based on spaces\nmethod SplitGroups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    ensures |groups| == CountGroups(paren_string)\n{\n    // Implementation goes here\n}\n\n// Helper method to calculate the maximum nesting level of a single group\nmethod MaxNestingLevel(group: string) returns (level: int)\n    requires group != null\n    ensures level >= 0\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/6",
+  "problem_data": {
+    "task_id": "HumanEval/6",
+    "prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+    "canonical_solution": "    def parse_paren_group(s):\n        depth = 0\n        max_depth = 0\n        for c in s:\n            if c == '(':\n                depth += 1\n                max_depth = max(depth, max_depth)\n            else:\n                depth -= 1\n\n        return max_depth\n\n    return [parse_paren_group(x) for x in paren_string.split(' ') if x]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [2, 3, 1, 3]\n    assert candidate('() (()) ((())) (((())))') == [1, 2, 3, 4]\n    assert candidate('(()(())((())))') == [4]\n",
+    "entry_point": "parse_nested_parens"
+  },
+  "path": "results/formalize/15/006_0_python.json",
+  "method": "formalize",
+  "trial": 15,
+  "time_taken": 2.274815,
+  "time_start": "2025-04-25T06:06:30.986251",
+  "time_end": "2025-04-25T06:06:33.261066",
+  "prompt_tokens": 520,
+  "completion_tokens": 121,
+  "total_tokens": 641,
+  "raw": {
+    "id": "chatcmpl-BQAExLa7QHSPN5HDkRxu0pOO8mwsV",
+    "object": "chat.completion",
+    "created": 1745575591,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    def max_nesting_level(group: str) -> int:\n        max_level = 0\n        current_level = 0\n        for char in group:\n            if char == '(':\n                current_level += 1\n                max_level = max(max_level, current_level)\n            elif char == ')':\n                current_level -= 1\n        return max_level\n\n    groups = paren_string.split()\n    return [max_nesting_level(group) for group in groups]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 520,
+      "completion_tokens": 121,
+      "total_tokens": 641,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 490.67534
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 2
+}

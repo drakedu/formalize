@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod parse_nested_parens(paren_string: string) returns (result: seq<int>)\n    requires paren_string != null\n    ensures |result| == CountSpaces(paren_string) + 1 // number of groups is one more than the number of spaces\n    ensures forall i :: 0 <= i < |result| ==> result[i] >= 0 // each depth of nesting is non-negative\n    ensures forall i :: 0 <= i < |result| ==> result[i] == MaxDepth(paren_string, i) // result[i] is the maximum depth for the i-th group\n{\n    // Implementation will go here\n}\n\nmethod CountSpaces(s: string) returns (count: int)\n    requires s != null\n    ensures count >= 0\n    ensures count == CountCharacters(s, ' ') // count is the number of spaces in the string\n{\n    // Implementation will go here\n}\n\nmethod MaxDepth(s: string, group_index: int) returns (depth: int)\n    requires s != null && 0 <= group_index < CountSpaces(s) + 1\n    ensures depth >= 0\n    ensures depth == MaximumNestingLevel(s, group_index) // depth is the maximum nesting level for the specified group\n{\n    // Implementation will go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+  "problem_id": "HumanEval/6",
+  "problem_data": {
+    "task_id": "HumanEval/6",
+    "prompt": "from typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    \"\"\" Input to this function is a string represented multiple groups for nested parentheses separated by spaces.\n    For each of the group, output the deepest level of nesting of parentheses.\n    E.g. (()()) has maximum two levels of nesting while ((())) has three.\n\n    >>> parse_nested_parens('(()()) ((())) () ((())()())')\n    [2, 3, 1, 3]\n    \"\"\"\n",
+    "canonical_solution": "    def parse_paren_group(s):\n        depth = 0\n        max_depth = 0\n        for c in s:\n            if c == '(':\n                depth += 1\n                max_depth = max(depth, max_depth)\n            else:\n                depth -= 1\n\n        return max_depth\n\n    return [parse_paren_group(x) for x in paren_string.split(' ') if x]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [2, 3, 1, 3]\n    assert candidate('() (()) ((())) (((())))') == [1, 2, 3, 4]\n    assert candidate('(()(())((())))') == [4]\n",
+    "entry_point": "parse_nested_parens"
+  },
+  "path": "results/formalize/1/006_2_dafny.json",
+  "method": "formalize",
+  "trial": 1,
+  "time_taken": 4.353841,
+  "time_start": "2025-04-24T20:39:54.069823",
+  "time_end": "2025-04-24T20:39:58.423664",
+  "prompt_tokens": 196,
+  "completion_tokens": 270,
+  "total_tokens": 466,
+  "raw": {
+    "id": "chatcmpl-BQ1Ocqy9L8udYA070lS79Jcuukmjw",
+    "object": "chat.completion",
+    "created": 1745541594,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod parse_nested_parens(paren_string: string) returns (result: seq<int>)\n    requires paren_string != null\n    ensures |result| == CountSpaces(paren_string) + 1 // number of groups is one more than the number of spaces\n    ensures forall i :: 0 <= i < |result| ==> result[i] >= 0 // each depth of nesting is non-negative\n    ensures forall i :: 0 <= i < |result| ==> result[i] == MaxDepth(paren_string, i) // result[i] is the maximum depth for the i-th group\n{\n    // Implementation will go here\n}\n\nmethod CountSpaces(s: string) returns (count: int)\n    requires s != null\n    ensures count >= 0\n    ensures count == CountCharacters(s, ' ') // count is the number of spaces in the string\n{\n    // Implementation will go here\n}\n\nmethod MaxDepth(s: string, group_index: int) returns (depth: int)\n    requires s != null && 0 <= group_index < CountSpaces(s) + 1\n    ensures depth >= 0\n    ensures depth == MaximumNestingLevel(s, group_index) // depth is the maximum nesting level for the specified group\n{\n    // Implementation will go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 196,
+      "completion_tokens": 270,
+      "total_tokens": 466,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00019,
+    "your_harvard_credits_still_available": 493.4754
+  }
+}

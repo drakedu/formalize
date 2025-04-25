@@ -1,0 +1,63 @@
+{
+  "completion": "def pluck(arr):\n    smallest_even = float('inf')\n    smallest_index = -1\n    \n    for index, value in enumerate(arr):\n        if value % 2 == 0:\n            if value < smallest_even:\n                smallest_even = value\n                smallest_index = index\n\n    if smallest_index == -1:\n        return []\n    \n    return [smallest_even, smallest_index]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef pluck(arr):\n    \"\"\"\n    \"Given an array representing a branch of a tree that has non-negative integer nodes\n    your task is to pluck one of the nodes and return it.\n    The plucked node should be the node with the smallest even value.\n    If multiple nodes with the same smallest even value are found return the node that has smallest index.\n\n    The plucked node should be returned in a list, [ smalest_value, its index ],\n    If there are no even values or the given array is empty, return [].\n\n    Example 1:\n        Input: [4,2,3]\n        Output: [2, 1]\n        Explanation: 2 has the smallest even value, and 2 has the smallest index.\n\n    Example 2:\n        Input: [1,2,3]\n        Output: [2, 1]\n        Explanation: 2 has the smallest even value, and 2 has the smallest index. \n\n    Example 3:\n        Input: []\n        Output: []\n    \n    Example 4:\n        Input: [5, 0, 3, 0, 4, 2]\n        Output: [0, 1]\n        Explanation: 0 is the smallest value, but  there are two zeros,\n                     so we will choose the first zero, which has the smallest index.\n\n    Constraints:\n        * 1 <= nodes.length <= 10000\n        * 0 <= node.value\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method pluck(arr: seq<int>) returns (result: seq<int>)\n    requires |arr| <= 10000\n    requires forall i :: 0 <= i < |arr| ==> arr[i] >= 0\n    ensures (result == [] ==> |arr| == 0) // If result is empty, arr must be empty\n    ensures (result != [] ==> |result| == 2 && result[0] % 2 == 0 && \n        exists i :: 0 <= i < |arr| && arr[i] == result[0] && result[1] == i && \n        forall j :: 0 <= j < |arr| && arr[j] % 2 == 0 && arr[j] < result[0] ==> false) // result[0] is the smallest even value\n{\n    // Method implementation goes here\n}",
+  "problem_id": "HumanEval/68",
+  "problem_data": {
+    "task_id": "HumanEval/68",
+    "prompt": "\ndef pluck(arr):\n    \"\"\"\n    \"Given an array representing a branch of a tree that has non-negative integer nodes\n    your task is to pluck one of the nodes and return it.\n    The plucked node should be the node with the smallest even value.\n    If multiple nodes with the same smallest even value are found return the node that has smallest index.\n\n    The plucked node should be returned in a list, [ smalest_value, its index ],\n    If there are no even values or the given array is empty, return [].\n\n    Example 1:\n        Input: [4,2,3]\n        Output: [2, 1]\n        Explanation: 2 has the smallest even value, and 2 has the smallest index.\n\n    Example 2:\n        Input: [1,2,3]\n        Output: [2, 1]\n        Explanation: 2 has the smallest even value, and 2 has the smallest index. \n\n    Example 3:\n        Input: []\n        Output: []\n    \n    Example 4:\n        Input: [5, 0, 3, 0, 4, 2]\n        Output: [0, 1]\n        Explanation: 0 is the smallest value, but  there are two zeros,\n                     so we will choose the first zero, which has the smallest index.\n\n    Constraints:\n        * 1 <= nodes.length <= 10000\n        * 0 <= node.value\n    \"\"\"\n",
+    "canonical_solution": "    if(len(arr) == 0): return []\n    evens = list(filter(lambda x: x%2 == 0, arr))\n    if(evens == []): return []\n    return [min(evens), arr.index(min(evens))]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([4,2,3]) == [2, 1], \"Error\"\n    assert candidate([1,2,3]) == [2, 1], \"Error\"\n    assert candidate([]) == [], \"Error\"\n    assert candidate([5, 0, 3, 0, 4, 2]) == [0, 1], \"Error\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate([1, 2, 3, 0, 5, 3]) == [0, 3], \"Error\"\n    assert candidate([5, 4, 8, 4 ,8]) == [4, 1], \"Error\"\n    assert candidate([7, 6, 7, 1]) == [6, 1], \"Error\"\n    assert candidate([7, 9, 7, 1]) == [], \"Error\"\n\n",
+    "entry_point": "pluck"
+  },
+  "path": "results/formalize/8/068_4_python.json",
+  "method": "formalize",
+  "trial": 8,
+  "time_taken": 2.173329,
+  "time_start": "2025-04-25T05:01:21.655831",
+  "time_end": "2025-04-25T05:01:23.829160",
+  "prompt_tokens": 624,
+  "completion_tokens": 85,
+  "total_tokens": 709,
+  "raw": {
+    "id": "chatcmpl-BQ9DunPtjop1wbAJDAauEYHIu2BpW",
+    "object": "chat.completion",
+    "created": 1745571682,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef pluck(arr):\n    smallest_even = float('inf')\n    smallest_index = -1\n    \n    for index, value in enumerate(arr):\n        if value % 2 == 0:\n            if value < smallest_even:\n                smallest_even = value\n                smallest_index = index\n\n    if smallest_index == -1:\n        return []\n    \n    return [smallest_even, smallest_index]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 624,
+      "completion_tokens": 85,
+      "total_tokens": 709,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_129a36352a",
+    "your_harvard_credits_used_this_transaction": 0.00014,
+    "your_harvard_credits_still_available": 492.00459
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 1
+}

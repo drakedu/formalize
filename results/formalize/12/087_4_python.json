@@ -1,0 +1,60 @@
+{
+  "completion": "def get_row(lst, x):\n    result = []\n    for r in range(len(lst)):\n        for c in range(len(lst[r])):\n            if lst[r][c] == x:\n                result.append((r, c))\n    result.sort(key=lambda coord: (coord[0], -coord[1]))\n    return result",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method get_row(lst: seq<seq<int>>, x: int) returns (result: seq<(int, int)>)\n    requires forall i :: 0 <= i < |lst| ==> forall j :: 0 <= j < |lst[i]| ==> lst[i][j] is int\n    requires |lst| <= 100\n    requires forall i :: 0 <= i < |lst| ==> |lst[i]| <= 100\n    ensures forall r, c :: (r, c) in result ==> 0 <= r < |lst| && 0 <= c < |lst[r]| && lst[r][c] == x\n    ensures |result| == CountOccurrences(lst, x)\n    ensures result == SortCoordinates(result)\n{\n    // Implementation of the method should go here.\n}\n\n// Helper function to count occurrences of x in the matrix\nmethod CountOccurrences(lst: seq<seq<int>>, x: int) returns (count: int)\n    ensures count == SumOccurrences(lst, x)\n{\n    // Implementation to count occurrences\n}\n\n// Helper function to sort coordinates as specified\nmethod SortCoordinates(coords: seq<(int, int)>) returns (sortedCoords: seq<(int, int)>)\n    ensures sortedCoords == SortByRowThenColumn(coords)\n{\n    // Implementation to sort coordinates\n}",
+  "problem_id": "HumanEval/87",
+  "problem_data": {
+    "task_id": "HumanEval/87",
+    "prompt": "\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n",
+    "canonical_solution": "    coords = [(i, j) for i in range(len(lst)) for j in range(len(lst[i])) if lst[i][j] == x]\n    return sorted(sorted(coords, key=lambda x: x[1], reverse=True), key=lambda x: x[0])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "get_row"
+  },
+  "path": "results/formalize/12/087_4_python.json",
+  "method": "formalize",
+  "trial": 12,
+  "time_taken": 1.204025,
+  "time_start": "2025-04-25T05:42:04.069554",
+  "time_end": "2025-04-25T05:42:05.273579",
+  "prompt_tokens": 658,
+  "completion_tokens": 72,
+  "total_tokens": 730,
+  "raw": {
+    "id": "chatcmpl-BQ9rI5saxgAYuHJWwpGUGBVvhdI4i",
+    "object": "chat.completion",
+    "created": 1745574124,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef get_row(lst, x):\n    result = []\n    for r in range(len(lst)):\n        for c in range(len(lst[r])):\n            if lst[r][c] == x:\n                result.append((r, c))\n    result.sort(key=lambda coord: (coord[0], -coord[1]))\n    return result\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 658,
+      "completion_tokens": 72,
+      "total_tokens": 730,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00014,
+    "your_harvard_credits_still_available": 491.17978
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod correct_bracketing(brackets: string) returns (result: bool)\n    requires brackets != null\n    modifies []\n    ensures result == (forall i: int :: 0 <= i < |brackets| ==> (count_open(brackets, 0, i) == count_close(brackets, 0, i) && count_open(brackets, 0, |brackets|) == count_close(brackets, 0, |brackets|)))\n{\n    // Method implementation would go here\n}\n\nfunction count_open(brackets: string, start: int, end: int): int\n    requires 0 <= start <= end <= |brackets|\n    ensures result >= 0\n{\n    // Function implementation would go here\n}\n\nfunction count_close(brackets: string, start: int, end: int): int\n    requires 0 <= start <= end <= |brackets|\n    ensures result >= 0\n{\n    // Function implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n",
+  "problem_id": "HumanEval/61",
+  "problem_data": {
+    "task_id": "HumanEval/61",
+    "prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n",
+    "canonical_solution": "    depth = 0\n    for b in brackets:\n        if b == \"(\":\n            depth += 1\n        else:\n            depth -= 1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(\"()\")\n    assert candidate(\"(()())\")\n    assert candidate(\"()()(()())()\")\n    assert candidate(\"()()((()()())())(()()(()))\")\n    assert not candidate(\"((()())))\")\n    assert not candidate(\")(()\")\n    assert not candidate(\"(\")\n    assert not candidate(\"((((\")\n    assert not candidate(\")\")\n    assert not candidate(\"(()\")\n    assert not candidate(\"()()(()())())(()\")\n    assert not candidate(\"()()(()())()))()\")\n\n",
+    "entry_point": "correct_bracketing"
+  },
+  "path": "results/formalize/21/061_1_dafny.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 3.890741,
+  "time_start": "2025-04-25T07:11:03.048745",
+  "time_end": "2025-04-25T07:11:06.939486",
+  "prompt_tokens": 178,
+  "completion_tokens": 207,
+  "total_tokens": 385,
+  "raw": {
+    "id": "chatcmpl-BQBFP37JvVGZzhkVd15uWm8yrYNu1",
+    "object": "chat.completion",
+    "created": 1745579463,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod correct_bracketing(brackets: string) returns (result: bool)\n    requires brackets != null\n    modifies []\n    ensures result == (forall i: int :: 0 <= i < |brackets| ==> (count_open(brackets, 0, i) == count_close(brackets, 0, i) && count_open(brackets, 0, |brackets|) == count_close(brackets, 0, |brackets|)))\n{\n    // Method implementation would go here\n}\n\nfunction count_open(brackets: string, start: int, end: int): int\n    requires 0 <= start <= end <= |brackets|\n    ensures result >= 0\n{\n    // Function implementation would go here\n}\n\nfunction count_close(brackets: string, start: int, end: int): int\n    requires 0 <= start <= end <= |brackets|\n    ensures result >= 0\n{\n    // Function implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 178,
+      "completion_tokens": 207,
+      "total_tokens": 385,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 489.39488
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod triples_sum_to_zero(l: seq<int>) returns (result: bool)\n    requires |l| >= 3\n    ensures result == (exists a, b, c: int :: a != b && b != c && a != c && a + b + c == 0 && a in l && b in l && c in l)\n{\n    // Method implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef triples_sum_to_zero(l: list):\n    \"\"\"\n    triples_sum_to_zero takes a list of integers as an input.\n    it returns True if there are three distinct elements in the list that\n    sum to zero, and False otherwise.\n\n    >>> triples_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> triples_sum_to_zero([1, 3, -2, 1])\n    True\n    >>> triples_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> triples_sum_to_zero([2, 4, -5, 3, 9, 7])\n    True\n    >>> triples_sum_to_zero([1])\n    False\n    \"\"\"\n",
+  "problem_id": "HumanEval/40",
+  "problem_data": {
+    "task_id": "HumanEval/40",
+    "prompt": "\n\ndef triples_sum_to_zero(l: list):\n    \"\"\"\n    triples_sum_to_zero takes a list of integers as an input.\n    it returns True if there are three distinct elements in the list that\n    sum to zero, and False otherwise.\n\n    >>> triples_sum_to_zero([1, 3, 5, 0])\n    False\n    >>> triples_sum_to_zero([1, 3, -2, 1])\n    True\n    >>> triples_sum_to_zero([1, 2, 3, 7])\n    False\n    >>> triples_sum_to_zero([2, 4, -5, 3, 9, 7])\n    True\n    >>> triples_sum_to_zero([1])\n    False\n    \"\"\"\n",
+    "canonical_solution": "    for i in range(len(l)):\n        for j in range(i + 1, len(l)):\n            for k in range(j + 1, len(l)):\n                if l[i] + l[j] + l[k] == 0:\n                    return True\n    return False\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 3, 5, 0]) == False\n    assert candidate([1, 3, 5, -1]) == False\n    assert candidate([1, 3, -2, 1]) == True\n    assert candidate([1, 2, 3, 7]) == False\n    assert candidate([1, 2, 5, 7]) == False\n    assert candidate([2, 4, -5, 3, 9, 7]) == True\n    assert candidate([1]) == False\n    assert candidate([1, 3, 5, -100]) == False\n    assert candidate([100, 3, 5, -100]) == False\n\n",
+    "entry_point": "triples_sum_to_zero"
+  },
+  "path": "results/formalize/13/040_0_dafny.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 1.722709,
+  "time_start": "2025-04-25T05:48:42.650231",
+  "time_end": "2025-04-25T05:48:44.372940",
+  "prompt_tokens": 246,
+  "completion_tokens": 87,
+  "total_tokens": 333,
+  "raw": {
+    "id": "chatcmpl-BQ9xiL9tkFVi98HLttKHhDC2xqTLx",
+    "object": "chat.completion",
+    "created": 1745574522,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod triples_sum_to_zero(l: seq<int>) returns (result: bool)\n    requires |l| >= 3\n    ensures result == (exists a, b, c: int :: a != b && b != c && a != c && a + b + c == 0 && a in l && b in l && c in l)\n{\n    // Method implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 246,
+      "completion_tokens": 87,
+      "total_tokens": 333,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 491.04135
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    paren_string = paren_string.replace(\" \", \"\")\n    groups = []\n    balance = 0\n    current_group = []\n\n    for char in paren_string:\n        if char == '(':\n            if balance == 0 and current_group:\n                groups.append(''.join(current_group))\n                current_group = []\n            current_group.append(char)\n            balance += 1\n        elif char == ')':\n            current_group.append(char)\n            balance -= 1\n            if balance == 0:\n                groups.append(''.join(current_group))\n                current_group = []\n    \n    if current_group:\n        groups.append(''.join(current_group))\n\n    return groups",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    ensures forall i :: 0 <= i < |groups| ==> \n            groups[i] != null && \n            groups[i].Length > 0 && \n            (forall j :: 0 <= j < groups[i].Length ==> \n                groups[i][j] == '(' || groups[i][j] == ')') &&\n            (CountChar(groups[i], '(') == CountChar(groups[i], ')')) &&\n            (|groups| == CountBalancedGroups(paren_string)) &&\n            (forall g :: g in groups ==> !ContainsNested(g)) &&\n            (CountSpaces(paren_string) == CountSpacesRemoved(groups))\n{\n    // Implementation would go here\n}\n\nmethod CountChar(s: string, c: char) returns (count: int)\n    ensures count >= 0\n    ensures count == |{i | i < |s| && s[i] == c}|\n{\n    // Implementation would go here\n}\n\nmethod CountBalancedGroups(s: string) returns (count: int)\n    requires s != null\n    ensures count >= 0\n{\n    // Implementation would go here\n}\n\nmethod ContainsNested(s: string) returns (result: bool)\n    requires s != null\n    ensures result == (CountChar(s, '(') != CountChar(s, ')'))\n{\n    // Implementation would go here\n}\n\nmethod CountSpaces(s: string) returns (count: int)\n    requires s != null\n    ensures count >= 0\n{\n    // Implementation would go here\n}\n\nmethod CountSpacesRemoved(groups: seq<string>) returns (count: int)\n    ensures count >= 0\n    ensures count == |{g | g in groups}| * CountSpaces(g)\n{\n    // Implementation would go here\n}",
+  "problem_id": "HumanEval/1",
+  "problem_data": {
+    "task_id": "HumanEval/1",
+    "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+    "entry_point": "separate_paren_groups"
+  },
+  "path": "results/formalize/29/001_1_python.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 4.000689,
+  "time_start": "2025-04-25T08:38:10.961996",
+  "time_end": "2025-04-25T08:38:14.962685",
+  "prompt_tokens": 624,
+  "completion_tokens": 159,
+  "total_tokens": 783,
+  "raw": {
+    "id": "chatcmpl-BQCbj9BTiLmh59ZwhofIQkDEtCGYf",
+    "object": "chat.completion",
+    "created": 1745584691,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    paren_string = paren_string.replace(\" \", \"\")\n    groups = []\n    balance = 0\n    current_group = []\n\n    for char in paren_string:\n        if char == '(':\n            if balance == 0 and current_group:\n                groups.append(''.join(current_group))\n                current_group = []\n            current_group.append(char)\n            balance += 1\n        elif char == ')':\n            current_group.append(char)\n            balance -= 1\n            if balance == 0:\n                groups.append(''.join(current_group))\n                current_group = []\n    \n    if current_group:\n        groups.append(''.join(current_group))\n\n    return groups\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 624,
+      "completion_tokens": 159,
+      "total_tokens": 783,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00018,
+    "your_harvard_credits_still_available": 487.80617
+  }
+}

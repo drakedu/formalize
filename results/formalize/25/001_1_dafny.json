@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' '\n    ensures forall g :: g in groups ==> g != \"\" && g.Length > 0 \n    ensures |groups| > 0\n    ensures forall i,j :: 0 <= i < j < |groups| ==> groups[i] != groups[j]\n    ensures String.Join(\" \", groups) == paren_string.Replace(\" \", \"\")\n{\n    // Implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+  "problem_id": "HumanEval/1",
+  "problem_data": {
+    "task_id": "HumanEval/1",
+    "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+    "entry_point": "separate_paren_groups"
+  },
+  "path": "results/formalize/25/001_1_dafny.json",
+  "method": "formalize",
+  "trial": 25,
+  "time_taken": 2.42262,
+  "time_start": "2025-04-25T07:55:37.451818",
+  "time_end": "2025-04-25T07:55:39.874438",
+  "prompt_tokens": 201,
+  "completion_tokens": 147,
+  "total_tokens": 348,
+  "raw": {
+    "id": "chatcmpl-BQBwXzeov4hEDmhHH5TJf1WIiahPc",
+    "object": "chat.completion",
+    "created": 1745582137,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' '\n    ensures forall g :: g in groups ==> g != \"\" && g.Length > 0 \n    ensures |groups| > 0\n    ensures forall i,j :: 0 <= i < j < |groups| ==> groups[i] != groups[j]\n    ensures String.Join(\" \", groups) == paren_string.Replace(\" \", \"\")\n{\n    // Implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 201,
+      "completion_tokens": 147,
+      "total_tokens": 348,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00011,
+    "your_harvard_credits_still_available": 488.62104
+  }
+}

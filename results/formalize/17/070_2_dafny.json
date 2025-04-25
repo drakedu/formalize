@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod strange_sort_list(lst: seq<int>) returns (result: seq<int>)\n    requires |lst| >= 0 // The input list can have any number of elements\n    ensures |result| == |lst| // The output list has the same length as the input list\n    ensures forall i: int :: 0 <= i < |result| ==> result[i] in lst // All elements in the result are from the input list\n    ensures (forall x: int :: x in lst ==> count(result, x) == count(lst, x)) // The output contains the same elements with the same frequency as the input\n    ensures (result == [] ==> lst == []) // If the result is empty, the input must also be empty\n    ensures (result != [] ==> \n        (result[0] == Min(lst) || result[0] == Max(lst)) && \n        (forall i: int :: 1 <= i < |result| ==> \n            (i % 2 == 0 ==> result[i] == Min(Remove(result[0..i], lst))) || \n            (i % 2 == 1 ==> result[i] == Max(Remove(result[0..i], lst))))) // Alternating min and max selection\n    )\n{\n    // Implementation of the function would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef strange_sort_list(lst):\n    '''\n    Given list of integers, return list in strange order.\n    Strange sorting, is when you start with the minimum value,\n    then maximum of the remaining integers, then minimum and so on.\n\n    Examples:\n    strange_sort_list([1, 2, 3, 4]) == [1, 4, 2, 3]\n    strange_sort_list([5, 5, 5, 5]) == [5, 5, 5, 5]\n    strange_sort_list([]) == []\n    '''\n",
+  "problem_id": "HumanEval/70",
+  "problem_data": {
+    "task_id": "HumanEval/70",
+    "prompt": "\ndef strange_sort_list(lst):\n    '''\n    Given list of integers, return list in strange order.\n    Strange sorting, is when you start with the minimum value,\n    then maximum of the remaining integers, then minimum and so on.\n\n    Examples:\n    strange_sort_list([1, 2, 3, 4]) == [1, 4, 2, 3]\n    strange_sort_list([5, 5, 5, 5]) == [5, 5, 5, 5]\n    strange_sort_list([]) == []\n    '''\n",
+    "canonical_solution": "    res, switch = [], True\n    while lst:\n        res.append(min(lst) if switch else max(lst))\n        lst.remove(res[-1])\n        switch = not switch\n    return res\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 2, 3, 4]) == [1, 4, 2, 3]\n    assert candidate([5, 6, 7, 8, 9]) == [5, 9, 6, 8, 7]\n    assert candidate([1, 2, 3, 4, 5]) == [1, 5, 2, 4, 3]\n    assert candidate([5, 6, 7, 8, 9, 1]) == [1, 9, 5, 8, 6, 7]\n    assert candidate([5, 5, 5, 5]) == [5, 5, 5, 5]\n    assert candidate([]) == []\n    assert candidate([1,2,3,4,5,6,7,8]) == [1, 8, 2, 7, 3, 6, 4, 5]\n    assert candidate([0,2,2,2,5,5,-5,-5]) == [-5, 5, -5, 5, 0, 2, 2, 2]\n    assert candidate([111111]) == [111111]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "strange_sort_list"
+  },
+  "path": "results/formalize/17/070_2_dafny.json",
+  "method": "formalize",
+  "trial": 17,
+  "time_taken": 5.079927,
+  "time_start": "2025-04-25T06:28:34.439620",
+  "time_end": "2025-04-25T06:28:39.519547",
+  "prompt_tokens": 211,
+  "completion_tokens": 279,
+  "total_tokens": 490,
+  "raw": {
+    "id": "chatcmpl-BQAaIhR6CKjeVEu0c62u2xOkhFhtd",
+    "object": "chat.completion",
+    "created": 1745576914,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod strange_sort_list(lst: seq<int>) returns (result: seq<int>)\n    requires |lst| >= 0 // The input list can have any number of elements\n    ensures |result| == |lst| // The output list has the same length as the input list\n    ensures forall i: int :: 0 <= i < |result| ==> result[i] in lst // All elements in the result are from the input list\n    ensures (forall x: int :: x in lst ==> count(result, x) == count(lst, x)) // The output contains the same elements with the same frequency as the input\n    ensures (result == [] ==> lst == []) // If the result is empty, the input must also be empty\n    ensures (result != [] ==> \n        (result[0] == Min(lst) || result[0] == Max(lst)) && \n        (forall i: int :: 1 <= i < |result| ==> \n            (i % 2 == 0 ==> result[i] == Min(Remove(result[0..i], lst))) || \n            (i % 2 == 1 ==> result[i] == Max(Remove(result[0..i], lst))))) // Alternating min and max selection\n    )\n{\n    // Implementation of the function would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 211,
+      "completion_tokens": 279,
+      "total_tokens": 490,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00019,
+    "your_harvard_credits_still_available": 490.20071
+  }
+}

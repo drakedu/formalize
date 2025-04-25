@@ -1,0 +1,60 @@
+{
+  "completion": "def count_upper(s):\n    count = 0\n    for i in range(0, len(s), 2):\n        if s[i] in 'AEIOU':\n            count += 1\n    return count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef count_upper(s):\n    \"\"\"\n    Given a string s, count the number of uppercase vowels in even indices.\n    \n    For example:\n    count_upper('aBCdEf') returns 1\n    count_upper('abcdefg') returns 0\n    count_upper('dBBE') returns 0\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method count_upper(s: string) returns (count: int)\n    requires s != null\n    ensures count >= 0\n    ensures count == CountUpperVowelsAtEvenIndices(s)\n{\n    // Implementation goes here\n}\n\n// Helper function to count uppercase vowels at even indices\nfunction CountUpperVowelsAtEvenIndices(s: string): int\n    requires s != null\n    ensures Result >= 0\n{\n    var count := 0;\n    var i: int := 0;\n    while i < s.Length\n        invariant 0 <= i <= s.Length\n        invariant count >= 0\n    {\n        if (i % 2 == 0) && (s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U') {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}",
+  "problem_id": "HumanEval/98",
+  "problem_data": {
+    "task_id": "HumanEval/98",
+    "prompt": "\ndef count_upper(s):\n    \"\"\"\n    Given a string s, count the number of uppercase vowels in even indices.\n    \n    For example:\n    count_upper('aBCdEf') returns 1\n    count_upper('abcdefg') returns 0\n    count_upper('dBBE') returns 0\n    \"\"\"\n",
+    "canonical_solution": "    count = 0\n    for i in range(0,len(s),2):\n        if s[i] in \"AEIOU\":\n            count += 1\n    return count\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('aBCdEf')  == 1\n    assert candidate('abcdefg') == 0\n    assert candidate('dBBE') == 0\n    assert candidate('B')  == 0\n    assert candidate('U')  == 1\n    assert candidate('') == 0\n    assert candidate('EEEE') == 2\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "count_upper"
+  },
+  "path": "results/formalize/25/098_1_python.json",
+  "method": "formalize",
+  "trial": 25,
+  "time_taken": 1.529057,
+  "time_start": "2025-04-25T08:00:36.259815",
+  "time_end": "2025-04-25T08:00:37.788872",
+  "prompt_tokens": 408,
+  "completion_tokens": 51,
+  "total_tokens": 459,
+  "raw": {
+    "id": "chatcmpl-BQC1Md24euzGitiHfAkVCOeJNbVjm",
+    "object": "chat.completion",
+    "created": 1745582436,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef count_upper(s):\n    count = 0\n    for i in range(0, len(s), 2):\n        if s[i] in 'AEIOU':\n            count += 1\n    return count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 408,
+      "completion_tokens": 51,
+      "total_tokens": 459,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 488.51752
+  }
+}

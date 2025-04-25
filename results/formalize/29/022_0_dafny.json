@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod filter_integers(values: seq<object>) returns (result: seq<int>)\n    requires |values| > 0 // The input list must not be empty\n    ensures forall i :: 0 <= i < |result| ==> result[i] is int // All elements in the result are integers\n    ensures |result| == CountIntegers(values) // The length of result is equal to the count of integers in values\n{\n    // Implementation goes here\n}\n\n// Helper function to count integers in the input sequence\nfunction CountIntegers(values: seq<object>): int\n    reads values\n{\n    var count := 0;\n    var len := |values|;\n    // Count the number of integers in values\n    if len == 0 then\n        count := 0;\n    else {\n        count := CountIntegers(values[1..]); // Recursive call on the tail\n        if values[0] is int then\n            count := count + 1; // Increment count if the head is an integer\n    }\n    count\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+  "problem_id": "HumanEval/22",
+  "problem_data": {
+    "task_id": "HumanEval/22",
+    "prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+    "canonical_solution": "    return [x for x in values if isinstance(x, int)]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([4, {}, [], 23.2, 9, 'adasd']) == [4, 9]\n    assert candidate([3, 'c', 3, 3, 'a', 'b']) == [3, 3, 3]\n",
+    "entry_point": "filter_integers"
+  },
+  "path": "results/formalize/29/022_0_dafny.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 4.01589,
+  "time_start": "2025-04-25T08:38:56.579329",
+  "time_end": "2025-04-25T08:39:00.595219",
+  "prompt_tokens": 180,
+  "completion_tokens": 221,
+  "total_tokens": 401,
+  "raw": {
+    "id": "chatcmpl-BQCcSoOryZWHjA9SrrENjco4gKRUp",
+    "object": "chat.completion",
+    "created": 1745584736,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod filter_integers(values: seq<object>) returns (result: seq<int>)\n    requires |values| > 0 // The input list must not be empty\n    ensures forall i :: 0 <= i < |result| ==> result[i] is int // All elements in the result are integers\n    ensures |result| == CountIntegers(values) // The length of result is equal to the count of integers in values\n{\n    // Implementation goes here\n}\n\n// Helper function to count integers in the input sequence\nfunction CountIntegers(values: seq<object>): int\n    reads values\n{\n    var count := 0;\n    var len := |values|;\n    // Count the number of integers in values\n    if len == 0 then\n        count := 0;\n    else {\n        count := CountIntegers(values[1..]); // Recursive call on the tail\n        if values[0] is int then\n            count := count + 1; // Increment count if the head is an integer\n    }\n    count\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 180,
+      "completion_tokens": 221,
+      "total_tokens": 401,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 487.79253
+  }
+}

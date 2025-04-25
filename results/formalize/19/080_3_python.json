@@ -1,0 +1,60 @@
+{
+  "completion": "def is_happy(s):\n    if len(s) < 3:\n        return False\n    for i in range(len(s) - 2):\n        if s[i] == s[i + 1] or s[i] == s[i + 2] or s[i + 1] == s[i + 2]:\n            return False\n    return True",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef is_happy(s):\n    \"\"\"You are given a string s.\n    Your task is to check if the string is happy or not.\n    A string is happy if its length is at least 3 and every 3 consecutive letters are distinct\n    For example:\n    is_happy(a) => False\n    is_happy(aa) => False\n    is_happy(abcd) => True\n    is_happy(aabb) => False\n    is_happy(adb) => True\n    is_happy(xyy) => False\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method is_happy(s: string) returns (result: bool)\n  requires s != null\n  requires |s| >= 0\n  ensures (|s| < 3 ==> result == false) && (|s| >= 3 ==> result == true) // Postcondition for lengths\n  ensures result == true ==> forall i :: 0 <= i < |s| - 2 ==> s[i] != s[i + 1] && s[i] != s[i + 2] && s[i + 1] != s[i + 2] // Postcondition for happy string\n{\n  // Method implementation would go here\n}",
+  "problem_id": "HumanEval/80",
+  "problem_data": {
+    "task_id": "HumanEval/80",
+    "prompt": "\ndef is_happy(s):\n    \"\"\"You are given a string s.\n    Your task is to check if the string is happy or not.\n    A string is happy if its length is at least 3 and every 3 consecutive letters are distinct\n    For example:\n    is_happy(a) => False\n    is_happy(aa) => False\n    is_happy(abcd) => True\n    is_happy(aabb) => False\n    is_happy(adb) => True\n    is_happy(xyy) => False\n    \"\"\"\n",
+    "canonical_solution": "    if len(s) < 3:\n      return False\n\n    for i in range(len(s) - 2):\n      \n      if s[i] == s[i+1] or s[i+1] == s[i+2] or s[i] == s[i+2]:\n        return False\n    return True\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"a\") == False , \"a\"\n    assert candidate(\"aa\") == False , \"aa\"\n    assert candidate(\"abcd\") == True , \"abcd\"\n    assert candidate(\"aabb\") == False , \"aabb\"\n    assert candidate(\"adb\") == True , \"adb\"\n    assert candidate(\"xyy\") == False , \"xyy\"\n    assert candidate(\"iopaxpoi\") == True , \"iopaxpoi\"\n    assert candidate(\"iopaxioi\") == False , \"iopaxioi\"\n",
+    "entry_point": "is_happy"
+  },
+  "path": "results/formalize/19/080_3_python.json",
+  "method": "formalize",
+  "trial": 19,
+  "time_taken": 1.857445,
+  "time_start": "2025-04-25T06:51:37.057852",
+  "time_end": "2025-04-25T06:51:38.915297",
+  "prompt_tokens": 388,
+  "completion_tokens": 81,
+  "total_tokens": 469,
+  "raw": {
+    "id": "chatcmpl-BQAwb1ukQ4Ipo4rlr14O9K2y6mCg0",
+    "object": "chat.completion",
+    "created": 1745578297,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef is_happy(s):\n    if len(s) < 3:\n        return False\n    for i in range(len(s) - 2):\n        if s[i] == s[i + 1] or s[i] == s[i + 2] or s[i + 1] == s[i + 2]:\n            return False\n    return True\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 388,
+      "completion_tokens": 81,
+      "total_tokens": 469,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 489.7761
+  }
+}

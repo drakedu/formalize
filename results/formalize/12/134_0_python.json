@@ -1,0 +1,60 @@
+{
+  "completion": "def check_if_last_char_is_a_letter(txt):\n    if not txt:\n        return False\n    if txt[-1].isalpha() and (len(txt) == 1 or txt[-2] == ' '):\n        return True\n    return False",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef check_if_last_char_is_a_letter(txt):\n    '''\n    Create a function that returns True if the last character\n    of a given string is an alphabetical character and is not\n    a part of a word, and False otherwise.\n    Note: \"word\" is a group of characters separated by space.\n\n    Examples:\n    check_if_last_char_is_a_letter(\"apple pie\") \u279e False\n    check_if_last_char_is_a_letter(\"apple pi e\") \u279e True\n    check_if_last_char_is_a_letter(\"apple pi e \") \u279e False\n    check_if_last_char_is_a_letter(\"\") \u279e False \n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method check_if_last_char_is_a_letter(txt: string) returns (result: bool)\n    requires txt != null\n    ensures result == (txt.Length > 0 && \n                      (txt[txt.Length - 1] >= 'a' && txt[txt.Length - 1] <= 'z' || \n                       txt[txt.Length - 1] >= 'A' && txt[txt.Length - 1] <= 'Z') &&\n                      (txt.Length == 1 || txt[txt.Length - 2] == ' '))\n    ensures result == false ==> (txt.Length == 0 || (txt.Length > 1 && \n                      (txt[txt.Length - 1] < 'a' || txt[txt.Length - 1] > 'z' && \n                       txt[txt.Length - 1] < 'A' || txt[txt.Length - 1] > 'Z' || \n                       (txt[txt.Length - 2] != ' ')))\n    ensures result == true ==> (txt.Length > 1 && \n                      (txt[txt.Length - 1] >= 'a' && txt[txt.Length - 1] <= 'z' || \n                       txt[txt.Length - 1] >= 'A' && txt[txt.Length - 1] <= 'Z') && \n                      txt[txt.Length - 2] == ' ')",
+  "problem_id": "HumanEval/134",
+  "problem_data": {
+    "task_id": "HumanEval/134",
+    "prompt": "\ndef check_if_last_char_is_a_letter(txt):\n    '''\n    Create a function that returns True if the last character\n    of a given string is an alphabetical character and is not\n    a part of a word, and False otherwise.\n    Note: \"word\" is a group of characters separated by space.\n\n    Examples:\n    check_if_last_char_is_a_letter(\"apple pie\") \u279e False\n    check_if_last_char_is_a_letter(\"apple pi e\") \u279e True\n    check_if_last_char_is_a_letter(\"apple pi e \") \u279e False\n    check_if_last_char_is_a_letter(\"\") \u279e False \n    '''\n",
+    "canonical_solution": " \n    check = txt.split(' ')[-1]\n    return True if len(check) == 1 and (97 <= ord(check.lower()) <= 122) else False\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"apple\") == False\n    assert candidate(\"apple pi e\") == True\n    assert candidate(\"eeeee\") == False\n    assert candidate(\"A\") == True\n    assert candidate(\"Pumpkin pie \") == False\n    assert candidate(\"Pumpkin pie 1\") == False\n    assert candidate(\"\") == False\n    assert candidate(\"eeeee e \") == False\n    assert candidate(\"apple pie\") == False\n    assert candidate(\"apple pi e \") == False\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "check_if_last_char_is_a_letter"
+  },
+  "path": "results/formalize/12/134_0_python.json",
+  "method": "formalize",
+  "trial": 12,
+  "time_taken": 1.493401,
+  "time_start": "2025-04-25T05:44:45.466300",
+  "time_end": "2025-04-25T05:44:46.959701",
+  "prompt_tokens": 554,
+  "completion_tokens": 58,
+  "total_tokens": 612,
+  "raw": {
+    "id": "chatcmpl-BQ9tt1Fz1CPGhhrZZfAWDrpw4hMN2",
+    "object": "chat.completion",
+    "created": 1745574285,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef check_if_last_char_is_a_letter(txt):\n    if not txt:\n        return False\n    if txt[-1].isalpha() and (len(txt) == 1 or txt[-2] == ' '):\n        return True\n    return False\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 554,
+      "completion_tokens": 58,
+      "total_tokens": 612,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00011,
+    "your_harvard_credits_still_available": 491.11939
+  }
+}

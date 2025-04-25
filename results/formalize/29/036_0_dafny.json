@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod fizz_buzz(n: int) returns (count: int)\n    requires n >= 0\n    ensures count == |{ x | 0 <= x < n && (x % 11 == 0 || x % 13 == 0) && number_of_sevens(x) }|\n{\n    // Implementation goes here\n}\n\nfunction number_of_sevens(x: int) : int\n    requires x >= 0\n    ensures number_of_sevens(x) >= 0\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+  "problem_id": "HumanEval/36",
+  "problem_data": {
+    "task_id": "HumanEval/36",
+    "prompt": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+    "canonical_solution": "    ns = []\n    for i in range(n):\n        if i % 11 == 0 or i % 13 == 0:\n            ns.append(i)\n    s = ''.join(list(map(str, ns)))\n    ans = 0\n    for c in s:\n        ans += (c == '7')\n    return ans\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(50) == 0\n    assert candidate(78) == 2\n    assert candidate(79) == 3\n    assert candidate(100) == 3\n    assert candidate(200) == 6\n    assert candidate(4000) == 192\n    assert candidate(10000) == 639\n    assert candidate(100000) == 8026\n\n",
+    "entry_point": "fizz_buzz"
+  },
+  "path": "results/formalize/29/036_0_dafny.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 2.24014,
+  "time_start": "2025-04-25T08:39:43.420647",
+  "time_end": "2025-04-25T08:39:45.660787",
+  "prompt_tokens": 166,
+  "completion_tokens": 115,
+  "total_tokens": 281,
+  "raw": {
+    "id": "chatcmpl-BQCdDqXQu0YGHJ9lNoGKLR9rcrjNq",
+    "object": "chat.completion",
+    "created": 1745584783,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod fizz_buzz(n: int) returns (count: int)\n    requires n >= 0\n    ensures count == |{ x | 0 <= x < n && (x % 11 == 0 || x % 13 == 0) && number_of_sevens(x) }|\n{\n    // Implementation goes here\n}\n\nfunction number_of_sevens(x: int) : int\n    requires x >= 0\n    ensures number_of_sevens(x) >= 0\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 166,
+      "completion_tokens": 115,
+      "total_tokens": 281,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 487.77745
+  }
+}

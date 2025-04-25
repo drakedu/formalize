@@ -1,0 +1,60 @@
+{
+  "completion": "def find_max(words):\n    max_unique_count = 0\n    result = \"\"\n    \n    for word in words:\n        unique_char_count = len(set(word))\n        \n        if unique_char_count > max_unique_count:\n            max_unique_count = unique_char_count\n            result = word\n        elif unique_char_count == max_unique_count:\n            if result == \"\" or word < result:\n                result = word\n                \n    return result",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method find_max(words: seq<string>) returns (result: string)\n    requires |words| > 0\n    ensures (result == \"\" ==> |words| == 0) // If the result is an empty string, the input list must be empty\n    ensures (result != \"\") ==> (exists w: string :: w in words && \n                                  |w| == MaxUniqueCount(words) && \n                                  w == MinLexicographical(words, MaxUniqueCount(words))) // The result has maximum unique characters and is lexicographically minimal\n\n// Helper function to calculate the maximum number of unique characters in the list of words\nfunction MaxUniqueCount(words: seq<string>): int {\n    // Implementation that calculates the maximum number of unique characters\n}\n\n// Helper function to find the lexicographically minimal word with the given maximum unique character count\nfunction MinLexicographical(words: seq<string>, maxCount: int): string {\n    // Implementation that finds the first word that meets the criteria\n}",
+  "problem_id": "HumanEval/158",
+  "problem_data": {
+    "task_id": "HumanEval/158",
+    "prompt": "\ndef find_max(words):\n    \"\"\"Write a function that accepts a list of strings.\n    The list contains different words. Return the word with maximum number\n    of unique characters. If multiple strings have maximum number of unique\n    characters, return the one which comes first in lexicographical order.\n\n    find_max([\"name\", \"of\", \"string\"]) == \"string\"\n    find_max([\"name\", \"enam\", \"game\"]) == \"enam\"\n    find_max([\"aaaaaaa\", \"bb\" ,\"cc\"]) == \"\"aaaaaaa\"\n    \"\"\"\n",
+    "canonical_solution": "    return sorted(words, key = lambda x: (-len(set(x)), x))[0]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert (candidate([\"name\", \"of\", \"string\"]) == \"string\"), \"t1\"\n    assert (candidate([\"name\", \"enam\", \"game\"]) == \"enam\"), 't2'\n    assert (candidate([\"aaaaaaa\", \"bb\", \"cc\"]) == \"aaaaaaa\"), 't3'\n    assert (candidate([\"abc\", \"cba\"]) == \"abc\"), 't4'\n    assert (candidate([\"play\", \"this\", \"game\", \"of\",\"footbott\"]) == \"footbott\"), 't5'\n    assert (candidate([\"we\", \"are\", \"gonna\", \"rock\"]) == \"gonna\"), 't6'\n    assert (candidate([\"we\", \"are\", \"a\", \"mad\", \"nation\"]) == \"nation\"), 't7'\n    assert (candidate([\"this\", \"is\", \"a\", \"prrk\"]) == \"this\"), 't8'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert (candidate([\"b\"]) == \"b\"), 't9'\n    assert (candidate([\"play\", \"play\", \"play\"]) == \"play\"), 't10'\n\n",
+    "entry_point": "find_max"
+  },
+  "path": "results/formalize/28/158_1_python.json",
+  "method": "formalize",
+  "trial": 28,
+  "time_taken": 2.820363,
+  "time_start": "2025-04-25T08:37:16.535533",
+  "time_end": "2025-04-25T08:37:19.355896",
+  "prompt_tokens": 452,
+  "completion_tokens": 92,
+  "total_tokens": 544,
+  "raw": {
+    "id": "chatcmpl-BQCaqe7FnzPpvqZdGCnoGYTuFm16e",
+    "object": "chat.completion",
+    "created": 1745584636,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef find_max(words):\n    max_unique_count = 0\n    result = \"\"\n    \n    for word in words:\n        unique_char_count = len(set(word))\n        \n        if unique_char_count > max_unique_count:\n            max_unique_count = unique_char_count\n            result = word\n        elif unique_char_count == max_unique_count:\n            if result == \"\" or word < result:\n                result = word\n                \n    return result\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 452,
+      "completion_tokens": 92,
+      "total_tokens": 544,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 487.821
+  }
+}

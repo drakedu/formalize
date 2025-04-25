@@ -1,0 +1,63 @@
+{
+  "completion": "def is_sorted(lst):\n    if len(lst) <= 1:\n        return True\n    \n    seen = set()\n    for i in range(len(lst)):\n        if lst[i] in seen:\n            return False\n        seen.add(lst[i])\n        if i > 0 and lst[i] < lst[i - 1]:\n            return False\n    \n    return True",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef is_sorted(lst):\n    '''\n    Given a list of numbers, return whether or not they are sorted\n    in ascending order. If list has more than 1 duplicate of the same\n    number, return False. Assume no negative numbers and only integers.\n\n    Examples\n    is_sorted([5]) \u279e True\n    is_sorted([1, 2, 3, 4, 5]) \u279e True\n    is_sorted([1, 3, 2, 4, 5]) \u279e False\n    is_sorted([1, 2, 3, 4, 5, 6]) \u279e True\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) \u279e True\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) \u279e False\n    is_sorted([1, 2, 2, 3, 3, 4]) \u279e True\n    is_sorted([1, 2, 2, 2, 3, 4]) \u279e False\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method is_sorted(lst: seq<int>) returns (result: bool)\n    requires |lst| > 0 // The list must have at least one element\n    ensures result == (forall i, j :: 0 <= i < j < |lst| ==> (lst[i] <= lst[j]) && !hasDuplicates(lst))\n{\n    // Implementation goes here\n}\n\npredicate hasDuplicates(lst: seq<int>) \n    reads lst\n{\n    // A predicate to check if there are more than 1 duplicate of any number in lst\n    exists x :: x in lst && Count(lst, x) > 2\n}\n\nfunction Count(lst: seq<int>, x: int): int\n{\n    // A function to count occurrences of x in lst\n}",
+  "problem_id": "HumanEval/126",
+  "problem_data": {
+    "task_id": "HumanEval/126",
+    "prompt": "\ndef is_sorted(lst):\n    '''\n    Given a list of numbers, return whether or not they are sorted\n    in ascending order. If list has more than 1 duplicate of the same\n    number, return False. Assume no negative numbers and only integers.\n\n    Examples\n    is_sorted([5]) \u279e True\n    is_sorted([1, 2, 3, 4, 5]) \u279e True\n    is_sorted([1, 3, 2, 4, 5]) \u279e False\n    is_sorted([1, 2, 3, 4, 5, 6]) \u279e True\n    is_sorted([1, 2, 3, 4, 5, 6, 7]) \u279e True\n    is_sorted([1, 3, 2, 4, 5, 6, 7]) \u279e False\n    is_sorted([1, 2, 2, 3, 3, 4]) \u279e True\n    is_sorted([1, 2, 2, 2, 3, 4]) \u279e False\n    '''\n",
+    "canonical_solution": "    count_digit = dict([(i, 0) for i in lst])\n    for i in lst:\n        count_digit[i]+=1 \n    if any(count_digit[i] > 2 for i in lst):\n        return False\n    if all(lst[i-1] <= lst[i] for i in range(1, len(lst))):\n        return True\n    else:\n        return False\n    \n    \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([5]) == True\n    assert candidate([1, 2, 3, 4, 5]) == True\n    assert candidate([1, 3, 2, 4, 5]) == False\n    assert candidate([1, 2, 3, 4, 5, 6]) == True\n    assert candidate([1, 2, 3, 4, 5, 6, 7]) == True\n    assert candidate([1, 3, 2, 4, 5, 6, 7]) == False, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([]) == True, \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate([1]) == True, \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate([3, 2, 1]) == False, \"This prints if this assert fails 4 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1, 2, 2, 2, 3, 4]) == False, \"This prints if this assert fails 5 (good for debugging!)\"\n    assert candidate([1, 2, 3, 3, 3, 4]) == False, \"This prints if this assert fails 6 (good for debugging!)\"\n    assert candidate([1, 2, 2, 3, 3, 4]) == True, \"This prints if this assert fails 7 (good for debugging!)\"\n    assert candidate([1, 2, 3, 4]) == True, \"This prints if this assert fails 8 (good for debugging!)\"\n\n",
+    "entry_point": "is_sorted"
+  },
+  "path": "results/formalize/14/126_0_python.json",
+  "method": "formalize",
+  "trial": 14,
+  "time_taken": 2.223984,
+  "time_start": "2025-04-25T06:02:42.349986",
+  "time_end": "2025-04-25T06:02:44.573970",
+  "prompt_tokens": 534,
+  "completion_tokens": 79,
+  "total_tokens": 613,
+  "raw": {
+    "id": "chatcmpl-BQABGK8L4vy1JMO3V0RMNZ1to2GvW",
+    "object": "chat.completion",
+    "created": 1745575362,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef is_sorted(lst):\n    if len(lst) <= 1:\n        return True\n    \n    seen = set()\n    for i in range(len(lst)):\n        if lst[i] in seen:\n            return False\n        seen.add(lst[i])\n        if i > 0 and lst[i] < lst[i - 1]:\n            return False\n    \n    return True\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 534,
+      "completion_tokens": 79,
+      "total_tokens": 613,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 490.73501
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 2
+}

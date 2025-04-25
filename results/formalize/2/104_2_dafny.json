@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in x are positive integers\n    ensures result == Sort(SeqFilter(x, IsOddDigit)) // The result is a sorted list of elements without even digits\n{\n    // Implementation goes here\n}\n\n// Helper function to check if a number has only odd digits\nmethod IsOddDigit(n: int) returns (b: bool)\n    requires n >= 0\n    ensures b == (forall d :: d in Digits(n) ==> IsOdd(d)) // All digits of n are odd\n{\n    // Implementation goes here\n}\n\n// Function to extract digits from a number\nmethod Digits(n: int) returns (d: seq<int>)\n    requires n >= 0\n    ensures |d| == CountDigits(n) // The number of digits in d equals the number of digits in n\n{\n    // Implementation goes here\n}\n\n// Function to count the number of digits in a number\nmethod CountDigits(n: int) returns (count: int)\n    requires n >= 0\n    ensures count >= 0 // The count of digits is non-negative\n{\n    // Implementation goes here\n}\n\n// Function to filter a sequence based on a predicate\nmethod SeqFilter(s: seq<int>, pred: int -> bool) returns (filtered: seq<int>)\n    requires |s| >= 0\n    ensures |filtered| <= |s| // The filtered sequence is not longer than the original\n{\n    // Implementation goes here\n}\n\n// Function to sort a sequence\nmethod Sort(s: seq<int>) returns (sorted: seq<int>)\n    requires |s| >= 0\n    ensures IsSorted(sorted) // The sorted sequence is in increasing order\n{\n    // Implementation goes here\n}\n\n// Helper function to check if a sequence is sorted\nmethod IsSorted(s: seq<int>) returns (b: bool)\n    requires |s| >= 0\n    ensures b == (forall i :: 0 <= i < |s| - 1 ==> s[i] <= s[i + 1]) // The sequence is sorted\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/2/104_2_dafny.json",
+  "method": "formalize",
+  "trial": 2,
+  "time_taken": 10.633819,
+  "time_start": "2025-04-24T22:48:05.329201",
+  "time_end": "2025-04-24T22:48:15.963020",
+  "prompt_tokens": 188,
+  "completion_tokens": 466,
+  "total_tokens": 654,
+  "raw": {
+    "id": "chatcmpl-BQ3OfsOeQOcjwIJunHBEQo6dlK6cp",
+    "object": "chat.completion",
+    "created": 1745549285,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in x are positive integers\n    ensures result == Sort(SeqFilter(x, IsOddDigit)) // The result is a sorted list of elements without even digits\n{\n    // Implementation goes here\n}\n\n// Helper function to check if a number has only odd digits\nmethod IsOddDigit(n: int) returns (b: bool)\n    requires n >= 0\n    ensures b == (forall d :: d in Digits(n) ==> IsOdd(d)) // All digits of n are odd\n{\n    // Implementation goes here\n}\n\n// Function to extract digits from a number\nmethod Digits(n: int) returns (d: seq<int>)\n    requires n >= 0\n    ensures |d| == CountDigits(n) // The number of digits in d equals the number of digits in n\n{\n    // Implementation goes here\n}\n\n// Function to count the number of digits in a number\nmethod CountDigits(n: int) returns (count: int)\n    requires n >= 0\n    ensures count >= 0 // The count of digits is non-negative\n{\n    // Implementation goes here\n}\n\n// Function to filter a sequence based on a predicate\nmethod SeqFilter(s: seq<int>, pred: int -> bool) returns (filtered: seq<int>)\n    requires |s| >= 0\n    ensures |filtered| <= |s| // The filtered sequence is not longer than the original\n{\n    // Implementation goes here\n}\n\n// Function to sort a sequence\nmethod Sort(s: seq<int>) returns (sorted: seq<int>)\n    requires |s| >= 0\n    ensures IsSorted(sorted) // The sorted sequence is in increasing order\n{\n    // Implementation goes here\n}\n\n// Helper function to check if a sequence is sorted\nmethod IsSorted(s: seq<int>) returns (b: bool)\n    requires |s| >= 0\n    ensures b == (forall i :: 0 <= i < |s| - 1 ==> s[i] <= s[i + 1]) // The sequence is sorted\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 188,
+      "completion_tokens": 466,
+      "total_tokens": 654,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.0003,
+    "your_harvard_credits_still_available": 493.1661
+  }
+}

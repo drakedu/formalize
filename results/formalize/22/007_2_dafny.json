@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod filter_by_substring(strings: seq<string>, substring: string) returns (result: seq<string>)\n    requires strings != null\n    requires substring != null\n    ensures forall s: string :: s in result ==> s in strings && substring in s\n    ensures result == [s | s in strings && substring in s]\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+  "problem_id": "HumanEval/7",
+  "problem_data": {
+    "task_id": "HumanEval/7",
+    "prompt": "from typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n",
+    "canonical_solution": "    return [x for x in strings if substring in x]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n    assert candidate(['xxx', 'asd', 'aaaxxy', 'john doe', 'xxxAAA', 'xxx'], 'xx') == ['xxx', 'aaaxxy', 'xxxAAA', 'xxx']\n    assert candidate(['grunt', 'trumpet', 'prune', 'gruesome'], 'run') == ['grunt', 'prune']\n",
+    "entry_point": "filter_by_substring"
+  },
+  "path": "results/formalize/22/007_2_dafny.json",
+  "method": "formalize",
+  "trial": 22,
+  "time_taken": 1.950292,
+  "time_start": "2025-04-25T07:18:34.799256",
+  "time_end": "2025-04-25T07:18:36.749548",
+  "prompt_tokens": 179,
+  "completion_tokens": 81,
+  "total_tokens": 260,
+  "raw": {
+    "id": "chatcmpl-BQBMhteqqltwthK10abB7SrjCSPYi",
+    "object": "chat.completion",
+    "created": 1745579915,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod filter_by_substring(strings: seq<string>, substring: string) returns (result: seq<string>)\n    requires strings != null\n    requires substring != null\n    ensures forall s: string :: s in result ==> s in strings && substring in s\n    ensures result == [s | s in strings && substring in s]\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 179,
+      "completion_tokens": 81,
+      "total_tokens": 260,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 489.25171
+  }
+}

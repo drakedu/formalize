@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod get_row(lst: seq<seq<int>>, x: int) returns (res: seq<(int, int)>)\n    requires forall i :: 0 <= i < |lst| ==> forall j :: 0 <= j < |lst[i]| ==> lst[i][j] in int\n    ensures res == [(i, j) | i, j :: 0 <= i < |lst| && 0 <= j < |lst[i]| && lst[i][j] == x]\n    ensures |res| == CountOccurrences(lst, x)\n    ensures forall i, j, k :: 0 <= i < |res| && 0 <= j < |res| && res[i] == (row1, col1) && res[j] == (row2, col2) ==> \n        (row1 < row2 || (row1 == row2 && col1 >= col2))\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n",
+  "problem_id": "HumanEval/87",
+  "problem_data": {
+    "task_id": "HumanEval/87",
+    "prompt": "\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n",
+    "canonical_solution": "    coords = [(i, j) for i in range(len(lst)) for j in range(len(lst[i])) if lst[i][j] == x]\n    return sorted(sorted(coords, key=lambda x: x[1], reverse=True), key=lambda x: x[0])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "get_row"
+  },
+  "path": "results/formalize/24/087_4_dafny.json",
+  "method": "formalize",
+  "trial": 24,
+  "time_taken": 3.443816,
+  "time_start": "2025-04-25T07:44:59.725349",
+  "time_end": "2025-04-25T07:45:03.169165",
+  "prompt_tokens": 346,
+  "completion_tokens": 200,
+  "total_tokens": 546,
+  "raw": {
+    "id": "chatcmpl-BQBmFweIaZReTv4l3eXaqX8uXGC7q",
+    "object": "chat.completion",
+    "created": 1745581499,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod get_row(lst: seq<seq<int>>, x: int) returns (res: seq<(int, int)>)\n    requires forall i :: 0 <= i < |lst| ==> forall j :: 0 <= j < |lst[i]| ==> lst[i][j] in int\n    ensures res == [(i, j) | i, j :: 0 <= i < |lst| && 0 <= j < |lst[i]| && lst[i][j] == x]\n    ensures |res| == CountOccurrences(lst, x)\n    ensures forall i, j, k :: 0 <= i < |res| && 0 <= j < |res| && res[i] == (row1, col1) && res[j] == (row2, col2) ==> \n        (row1 < row2 || (row1 == row2 && col1 >= col2))\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 346,
+      "completion_tokens": 200,
+      "total_tokens": 546,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00017,
+    "your_harvard_credits_still_available": 488.74809
+  }
+}

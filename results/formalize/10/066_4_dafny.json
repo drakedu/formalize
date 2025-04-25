@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod digitSum(s: string) returns (sum: int)\n    requires s != null\n    ensures sum >= 0\n    ensures sum == SumASCIIUpper(s)\n{\n    // Implementation would go here\n}\n\n// Helper function to compute the sum of ASCII values of uppercase characters\nmethod SumASCIIUpper(s: string) returns (sum: int)\n    requires s != null\n    ensures sum >= 0\n    ensures sum == (if s.Length == 0 then 0 else SumASCIIUpperHelper(s, 0, 0))\n{\n    // Implementation would go here\n}\n\n// Helper function to iterate through the string and sum ASCII values\nmethod SumASCIIUpperHelper(s: string, index: int, acc: int) returns (sum: int)\n    requires s != null\n    requires 0 <= index <= s.Length\n    requires acc >= 0\n    ensures sum == acc + SumASCIIUpperHelper(s, index, acc)\n    ensures sum == (if index == s.Length then acc else \n                    (if IsUpper(s[index]) then acc + ASCII(s[index]) else acc) + \n                    SumASCIIUpperHelper(s, index + 1, acc))\n{\n    // Implementation would go here\n}\n\n// Helper function to check if a character is uppercase\nmethod IsUpper(c: char) returns (result: bool)\n    ensures result == (c >= 'A' && c <= 'Z')\n{\n    // Implementation would go here\n}\n\n// Helper function to get ASCII value of a character\nmethod ASCII(c: char) returns (value: int)\n    ensures value == (if c == 'A' then 65 else if c == 'B' then 66 else ... ) // Complete for all ASCII values needed\n{\n    // Implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef digitSum(s):\n    \"\"\"Task\n    Write a function that takes a string as input and returns the sum of the upper characters only'\n    ASCII codes.\n\n    Examples:\n        digitSum(\"\") => 0\n        digitSum(\"abAB\") => 131\n        digitSum(\"abcCd\") => 67\n        digitSum(\"helloE\") => 69\n        digitSum(\"woArBld\") => 131\n        digitSum(\"aAaaaXa\") => 153\n    \"\"\"\n",
+  "problem_id": "HumanEval/66",
+  "problem_data": {
+    "task_id": "HumanEval/66",
+    "prompt": "\ndef digitSum(s):\n    \"\"\"Task\n    Write a function that takes a string as input and returns the sum of the upper characters only'\n    ASCII codes.\n\n    Examples:\n        digitSum(\"\") => 0\n        digitSum(\"abAB\") => 131\n        digitSum(\"abcCd\") => 67\n        digitSum(\"helloE\") => 69\n        digitSum(\"woArBld\") => 131\n        digitSum(\"aAaaaXa\") => 153\n    \"\"\"\n",
+    "canonical_solution": "    if s == \"\": return 0\n    return sum(ord(char) if char.isupper() else 0 for char in s)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(\"\") == 0, \"Error\"\n    assert candidate(\"abAB\") == 131, \"Error\"\n    assert candidate(\"abcCd\") == 67, \"Error\"\n    assert candidate(\"helloE\") == 69, \"Error\"\n    assert candidate(\"woArBld\") == 131, \"Error\"\n    assert candidate(\"aAaaaXa\") == 153, \"Error\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\" How are yOu?\") == 151, \"Error\"\n    assert candidate(\"You arE Very Smart\") == 327, \"Error\"\n\n",
+    "entry_point": "digitSum"
+  },
+  "path": "results/formalize/10/066_4_dafny.json",
+  "method": "formalize",
+  "trial": 10,
+  "time_taken": 6.741656,
+  "time_start": "2025-04-25T05:21:34.031160",
+  "time_end": "2025-04-25T05:21:40.772816",
+  "prompt_tokens": 198,
+  "completion_tokens": 371,
+  "total_tokens": 569,
+  "raw": {
+    "id": "chatcmpl-BQ9XSfIxIRBjXjkCNTlXzVZtx0VFs",
+    "object": "chat.completion",
+    "created": 1745572894,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod digitSum(s: string) returns (sum: int)\n    requires s != null\n    ensures sum >= 0\n    ensures sum == SumASCIIUpper(s)\n{\n    // Implementation would go here\n}\n\n// Helper function to compute the sum of ASCII values of uppercase characters\nmethod SumASCIIUpper(s: string) returns (sum: int)\n    requires s != null\n    ensures sum >= 0\n    ensures sum == (if s.Length == 0 then 0 else SumASCIIUpperHelper(s, 0, 0))\n{\n    // Implementation would go here\n}\n\n// Helper function to iterate through the string and sum ASCII values\nmethod SumASCIIUpperHelper(s: string, index: int, acc: int) returns (sum: int)\n    requires s != null\n    requires 0 <= index <= s.Length\n    requires acc >= 0\n    ensures sum == acc + SumASCIIUpperHelper(s, index, acc)\n    ensures sum == (if index == s.Length then acc else \n                    (if IsUpper(s[index]) then acc + ASCII(s[index]) else acc) + \n                    SumASCIIUpperHelper(s, index + 1, acc))\n{\n    // Implementation would go here\n}\n\n// Helper function to check if a character is uppercase\nmethod IsUpper(c: char) returns (result: bool)\n    ensures result == (c >= 'A' && c <= 'Z')\n{\n    // Implementation would go here\n}\n\n// Helper function to get ASCII value of a character\nmethod ASCII(c: char) returns (value: int)\n    ensures value == (if c == 'A' then 65 else if c == 'B' then 66 else ... ) // Complete for all ASCII values needed\n{\n    // Implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 198,
+      "completion_tokens": 371,
+      "total_tokens": 569,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00025,
+    "your_harvard_credits_still_available": 491.6065
+  }
+}

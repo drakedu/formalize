@@ -1,0 +1,60 @@
+{
+  "completion": "def fruit_distribution(s, n):\n    apples = 0\n    oranges = 0\n    \n    # Split the string to extract the number of apples and oranges\n    parts = s.split()\n    for i in range(len(parts)):\n        if parts[i].isdigit():\n            if 'apples' in parts[i + 1]:\n                apples = int(parts[i])\n            elif 'oranges' in parts[i + 1]:\n                oranges = int(parts[i])\n    \n    # Calculate the number of mangoes\n    mango_count = n - apples - oranges\n    return mango_count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method fruit_distribution(s: string, n: int) returns (mangoCount: int)\n    requires n >= 0 // Total number of fruits cannot be negative\n    ensures mangoCount == n - apples - oranges // Total mango count is total fruits minus apples and oranges\n    ensures apples >= 0 && oranges >= 0 // Number of apples and oranges cannot be negative\n{\n    var apples := 0;\n    var oranges := 0;\n\n    // Parse the string 's' to extract the number of apples and oranges\n    // This part is assumed to be implemented in the body, \n    // where `apples` and `oranges` are updated based on the content of 's'.\n    // For example:\n    // apples := parse_apples(s);\n    // oranges := parse_oranges(s);\n    \n    // The actual parsing logic should be implemented accordingly,\n    // ensuring that the values for apples and oranges are extracted correctly.\n\n    // Postcondition checks\n    assert n >= apples + oranges; // Total fruits must be at least the sum of apples and oranges\n}",
+  "problem_id": "HumanEval/67",
+  "problem_data": {
+    "task_id": "HumanEval/67",
+    "prompt": "\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n",
+    "canonical_solution": "    lis = list()\n    for i in s.split(' '):\n        if i.isdigit():\n            lis.append(int(i))\n    return n - sum(lis)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"5 apples and 6 oranges\",19) == 8\n    assert candidate(\"5 apples and 6 oranges\",21) == 10\n    assert candidate(\"0 apples and 1 oranges\",3) == 2\n    assert candidate(\"1 apples and 0 oranges\",3) == 2\n    assert candidate(\"2 apples and 3 oranges\",100) == 95\n    assert candidate(\"2 apples and 3 oranges\",5) == 0\n    assert candidate(\"1 apples and 100 oranges\",120) == 19\n",
+    "entry_point": "fruit_distribution"
+  },
+  "path": "results/formalize/27/067_4_python.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 2.542193,
+  "time_start": "2025-04-25T08:20:49.815934",
+  "time_end": "2025-04-25T08:20:52.358127",
+  "prompt_tokens": 564,
+  "completion_tokens": 124,
+  "total_tokens": 688,
+  "raw": {
+    "id": "chatcmpl-BQCKwOLHo5S6nZSHKX5q36ok7qlzJ",
+    "object": "chat.completion",
+    "created": 1745583650,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef fruit_distribution(s, n):\n    apples = 0\n    oranges = 0\n    \n    # Split the string to extract the number of apples and oranges\n    parts = s.split()\n    for i in range(len(parts)):\n        if parts[i].isdigit():\n            if 'apples' in parts[i + 1]:\n                apples = int(parts[i])\n            elif 'oranges' in parts[i + 1]:\n                oranges = int(parts[i])\n    \n    # Calculate the number of mangoes\n    mango_count = n - apples - oranges\n    return mango_count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 564,
+      "completion_tokens": 124,
+      "total_tokens": 688,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 488.15011
+  }
+}

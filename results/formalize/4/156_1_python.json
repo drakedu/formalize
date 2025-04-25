@@ -1,0 +1,60 @@
+{
+  "completion": "def int_to_mini_roman(number: int) -> str:\n    if not (1 <= number <= 1000):\n        raise ValueError(\"Number must be between 1 and 1000\")\n\n    roman_numerals = [\n        (1000, 'm'), (900, 'cm'), (800, 'dccc'), (700, 'dcc'), (600, 'dc'),\n        (500, 'd'), (400, 'cd'), (300, 'ccc'), (200, 'cc'), (100, 'c'),\n        (90, 'xc'), (80, 'lxxx'), (70, 'lxx'), (60, 'lx'), (50, 'l'),\n        (40, 'xl'), (30, 'xxx'), (20, 'xx'), (19, 'xix'), (18, 'xviii'),\n        (17, 'xvii'), (16, 'xvi'), (15, 'xv'), (14, 'xiv'), (13, 'xiii'),\n        (12, 'xii'), (11, 'xi'), (10, 'x'), (9, 'ix'), (8, 'viii'),\n        (7, 'vii'), (6, 'vi'), (5, 'v'), (4, 'iv'), (3, 'iii'),\n        (2, 'ii'), (1, 'i')\n    ]\n\n    result = []\n    for value, numeral in roman_numerals:\n        while number >= value:\n            result.append(numeral)\n            number -= value\n\n    return ''.join(result)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef int_to_mini_roman(number):\n    \"\"\"\n    Given a positive integer, obtain its roman numeral equivalent as a string,\n    and return it in lowercase.\n    Restrictions: 1 <= num <= 1000\n\n    Examples:\n    >>> int_to_mini_roman(19) == 'xix'\n    >>> int_to_mini_roman(152) == 'clii'\n    >>> int_to_mini_roman(426) == 'cdxxvi'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method int_to_mini_roman(number: int) returns (result: string)\n    requires 1 <= number <= 1000\n    ensures result == ToMiniRoman(number)\n{\n    // method implementation goes here\n}\n\nfunction ToMiniRoman(n: int): string\n    requires 1 <= n <= 1000\n    ensures (n == 1 ==> result == \"i\") &&\n            (n == 2 ==> result == \"ii\") &&\n            (n == 3 ==> result == \"iii\") &&\n            (n == 4 ==> result == \"iv\") &&\n            (n == 5 ==> result == \"v\") &&\n            (n == 6 ==> result == \"vi\") &&\n            (n == 7 ==> result == \"vii\") &&\n            (n == 8 ==> result == \"viii\") &&\n            (n == 9 ==> result == \"ix\") &&\n            (n == 10 ==> result == \"x\") &&\n            (n == 11 ==> result == \"xi\") &&\n            (n == 12 ==> result == \"xii\") &&\n            (n == 13 ==> result == \"xiii\") &&\n            (n == 14 ==> result == \"xiv\") &&\n            (n == 15 ==> result == \"xv\") &&\n            (n == 16 ==> result == \"xvi\") &&\n            (n == 17 ==> result == \"xvii\") &&\n            (n == 18 ==> result == \"xviii\") &&\n            (n == 19 ==> result == \"xix\") &&\n            (n == 20 ==> result == \"xx\") &&\n            (n == 30 ==> result == \"xxx\") &&\n            (n == 40 ==> result == \"xl\") &&\n            (n == 50 ==> result == \"l\") &&\n            (n == 60 ==> result == \"lx\") &&\n            (n == 70 ==> result == \"lxx\") &&\n            (n == 80 ==> result == \"lxxx\") &&\n            (n == 90 ==> result == \"xc\") &&\n            (n == 100 ==> result == \"c\") &&\n            (n == 200 ==> result == \"cc\") &&\n            (n == 300 ==> result == \"ccc\") &&\n            (n == 400 ==> result == \"cd\") &&\n            (n == 500 ==> result == \"d\") &&\n            (n == 600 ==> result == \"dc\") &&\n            (n == 700 ==> result == \"dcc\") &&\n            (n == 800 ==> result == \"dcc\") &&\n            (n == 900 ==> result == \"cm\") &&\n            (n == 1000 ==> result == \"m\")\n{\n    // function implementation goes here\n}",
+  "problem_id": "HumanEval/156",
+  "problem_data": {
+    "task_id": "HumanEval/156",
+    "prompt": "\ndef int_to_mini_roman(number):\n    \"\"\"\n    Given a positive integer, obtain its roman numeral equivalent as a string,\n    and return it in lowercase.\n    Restrictions: 1 <= num <= 1000\n\n    Examples:\n    >>> int_to_mini_roman(19) == 'xix'\n    >>> int_to_mini_roman(152) == 'clii'\n    >>> int_to_mini_roman(426) == 'cdxxvi'\n    \"\"\"\n",
+    "canonical_solution": "    num = [1, 4, 5, 9, 10, 40, 50, 90,  \n           100, 400, 500, 900, 1000] \n    sym = [\"I\", \"IV\", \"V\", \"IX\", \"X\", \"XL\",  \n           \"L\", \"XC\", \"C\", \"CD\", \"D\", \"CM\", \"M\"] \n    i = 12\n    res = ''\n    while number: \n        div = number // num[i] \n        number %= num[i] \n        while div: \n            res += sym[i] \n            div -= 1\n        i -= 1\n    return res.lower()\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(19) == 'xix'\n    assert candidate(152) == 'clii'\n    assert candidate(251) == 'ccli'\n    assert candidate(426) == 'cdxxvi'\n    assert candidate(500) == 'd'\n    assert candidate(1) == 'i'\n    assert candidate(4) == 'iv'\n    assert candidate(43) == 'xliii'\n    assert candidate(90) == 'xc'\n    assert candidate(94) == 'xciv'\n    assert candidate(532) == 'dxxxii'\n    assert candidate(900) == 'cm'\n    assert candidate(994) == 'cmxciv'\n    assert candidate(1000) == 'm'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "int_to_mini_roman"
+  },
+  "path": "results/formalize/4/156_1_python.json",
+  "method": "formalize",
+  "trial": 4,
+  "time_taken": 4.48992,
+  "time_start": "2025-04-25T02:09:29.670693",
+  "time_end": "2025-04-25T02:09:34.160613",
+  "prompt_tokens": 807,
+  "completion_tokens": 340,
+  "total_tokens": 1147,
+  "raw": {
+    "id": "chatcmpl-BQ6XZe6vsDa3BzlFPlSZFtSPG4DE0",
+    "object": "chat.completion",
+    "created": 1745561369,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef int_to_mini_roman(number: int) -> str:\n    if not (1 <= number <= 1000):\n        raise ValueError(\"Number must be between 1 and 1000\")\n\n    roman_numerals = [\n        (1000, 'm'), (900, 'cm'), (800, 'dccc'), (700, 'dcc'), (600, 'dc'),\n        (500, 'd'), (400, 'cd'), (300, 'ccc'), (200, 'cc'), (100, 'c'),\n        (90, 'xc'), (80, 'lxxx'), (70, 'lxx'), (60, 'lx'), (50, 'l'),\n        (40, 'xl'), (30, 'xxx'), (20, 'xx'), (19, 'xix'), (18, 'xviii'),\n        (17, 'xvii'), (16, 'xvi'), (15, 'xv'), (14, 'xiv'), (13, 'xiii'),\n        (12, 'xii'), (11, 'xi'), (10, 'x'), (9, 'ix'), (8, 'viii'),\n        (7, 'vii'), (6, 'vi'), (5, 'v'), (4, 'iv'), (3, 'iii'),\n        (2, 'ii'), (1, 'i')\n    ]\n\n    result = []\n    for value, numeral in roman_numerals:\n        while number >= value:\n            result.append(numeral)\n            number -= value\n\n    return ''.join(result)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 807,
+      "completion_tokens": 340,
+      "total_tokens": 1147,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00032,
+    "your_harvard_credits_still_available": 492.6911
+  }
+}

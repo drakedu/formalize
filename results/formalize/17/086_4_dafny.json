@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod anti_shuffle(s: string) returns (result: string)\n    requires s != null\n    ensures |result| == |s|\n    ensures (forall i: int | 0 <= i < |s| :: (s[i] == ' ' ==> result[i] == ' ') && \n                                         (s[i] != ' ' ==> result[i] != ' ')) // spaces remain in their positions\n    ensures (forall w: int | 0 <= w < |result| && result[w] != ' ' :: \n            exists x: int | 0 <= x < |s| :: s[x] != ' ' && s[x] == result[w]) // characters are from original string\n    ensures (forall j: int | 0 <= j < |result| && result[j] != ' ' && result[j+1] != ' ' && j + 1 < |result| ==> \n            (result[j] <= result[j + 1])) // characters are in ascending order based on ascii value\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n",
+  "problem_id": "HumanEval/86",
+  "problem_data": {
+    "task_id": "HumanEval/86",
+    "prompt": "\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n",
+    "canonical_solution": "    return ' '.join([''.join(sorted(list(i))) for i in s.split(' ')])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Hi') == 'Hi'\n    assert candidate('hello') == 'ehllo'\n    assert candidate('number') == 'bemnru'\n    assert candidate('abcd') == 'abcd'\n    assert candidate('Hello World!!!') == 'Hello !!!Wdlor'\n    assert candidate('') == ''\n    assert candidate('Hi. My name is Mister Robot. How are you?') == '.Hi My aemn is Meirst .Rboot How aer ?ouy'\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "anti_shuffle"
+  },
+  "path": "results/formalize/17/086_4_dafny.json",
+  "method": "formalize",
+  "trial": 17,
+  "time_taken": 4.499405,
+  "time_start": "2025-04-25T06:29:32.008002",
+  "time_end": "2025-04-25T06:29:36.507407",
+  "prompt_tokens": 215,
+  "completion_tokens": 225,
+  "total_tokens": 440,
+  "raw": {
+    "id": "chatcmpl-BQAbEY0IBbIhWNdbolHIYCDXtXMef",
+    "object": "chat.completion",
+    "created": 1745576972,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod anti_shuffle(s: string) returns (result: string)\n    requires s != null\n    ensures |result| == |s|\n    ensures (forall i: int | 0 <= i < |s| :: (s[i] == ' ' ==> result[i] == ' ') && \n                                         (s[i] != ' ' ==> result[i] != ' ')) // spaces remain in their positions\n    ensures (forall w: int | 0 <= w < |result| && result[w] != ' ' :: \n            exists x: int | 0 <= x < |s| :: s[x] != ' ' && s[x] == result[w]) // characters are from original string\n    ensures (forall j: int | 0 <= j < |result| && result[j] != ' ' && result[j+1] != ' ' && j + 1 < |result| ==> \n            (result[j] <= result[j + 1])) // characters are in ascending order based on ascii value\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 215,
+      "completion_tokens": 225,
+      "total_tokens": 440,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00016,
+    "your_harvard_credits_still_available": 490.17866
+  }
+}

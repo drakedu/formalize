@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod filter_by_prefix(strings: seq<string>, prefix: string) returns (result: seq<string>)\n    requires |strings| >= 0\n    requires prefix != null\n    modifies result\n    ensures forall i :: 0 <= i < |result| ==> result[i].StartsWith(prefix)\n    ensures |result| == |{s | s in strings && s.StartsWith(prefix}|\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n",
+  "problem_id": "HumanEval/29",
+  "problem_data": {
+    "task_id": "HumanEval/29",
+    "prompt": "from typing import List\n\n\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n",
+    "canonical_solution": "    return [x for x in strings if x.startswith(prefix)]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([], 'john') == []\n    assert candidate(['xxx', 'asd', 'xxy', 'john doe', 'xxxAAA', 'xxx'], 'xxx') == ['xxx', 'xxxAAA', 'xxx']\n",
+    "entry_point": "filter_by_prefix"
+  },
+  "path": "results/formalize/9/029_1_dafny.json",
+  "method": "formalize",
+  "trial": 9,
+  "time_taken": 2.078122,
+  "time_start": "2025-04-25T05:09:15.252838",
+  "time_end": "2025-04-25T05:09:17.330960",
+  "prompt_tokens": 174,
+  "completion_tokens": 94,
+  "total_tokens": 268,
+  "raw": {
+    "id": "chatcmpl-BQ9LXh9c5IOiZXNJXYRNedEOt2LvT",
+    "object": "chat.completion",
+    "created": 1745572155,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod filter_by_prefix(strings: seq<string>, prefix: string) returns (result: seq<string>)\n    requires |strings| >= 0\n    requires prefix != null\n    modifies result\n    ensures forall i :: 0 <= i < |result| ==> result[i].StartsWith(prefix)\n    ensures |result| == |{s | s in strings && s.StartsWith(prefix}|\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 174,
+      "completion_tokens": 94,
+      "total_tokens": 268,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 491.8505
+  }
+}

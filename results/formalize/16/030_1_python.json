@@ -1,0 +1,60 @@
+{
+  "completion": "def get_positive(l: list):\n    return [x for x in l if x > 0]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method get_positive(l: seq<int>) returns (result: seq<int>)\n    requires l != []\n    ensures forall i :: 0 <= i < |result| ==> result[i] > 0\n    ensures |result| <= |l|\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/30",
+  "problem_data": {
+    "task_id": "HumanEval/30",
+    "prompt": "\n\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n",
+    "canonical_solution": "    return [e for e in l if e > 0]\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([-1, -2, 4, 5, 6]) == [4, 5, 6]\n    assert candidate([5, 3, -5, 2, 3, 3, 9, 0, 123, 1, -10]) == [5, 3, 2, 3, 3, 9, 123, 1]\n    assert candidate([-1, -2]) == []\n    assert candidate([]) == []\n\n",
+    "entry_point": "get_positive"
+  },
+  "path": "results/formalize/16/030_1_python.json",
+  "method": "formalize",
+  "trial": 16,
+  "time_taken": 0.976909,
+  "time_start": "2025-04-25T06:17:11.357673",
+  "time_end": "2025-04-25T06:17:12.334582",
+  "prompt_tokens": 302,
+  "completion_tokens": 26,
+  "total_tokens": 328,
+  "raw": {
+    "id": "chatcmpl-BQAPHlrXfmTzY2MmS27RxQxLLVNws",
+    "object": "chat.completion",
+    "created": 1745576231,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef get_positive(l: list):\n    return [x for x in l if x > 0]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 302,
+      "completion_tokens": 26,
+      "total_tokens": 328,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 6e-05,
+    "your_harvard_credits_still_available": 490.44581
+  }
+}

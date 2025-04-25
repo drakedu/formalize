@@ -1,0 +1,60 @@
+{
+  "completion": "def specialFilter(nums):\n    count = 0\n    \n    def is_odd_digit(digit):\n        return digit in {'1', '3', '5', '7', '9'}\n    \n    for num in nums:\n        if num > 10:\n            str_num = str(abs(num))\n            if is_odd_digit(str_num[0]) and is_odd_digit(str_num[-1]):\n                count += 1\n                \n    return count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef specialFilter(nums):\n    \"\"\"Write a function that takes an array of numbers as input and returns \n    the number of elements in the array that are greater than 10 and both \n    first and last digits of a number are odd (1, 3, 5, 7, 9).\n    For example:\n    specialFilter([15, -73, 14, -15]) => 1 \n    specialFilter([33, -2, -3, 45, 21, 109]) => 2\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method specialFilter(nums: array<int>) returns (count: int)\n    // Precondition: The input array 'nums' must not be null.\n    requires nums != null;\n\n    // The postcondition states that 'count' is the number of elements in 'nums' \n    // that are greater than 10 and whose first and last digits are both odd.\n    ensures count == CountElementsGreaterThanTenWithOddDigits(nums);\n\n    // Helper function to count valid elements.\n    // This function is not part of the public interface but is used for the postcondition.\n    method CountElementsGreaterThanTenWithOddDigits(nums: array<int>) returns (result: int)\n        requires nums != null\n        ensures result >= 0\n        ensures result == CountValidElements(nums);\n\n        // The logic to count valid elements would be implemented here.\n        // ...",
+  "problem_id": "HumanEval/146",
+  "problem_data": {
+    "task_id": "HumanEval/146",
+    "prompt": "\ndef specialFilter(nums):\n    \"\"\"Write a function that takes an array of numbers as input and returns \n    the number of elements in the array that are greater than 10 and both \n    first and last digits of a number are odd (1, 3, 5, 7, 9).\n    For example:\n    specialFilter([15, -73, 14, -15]) => 1 \n    specialFilter([33, -2, -3, 45, 21, 109]) => 2\n    \"\"\"\n",
+    "canonical_solution": "    \n    count = 0\n    for num in nums:\n        if num > 10:\n            odd_digits = (1, 3, 5, 7, 9)\n            number_as_string = str(num)\n            if int(number_as_string[0]) in odd_digits and int(number_as_string[-1]) in odd_digits:\n                count += 1\n        \n    return count \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([5, -2, 1, -5]) == 0  \n    assert candidate([15, -73, 14, -15]) == 1\n    assert candidate([33, -2, -3, 45, 21, 109]) == 2\n    assert candidate([43, -12, 93, 125, 121, 109]) == 4\n    assert candidate([71, -2, -33, 75, 21, 19]) == 3\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1]) == 0              \n    assert candidate([]) == 0                   \n\n",
+    "entry_point": "specialFilter"
+  },
+  "path": "results/formalize/19/146_2_python.json",
+  "method": "formalize",
+  "trial": 19,
+  "time_taken": 2.142026,
+  "time_start": "2025-04-25T06:56:05.998581",
+  "time_end": "2025-04-25T06:56:08.140607",
+  "prompt_tokens": 425,
+  "completion_tokens": 97,
+  "total_tokens": 522,
+  "raw": {
+    "id": "chatcmpl-BQB0wBgWrqFXZO77Kqbui4xbcAX9P",
+    "object": "chat.completion",
+    "created": 1745578566,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef specialFilter(nums):\n    count = 0\n    \n    def is_odd_digit(digit):\n        return digit in {'1', '3', '5', '7', '9'}\n    \n    for num in nums:\n        if num > 10:\n            str_num = str(abs(num))\n            if is_odd_digit(str_num[0]) and is_odd_digit(str_num[-1]):\n                count += 1\n                \n    return count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 425,
+      "completion_tokens": 97,
+      "total_tokens": 522,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 489.68902
+  }
+}

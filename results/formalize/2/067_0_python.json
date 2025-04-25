@@ -1,0 +1,60 @@
+{
+  "completion": "def fruit_distribution(s, n):\n    apples = int(s.split()[0])  # Extract the number of apples\n    oranges = int(s.split()[3])  # Extract the number of oranges\n    return n - apples - oranges",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method fruit_distribution(s: string, n: int) returns (mango_count: int)\n    requires n >= 0\n    requires |s| > 0\n    ensures mango_count == n - CountApples(s) - CountOranges(s)\n{\n    // Implementation goes here\n}\n\n// Helper methods to extract the counts of apples and oranges\nmethod CountApples(s: string) returns (count: int)\n    ensures count >= 0\n{\n    // Implementation for counting apples\n}\n\nmethod CountOranges(s: string) returns (count: int)\n    ensures count >= 0\n{\n    // Implementation for counting oranges\n}",
+  "problem_id": "HumanEval/67",
+  "problem_data": {
+    "task_id": "HumanEval/67",
+    "prompt": "\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n",
+    "canonical_solution": "    lis = list()\n    for i in s.split(' '):\n        if i.isdigit():\n            lis.append(int(i))\n    return n - sum(lis)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"5 apples and 6 oranges\",19) == 8\n    assert candidate(\"5 apples and 6 oranges\",21) == 10\n    assert candidate(\"0 apples and 1 oranges\",3) == 2\n    assert candidate(\"1 apples and 0 oranges\",3) == 2\n    assert candidate(\"2 apples and 3 oranges\",100) == 95\n    assert candidate(\"2 apples and 3 oranges\",5) == 0\n    assert candidate(\"1 apples and 100 oranges\",120) == 19\n",
+    "entry_point": "fruit_distribution"
+  },
+  "path": "results/formalize/2/067_0_python.json",
+  "method": "formalize",
+  "trial": 2,
+  "time_taken": 1.40142,
+  "time_start": "2025-04-24T22:30:09.834806",
+  "time_end": "2025-04-24T22:30:11.236226",
+  "prompt_tokens": 473,
+  "completion_tokens": 54,
+  "total_tokens": 527,
+  "raw": {
+    "id": "chatcmpl-BQ37JVwikN7fXPgklCtXdCx3ai7CT",
+    "object": "chat.completion",
+    "created": 1745548209,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef fruit_distribution(s, n):\n    apples = int(s.split()[0])  # Extract the number of apples\n    oranges = int(s.split()[3])  # Extract the number of oranges\n    return n - apples - oranges\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 473,
+      "completion_tokens": 54,
+      "total_tokens": 527,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 493.21337
+  }
+}

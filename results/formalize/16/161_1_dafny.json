@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod solve(s: string) returns (result: string)\n    requires s != null\n    ensures result != null\n    ensures (forall i: int :: 0 <= i < s.Length ==> (s[i] >= 'a' && s[i] <= 'z' ==> result[i] == char.ToUpper(s[i])) && (s[i] >= 'A' && s[i] <= 'Z' ==> result[i] == char.ToLower(s[i])) && (s[i] < 'a' || s[i] > 'z' && s[i] < 'A' || s[i] > 'Z' ==> result[i] == s[i]))\n    ensures (s.Length == 0 || (forall i: int :: 0 <= i < s.Length ==> (s[i] < 'a' || s[i] > 'z' && s[i] < 'A' || s[i] > 'Z') ==> result == reverseString(s)))\n    ensures (forall i: int :: 0 <= i < result.Length ==> result.Length == s.Length)\n{\n    // Method implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef solve(s):\n    \"\"\"You are given a string s.\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \n    otherwise keep it as it is.\n    If the string contains no letters, reverse the string.\n    The function should return the resulted string.\n    Examples\n    solve(\"1234\") = \"4321\"\n    solve(\"ab\") = \"AB\"\n    solve(\"#a@C\") = \"#A@c\"\n    \"\"\"\n",
+  "problem_id": "HumanEval/161",
+  "problem_data": {
+    "task_id": "HumanEval/161",
+    "prompt": "\ndef solve(s):\n    \"\"\"You are given a string s.\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \n    otherwise keep it as it is.\n    If the string contains no letters, reverse the string.\n    The function should return the resulted string.\n    Examples\n    solve(\"1234\") = \"4321\"\n    solve(\"ab\") = \"AB\"\n    solve(\"#a@C\") = \"#A@c\"\n    \"\"\"\n",
+    "canonical_solution": "    flg = 0\n    idx = 0\n    new_str = list(s)\n    for i in s:\n        if i.isalpha():\n            new_str[idx] = i.swapcase()\n            flg = 1\n        idx += 1\n    s = \"\"\n    for i in new_str:\n        s += i\n    if flg == 0:\n        return s[len(s)::-1]\n    return s\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"AsDf\") == \"aSdF\"\n    assert candidate(\"1234\") == \"4321\"\n    assert candidate(\"ab\") == \"AB\"\n    assert candidate(\"#a@C\") == \"#A@c\"\n    assert candidate(\"#AsdfW^45\") == \"#aSDFw^45\"\n    assert candidate(\"#6@2\") == \"2@6#\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"#$a^D\") == \"#$A^d\"\n    assert candidate(\"#ccc\") == \"#CCC\"\n\n    # Don't remove this line:\n",
+    "entry_point": "solve"
+  },
+  "path": "results/formalize/16/161_1_dafny.json",
+  "method": "formalize",
+  "trial": 16,
+  "time_taken": 5.44078,
+  "time_start": "2025-04-25T06:24:37.771946",
+  "time_end": "2025-04-25T06:24:43.212726",
+  "prompt_tokens": 194,
+  "completion_tokens": 235,
+  "total_tokens": 429,
+  "raw": {
+    "id": "chatcmpl-BQAWUbixCy4AFlXWZKeOUODiQx8Zh",
+    "object": "chat.completion",
+    "created": 1745576678,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod solve(s: string) returns (result: string)\n    requires s != null\n    ensures result != null\n    ensures (forall i: int :: 0 <= i < s.Length ==> (s[i] >= 'a' && s[i] <= 'z' ==> result[i] == char.ToUpper(s[i])) && (s[i] >= 'A' && s[i] <= 'Z' ==> result[i] == char.ToLower(s[i])) && (s[i] < 'a' || s[i] > 'z' && s[i] < 'A' || s[i] > 'Z' ==> result[i] == s[i]))\n    ensures (s.Length == 0 || (forall i: int :: 0 <= i < s.Length ==> (s[i] < 'a' || s[i] > 'z' && s[i] < 'A' || s[i] > 'Z') ==> result == reverseString(s)))\n    ensures (forall i: int :: 0 <= i < result.Length ==> result.Length == s.Length)\n{\n    // Method implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 194,
+      "completion_tokens": 235,
+      "total_tokens": 429,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00017,
+    "your_harvard_credits_still_available": 490.28009
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod decimal_to_binary(decimal: int) returns (result: string)\n    requires decimal >= 0\n    ensures result == \"db\" + BinaryString(decimal) + \"db\"\n{\n    // Implementation will go here\n}\n\nfunction BinaryString(decimal: int): string\n    requires decimal >= 0\n    ensures |result| == (if decimal == 0 then 1 else log2(decimal) + 1)\n    ensures forall i :: 0 <= i < |result| ==> (result[i] == '0' || result[i] == '1')\n    ensures result == ToBinary(decimal)\n{\n    // Implementation will be defined to convert decimal to binary string\n}\n\nfunction ToBinary(decimal: int): string\n    requires decimal >= 0\n    // This function would convert the decimal to its binary representation\n{\n    // Placeholder for the actual conversion logic\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef decimal_to_binary(decimal):\n    \"\"\"You will be given a number in decimal form and your task is to convert it to\n    binary format. The function should return a string, with each character representing a binary\n    number. Each character in the string will be '0' or '1'.\n\n    There will be an extra couple of characters 'db' at the beginning and at the end of the string.\n    The extra characters are there to help with the format.\n\n    Examples:\n    decimal_to_binary(15)   # returns \"db1111db\"\n    decimal_to_binary(32)   # returns \"db100000db\"\n    \"\"\"\n",
+  "problem_id": "HumanEval/79",
+  "problem_data": {
+    "task_id": "HumanEval/79",
+    "prompt": "\ndef decimal_to_binary(decimal):\n    \"\"\"You will be given a number in decimal form and your task is to convert it to\n    binary format. The function should return a string, with each character representing a binary\n    number. Each character in the string will be '0' or '1'.\n\n    There will be an extra couple of characters 'db' at the beginning and at the end of the string.\n    The extra characters are there to help with the format.\n\n    Examples:\n    decimal_to_binary(15)   # returns \"db1111db\"\n    decimal_to_binary(32)   # returns \"db100000db\"\n    \"\"\"\n",
+    "canonical_solution": "    return \"db\" + bin(decimal)[2:] + \"db\"\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(0) == \"db0db\"\n    assert candidate(32) == \"db100000db\"\n    assert candidate(103) == \"db1100111db\"\n    assert candidate(15) == \"db1111db\", \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "decimal_to_binary"
+  },
+  "path": "results/formalize/17/079_0_dafny.json",
+  "method": "formalize",
+  "trial": 17,
+  "time_taken": 3.443616,
+  "time_start": "2025-04-25T06:28:56.062214",
+  "time_end": "2025-04-25T06:28:59.505830",
+  "prompt_tokens": 226,
+  "completion_tokens": 185,
+  "total_tokens": 411,
+  "raw": {
+    "id": "chatcmpl-BQAaehnRBVjn0ZRcHEm484F6HmJn0",
+    "object": "chat.completion",
+    "created": 1745576936,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod decimal_to_binary(decimal: int) returns (result: string)\n    requires decimal >= 0\n    ensures result == \"db\" + BinaryString(decimal) + \"db\"\n{\n    // Implementation will go here\n}\n\nfunction BinaryString(decimal: int): string\n    requires decimal >= 0\n    ensures |result| == (if decimal == 0 then 1 else log2(decimal) + 1)\n    ensures forall i :: 0 <= i < |result| ==> (result[i] == '0' || result[i] == '1')\n    ensures result == ToBinary(decimal)\n{\n    // Implementation will be defined to convert decimal to binary string\n}\n\nfunction ToBinary(decimal: int): string\n    requires decimal >= 0\n    // This function would convert the decimal to its binary representation\n{\n    // Placeholder for the actual conversion logic\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 226,
+      "completion_tokens": 185,
+      "total_tokens": 411,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00014,
+    "your_harvard_credits_still_available": 490.19267
+  }
+}

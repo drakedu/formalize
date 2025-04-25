@@ -1,0 +1,60 @@
+{
+  "completion": "def strange_sort_list(lst):\n    if not lst:\n        return []\n    \n    lst.sort()\n    result = []\n    left, right = 0, len(lst) - 1\n    \n    while left <= right:\n        if left == right:\n            result.append(lst[left])\n        else:\n            result.append(lst[left])\n            result.append(lst[right])\n        left += 1\n        right -= 1\n    \n    return result",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef strange_sort_list(lst):\n    '''\n    Given list of integers, return list in strange order.\n    Strange sorting, is when you start with the minimum value,\n    then maximum of the remaining integers, then minimum and so on.\n\n    Examples:\n    strange_sort_list([1, 2, 3, 4]) == [1, 4, 2, 3]\n    strange_sort_list([5, 5, 5, 5]) == [5, 5, 5, 5]\n    strange_sort_list([]) == []\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method strange_sort_list(lst: seq<int>) returns (result: seq<int>)\n    requires |lst| >= 0 // The input list can be empty\n    ensures |result| == |lst| // The output list has the same number of elements as the input\n    ensures forall i :: 0 <= i < |result| ==> result[i] in lst // All elements in the result are from the input list\n    ensures // The result is sorted in the strange order\n        (|result| == 0 || result[0] == min(lst)) // First element is the minimum if result is not empty\n        && (forall j :: 0 <= j < |result| && j % 2 == 0 ==> result[j] <= result[j + 1]) // Even indexed elements are in non-decreasing order\n        && (forall k :: 0 <= k < |result| && k % 2 == 1 ==> result[k] >= result[k - 1]) // Odd indexed elements are in non-increasing order",
+  "problem_id": "HumanEval/70",
+  "problem_data": {
+    "task_id": "HumanEval/70",
+    "prompt": "\ndef strange_sort_list(lst):\n    '''\n    Given list of integers, return list in strange order.\n    Strange sorting, is when you start with the minimum value,\n    then maximum of the remaining integers, then minimum and so on.\n\n    Examples:\n    strange_sort_list([1, 2, 3, 4]) == [1, 4, 2, 3]\n    strange_sort_list([5, 5, 5, 5]) == [5, 5, 5, 5]\n    strange_sort_list([]) == []\n    '''\n",
+    "canonical_solution": "    res, switch = [], True\n    while lst:\n        res.append(min(lst) if switch else max(lst))\n        lst.remove(res[-1])\n        switch = not switch\n    return res\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 2, 3, 4]) == [1, 4, 2, 3]\n    assert candidate([5, 6, 7, 8, 9]) == [5, 9, 6, 8, 7]\n    assert candidate([1, 2, 3, 4, 5]) == [1, 5, 2, 4, 3]\n    assert candidate([5, 6, 7, 8, 9, 1]) == [1, 9, 5, 8, 6, 7]\n    assert candidate([5, 5, 5, 5]) == [5, 5, 5, 5]\n    assert candidate([]) == []\n    assert candidate([1,2,3,4,5,6,7,8]) == [1, 8, 2, 7, 3, 6, 4, 5]\n    assert candidate([0,2,2,2,5,5,-5,-5]) == [-5, 5, -5, 5, 0, 2, 2, 2]\n    assert candidate([111111]) == [111111]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "strange_sort_list"
+  },
+  "path": "results/formalize/25/070_4_python.json",
+  "method": "formalize",
+  "trial": 25,
+  "time_taken": 1.874088,
+  "time_start": "2025-04-25T07:59:07.887178",
+  "time_end": "2025-04-25T07:59:09.761266",
+  "prompt_tokens": 469,
+  "completion_tokens": 92,
+  "total_tokens": 561,
+  "raw": {
+    "id": "chatcmpl-BQBzwDtkcT7ArqDaP6qIGUXpawlES",
+    "object": "chat.completion",
+    "created": 1745582348,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef strange_sort_list(lst):\n    if not lst:\n        return []\n    \n    lst.sort()\n    result = []\n    left, right = 0, len(lst) - 1\n    \n    while left <= right:\n        if left == right:\n            result.append(lst[left])\n        else:\n            result.append(lst[left])\n            result.append(lst[right])\n        left += 1\n        right -= 1\n    \n    return result\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 469,
+      "completion_tokens": 92,
+      "total_tokens": 561,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 488.54656
+  }
+}

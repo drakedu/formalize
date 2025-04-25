@@ -1,0 +1,60 @@
+{
+  "completion": "def count_distinct_characters(string: str) -> int:\n    return len(set(string.lower()))",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef count_distinct_characters(string: str) -> int:\n    \"\"\" Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method count_distinct_characters(string: string) returns (distinctCount: int)\n    requires string != null\n    ensures distinctCount >= 0\n    ensures forall c: char :: (exists i: int :: 0 <= i < string.Length && string[i] == c) ==> (countOccurrences(c, string) > 0) ==> (countOccurrences(c, string.ToLower()) > 0 ==> distinctCount >= countDistinct(string.ToLower()))\n{\n    // Implementation would go here\n}",
+  "problem_id": "HumanEval/16",
+  "problem_data": {
+    "task_id": "HumanEval/16",
+    "prompt": "\n\ndef count_distinct_characters(string: str) -> int:\n    \"\"\" Given a string, find out how many distinct characters (regardless of case) does it consist of\n    >>> count_distinct_characters('xyzXYZ')\n    3\n    >>> count_distinct_characters('Jerry')\n    4\n    \"\"\"\n",
+    "canonical_solution": "    return len(set(string.lower()))\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == 0\n    assert candidate('abcde') == 5\n    assert candidate('abcde' + 'cade' + 'CADE') == 5\n    assert candidate('aaaaAAAAaaaa') == 1\n    assert candidate('Jerry jERRY JeRRRY') == 5\n",
+    "entry_point": "count_distinct_characters"
+  },
+  "path": "results/formalize/25/016_2_python.json",
+  "method": "formalize",
+  "trial": 25,
+  "time_taken": 0.898799,
+  "time_start": "2025-04-25T07:56:17.256847",
+  "time_end": "2025-04-25T07:56:18.155646",
+  "prompt_tokens": 306,
+  "completion_tokens": 25,
+  "total_tokens": 331,
+  "raw": {
+    "id": "chatcmpl-BQBxBhOc0cImvqt9SBwrSg1s8Ffzr",
+    "object": "chat.completion",
+    "created": 1745582177,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef count_distinct_characters(string: str) -> int:\n    return len(set(string.lower()))\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 306,
+      "completion_tokens": 25,
+      "total_tokens": 331,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 6e-05,
+    "your_harvard_credits_still_available": 488.60714
+  }
+}

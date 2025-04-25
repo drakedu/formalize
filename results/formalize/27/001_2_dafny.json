@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < |paren_string| ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures |groups| > 0\n    ensures forall g :: g in groups ==> (forall i :: 0 <= i < |g| ==> (g[i] == '(' || g[i] == ')'))\n    ensures forall i :: 0 <= i < |groups| ==> |groups[i]| > 0\n    ensures forall j :: 0 <= j < |groups| - 1 ==> |groups[j]| + |groups[j + 1]| > 0\n    ensures forall k :: 0 <= k < |groups| ==> (exists m :: 0 <= m < |paren_string| ==> (groups[k] == paren_string[m..m + |groups[k]|]))\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+  "problem_id": "HumanEval/1",
+  "problem_data": {
+    "task_id": "HumanEval/1",
+    "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+    "entry_point": "separate_paren_groups"
+  },
+  "path": "results/formalize/27/001_2_dafny.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 4.058703,
+  "time_start": "2025-04-25T08:16:50.254430",
+  "time_end": "2025-04-25T08:16:54.313133",
+  "prompt_tokens": 201,
+  "completion_tokens": 222,
+  "total_tokens": 423,
+  "raw": {
+    "id": "chatcmpl-BQCH43CY9Y7lKpAKuVaZIaKnXZxK3",
+    "object": "chat.completion",
+    "created": 1745583410,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < |paren_string| ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures |groups| > 0\n    ensures forall g :: g in groups ==> (forall i :: 0 <= i < |g| ==> (g[i] == '(' || g[i] == ')'))\n    ensures forall i :: 0 <= i < |groups| ==> |groups[i]| > 0\n    ensures forall j :: 0 <= j < |groups| - 1 ==> |groups[j]| + |groups[j + 1]| > 0\n    ensures forall k :: 0 <= k < |groups| ==> (exists m :: 0 <= m < |paren_string| ==> (groups[k] == paren_string[m..m + |groups[k]|]))\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 201,
+      "completion_tokens": 222,
+      "total_tokens": 423,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00016,
+    "your_harvard_credits_still_available": 488.21756
+  }
+}

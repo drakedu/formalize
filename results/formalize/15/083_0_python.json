@@ -1,0 +1,60 @@
+{
+  "completion": "def starts_one_ends(n):\n    if n <= 0:\n        return 0\n    \n    total_count = 9 * (10**(n - 1))  # Total n-digit numbers\n    starts_with_one = 10**(n - 1)    # Numbers starting with 1\n    ends_with_one = 10**(n - 1)      # Numbers ending with 1\n    starts_and_ends_with_one = 1     # The number 1...1 (n times)\n\n    count = starts_with_one + ends_with_one - starts_and_ends_with_one\n    return count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method starts_one_ends(n: int) returns (count: int)\n    requires n > 0\n    ensures count >= 0\n    ensures count == (9 * (10^(n - 1) - 1) / 9) + (9 * (10^(n - 1) - 1) / 9) - (10^(n - 1) / 9)\n{\n    // Implementation will go here.\n}",
+  "problem_id": "HumanEval/83",
+  "problem_data": {
+    "task_id": "HumanEval/83",
+    "prompt": "\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n",
+    "canonical_solution": "    if n == 1: return 1\n    return 18 * (10 ** (n - 2))\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(1) == 1\n    assert candidate(2) == 18\n    assert candidate(3) == 180\n    assert candidate(4) == 1800\n    assert candidate(5) == 18000\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "starts_one_ends"
+  },
+  "path": "results/formalize/15/083_0_python.json",
+  "method": "formalize",
+  "trial": 15,
+  "time_taken": 2.971058,
+  "time_start": "2025-04-25T06:10:26.732907",
+  "time_end": "2025-04-25T06:10:29.703965",
+  "prompt_tokens": 270,
+  "completion_tokens": 135,
+  "total_tokens": 405,
+  "raw": {
+    "id": "chatcmpl-BQAIkxZopS5RO2opQo7KDoewhumSK",
+    "object": "chat.completion",
+    "created": 1745575826,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef starts_one_ends(n):\n    if n <= 0:\n        return 0\n    \n    total_count = 9 * (10**(n - 1))  # Total n-digit numbers\n    starts_with_one = 10**(n - 1)    # Numbers starting with 1\n    ends_with_one = 10**(n - 1)      # Numbers ending with 1\n    starts_and_ends_with_one = 1     # The number 1...1 (n times)\n\n    count = starts_with_one + ends_with_one - starts_and_ends_with_one\n    return count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 270,
+      "completion_tokens": 135,
+      "total_tokens": 405,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 490.59215
+  }
+}

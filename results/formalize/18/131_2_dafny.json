@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod digits(n: int) returns (result: int)\n    requires n > 0\n    ensures (result == 0) ==> (forall d: int :: (d >= 0 && d < 10 ==> (d % 2 == 0) ==> (d in digits(n))))\n    ensures (result > 0) ==> (exists d: int :: (d >= 0 && d < 10) && (d % 2 == 1) && (d in digits(n)) && (result == d * product_of_odd_digits(digits(n) - d)))\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n",
+  "problem_id": "HumanEval/131",
+  "problem_data": {
+    "task_id": "HumanEval/131",
+    "prompt": "\ndef digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n",
+    "canonical_solution": "    product = 1\n    odd_count = 0\n    for digit in str(n):\n        int_digit = int(digit)\n        if int_digit%2 == 1:\n            product= product*int_digit\n            odd_count+=1\n    if odd_count ==0:\n        return 0\n    else:\n        return product\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(5) == 5\n    assert candidate(54) == 5\n    assert candidate(120) ==1\n    assert candidate(5014) == 5\n    assert candidate(98765) == 315\n    assert candidate(5576543) == 2625\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(2468) == 0\n\n",
+    "entry_point": "digits"
+  },
+  "path": "results/formalize/18/131_2_dafny.json",
+  "method": "formalize",
+  "trial": 18,
+  "time_taken": 2.742355,
+  "time_start": "2025-04-25T06:45:08.476134",
+  "time_end": "2025-04-25T06:45:11.218489",
+  "prompt_tokens": 158,
+  "completion_tokens": 136,
+  "total_tokens": 294,
+  "raw": {
+    "id": "chatcmpl-BQAqKXPrKx2e5Qbdri6Cc4z2YIACG",
+    "object": "chat.completion",
+    "created": 1745577908,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod digits(n: int) returns (result: int)\n    requires n > 0\n    ensures (result == 0) ==> (forall d: int :: (d >= 0 && d < 10 ==> (d % 2 == 0) ==> (d in digits(n))))\n    ensures (result > 0) ==> (exists d: int :: (d >= 0 && d < 10) && (d % 2 == 1) && (d in digits(n)) && (result == d * product_of_odd_digits(digits(n) - d)))\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 158,
+      "completion_tokens": 136,
+      "total_tokens": 294,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 489.90921
+  }
+}

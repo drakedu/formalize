@@ -1,0 +1,60 @@
+{
+  "completion": "def decode_shift(s: str):\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method decode_shift(s: string) returns (result: string)\n    requires s != null\n    ensures forall i: int :: 0 <= i < |s| ==> (result[i] == chr(((ord(s[i]) - ord('a') - 5 + 26) % 26) + ord('a')))\n{\n    // Implementation of the decode_shift would go here.\n}",
+  "problem_id": "HumanEval/50",
+  "problem_data": {
+    "task_id": "HumanEval/50",
+    "prompt": "\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n",
+    "canonical_solution": "    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    from random import randint, choice\n    import copy\n    import string\n\n    letters = string.ascii_lowercase\n    for _ in range(100):\n        str = ''.join(choice(letters) for i in range(randint(10, 20)))\n        encoded_str = encode_shift(str)\n        assert candidate(copy.deepcopy(encoded_str)) == str\n\n",
+    "entry_point": "decode_shift"
+  },
+  "path": "results/formalize/3/050_2_python.json",
+  "method": "formalize",
+  "trial": 3,
+  "time_taken": 1.065824,
+  "time_start": "2025-04-24T23:44:46.995821",
+  "time_end": "2025-04-24T23:44:48.061645",
+  "prompt_tokens": 301,
+  "completion_tokens": 44,
+  "total_tokens": 345,
+  "raw": {
+    "id": "chatcmpl-BQ4HXC2Vtwv1SeoSubiEh8qC5LcPs",
+    "object": "chat.completion",
+    "created": 1745552687,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef decode_shift(s: str):\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 301,
+      "completion_tokens": 44,
+      "total_tokens": 345,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 493.0309
+  }
+}

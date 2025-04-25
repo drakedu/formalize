@@ -1,0 +1,60 @@
+{
+  "completion": "def file_name_check(file_name):\n    if file_name.count('.') != 1:\n        return 'No'\n    \n    name, extension = file_name.split('.', 1)\n    \n    if not name or not name[0].isalpha():\n        return 'No'\n    \n    if extension not in ['txt', 'exe', 'dll']:\n        return 'No'\n    \n    digit_count = sum(c.isdigit() for c in file_name)\n    \n    if digit_count > 3:\n        return 'No'\n    \n    return 'Yes'",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef file_name_check(file_name):\n    \"\"\"Create a function which takes a string representing a file's name, and returns\n    'Yes' if the the file's name is valid, and returns 'No' otherwise.\n    A file's name is considered to be valid if and only if all the following conditions \n    are met:\n    - There should not be more than three digits ('0'-'9') in the file's name.\n    - The file's name contains exactly one dot '.'\n    - The substring before the dot should not be empty, and it starts with a letter from \n    the latin alphapet ('a'-'z' and 'A'-'Z').\n    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']\n    Examples:\n    file_name_check(\"example.txt\") # => 'Yes'\n    file_name_check(\"1example.dll\") # => 'No' (the name should start with a latin alphapet letter)\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method file_name_check(file_name: string) returns (result: string)\n    requires file_name != null\n    ensures result == \"Yes\" ==> \n        (CountDigits(file_name) <= 3 &&\n         ContainsExactlyOneDot(file_name) &&\n         SubstringBeforeDotIsValid(file_name) &&\n         SubstringAfterDotIsValid(file_name)\n        )\n    ensures result == \"No\" ==> \n        !(CountDigits(file_name) <= 3 &&\n          ContainsExactlyOneDot(file_name) &&\n          SubstringBeforeDotIsValid(file_name) &&\n          SubstringAfterDotIsValid(file_name)\n        )\n{\n    // Implementation would go here\n}\n\nfunction CountDigits(s: string): int\n    reads s\n    ensures 0 <= CountDigits(s) <= length(s)\n{\n    var count := 0;\n    var i := 0;\n    while (i < length(s))\n        invariant 0 <= i <= length(s)\n        invariant count == CountDigits(Substring(s, 0, i))\n    {\n        if (s[i] >= '0' && s[i] <= '9') {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\nfunction ContainsExactlyOneDot(s: string): bool\n    reads s\n{\n    var dotCount := 0;\n    var i := 0;\n    while (i < length(s))\n        invariant 0 <= i <= length(s)\n        invariant dotCount == CountDots(Substring(s, 0, i))\n    {\n        if (s[i] == '.') {\n            dotCount := dotCount + 1;\n        }\n        i := i + 1;\n    }\n    return dotCount == 1;\n}\n\nfunction SubstringBeforeDotIsValid(s: string): bool\n    reads s\n{\n    var dotIndex := IndexOfDot(s);\n    return dotIndex > 0 && (s[0] >= 'a' && s[0] <= 'z' || s[0] >= 'A' && s[0] <= 'Z');\n}\n\nfunction SubstringAfterDotIsValid(s: string): bool\n    reads s\n{\n    var dotIndex := IndexOfDot(s);\n    if (dotIndex == -1 || dotIndex == length(s) - 1) {\n        return false;\n    }\n    var extension := Substring(s, dotIndex + 1, length(s) - dotIndex - 1);\n    return extension == \"txt\" || extension == \"exe\" || extension == \"dll\";\n}\n\nfunction IndexOfDot(s: string): int\n    reads s\n{\n    var i := 0;\n    while (i < length(s))\n        invariant 0 <= i <= length(s)\n    {\n        if (s[i] == '.') {\n            return i;\n        }\n        i := i + 1;\n    }\n    return -1; // Indicate no dot found\n}",
+  "problem_id": "HumanEval/141",
+  "problem_data": {
+    "task_id": "HumanEval/141",
+    "prompt": "\ndef file_name_check(file_name):\n    \"\"\"Create a function which takes a string representing a file's name, and returns\n    'Yes' if the the file's name is valid, and returns 'No' otherwise.\n    A file's name is considered to be valid if and only if all the following conditions \n    are met:\n    - There should not be more than three digits ('0'-'9') in the file's name.\n    - The file's name contains exactly one dot '.'\n    - The substring before the dot should not be empty, and it starts with a letter from \n    the latin alphapet ('a'-'z' and 'A'-'Z').\n    - The substring after the dot should be one of these: ['txt', 'exe', 'dll']\n    Examples:\n    file_name_check(\"example.txt\") # => 'Yes'\n    file_name_check(\"1example.dll\") # => 'No' (the name should start with a latin alphapet letter)\n    \"\"\"\n",
+    "canonical_solution": "    suf = ['txt', 'exe', 'dll']\n    lst = file_name.split(sep='.')\n    if len(lst) != 2:\n        return 'No'\n    if not lst[1] in suf:\n        return 'No'\n    if len(lst[0]) == 0:\n        return 'No'\n    if not lst[0][0].isalpha():\n        return 'No'\n    t = len([x for x in lst[0] if x.isdigit()])\n    if t > 3:\n        return 'No'\n    return 'Yes'\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"example.txt\") == 'Yes'\n    assert candidate(\"1example.dll\") == 'No'\n    assert candidate('s1sdf3.asd') == 'No'\n    assert candidate('K.dll') == 'Yes'\n    assert candidate('MY16FILE3.exe') == 'Yes'\n    assert candidate('His12FILE94.exe') == 'No'\n    assert candidate('_Y.txt') == 'No'\n    assert candidate('?aREYA.exe') == 'No'\n    assert candidate('/this_is_valid.dll') == 'No'\n    assert candidate('this_is_valid.wow') == 'No'\n    assert candidate('this_is_valid.txt') == 'Yes'\n    assert candidate('this_is_valid.txtexe') == 'No'\n    assert candidate('#this2_i4s_5valid.ten') == 'No'\n    assert candidate('@this1_is6_valid.exe') == 'No'\n    assert candidate('this_is_12valid.6exe4.txt') == 'No'\n    assert candidate('all.exe.txt') == 'No'\n    assert candidate('I563_No.exe') == 'Yes'\n    assert candidate('Is3youfault.txt') == 'Yes'\n    assert candidate('no_one#knows.dll') == 'Yes'\n    assert candidate('1I563_Yes3.exe') == 'No'\n    assert candidate('I563_Yes3.txtt') == 'No'\n    assert candidate('final..txt') == 'No'\n    assert candidate('final132') == 'No'\n    assert candidate('_f4indsartal132.') == 'No'\n    \n        \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('.txt') == 'No'\n    assert candidate('s.') == 'No'\n\n",
+    "entry_point": "file_name_check"
+  },
+  "path": "results/formalize/3/141_1_python.json",
+  "method": "formalize",
+  "trial": 3,
+  "time_taken": 3.717761,
+  "time_start": "2025-04-25T00:33:05.048304",
+  "time_end": "2025-04-25T00:33:08.766065",
+  "prompt_tokens": 958,
+  "completion_tokens": 115,
+  "total_tokens": 1073,
+  "raw": {
+    "id": "chatcmpl-BQ52HW9quLUBJbmuLH32189udcu9L",
+    "object": "chat.completion",
+    "created": 1745555585,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef file_name_check(file_name):\n    if file_name.count('.') != 1:\n        return 'No'\n    \n    name, extension = file_name.split('.', 1)\n    \n    if not name or not name[0].isalpha():\n        return 'No'\n    \n    if extension not in ['txt', 'exe', 'dll']:\n        return 'No'\n    \n    digit_count = sum(c.isdigit() for c in file_name)\n    \n    if digit_count > 3:\n        return 'No'\n    \n    return 'Yes'\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 958,
+      "completion_tokens": 115,
+      "total_tokens": 1073,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00021,
+    "your_harvard_credits_still_available": 492.9133
+  }
+}

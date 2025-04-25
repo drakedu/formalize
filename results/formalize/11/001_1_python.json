@@ -1,0 +1,60 @@
+{
+  "completion": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    paren_string = paren_string.replace(\" \", \"\")\n    result = []\n    stack = []\n    current_group = []\n\n    for char in paren_string:\n        if char == '(':\n            if not stack:\n                current_group = []\n            stack.append(char)\n            current_group.append(char)\n        elif char == ')':\n            if stack:\n                stack.pop()\n                current_group.append(char)\n                if not stack:\n                    result.append(''.join(current_group))\n\n    return result",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (result: seq<string>)\n    requires paren_string != null\n    // Preconditions: The input string must be non-null.\n    // The input string is assumed to contain valid groups of parentheses.\n\n    ensures result != null\n    // Postcondition: The output list is non-null.\n    \n    ensures forall i :: 0 <= i < |result| ==> \n        // Postcondition: Each string in the result is a valid parentheses group.\n        result[i] != null && \n        is_balanced(result[i]) &&\n        is_separate_group(result[i], paren_string)\n    // A helper function to check if a string is balanced\n    // A helper function to check if the group is separate from others\n    \n    // Implementation would go here\n```\n\nIn this Dafny specification:\n- We specify that the input string must not be null.\n- We ensure that the output list is also non-null.\n- We enforce that each element in the output list is a non-null string and is a balanced parentheses group.\n- The `is_balanced` and `is_separate_group` would need to be helper functions that you would implement separately to check the conditions of each group.",
+  "problem_id": "HumanEval/1",
+  "problem_data": {
+    "task_id": "HumanEval/1",
+    "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+    "entry_point": "separate_paren_groups"
+  },
+  "path": "results/formalize/11/001_1_python.json",
+  "method": "formalize",
+  "trial": 11,
+  "time_taken": 5.002973,
+  "time_start": "2025-04-25T05:27:59.576823",
+  "time_end": "2025-04-25T05:28:04.579796",
+  "prompt_tokens": 500,
+  "completion_tokens": 122,
+  "total_tokens": 622,
+  "raw": {
+    "id": "chatcmpl-BQ9dfacvkTuipT7zuprqYo83ZGoEJ",
+    "object": "chat.completion",
+    "created": 1745573279,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    paren_string = paren_string.replace(\" \", \"\")\n    result = []\n    stack = []\n    current_group = []\n\n    for char in paren_string:\n        if char == '(':\n            if not stack:\n                current_group = []\n            stack.append(char)\n            current_group.append(char)\n        elif char == ')':\n            if stack:\n                stack.pop()\n                current_group.append(char)\n                if not stack:\n                    result.append(''.join(current_group))\n\n    return result\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 500,
+      "completion_tokens": 122,
+      "total_tokens": 622,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00014,
+    "your_harvard_credits_still_available": 491.47414
+  }
+}

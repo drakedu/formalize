@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod match_parens(lst: array<string>) returns (result: string)\n    requires |lst| == 2\n    requires forall i: int :: 0 <= i < |lst| ==> (lst[i] == \"(\" || lst[i] == \")\")\n    ensures result == \"Yes\" || result == \"No\"\n    ensures (result == \"Yes\" ==> (exists order: int :: order == 0 || order == 1 && is_good(lst[order] + lst[1 - order])))\n    ensures (result == \"No\" ==> (forall order: int :: order == 0 || order == 1 ==> !is_good(lst[order] + lst[1 - order])))\n{\n    // Implementation goes here\n}\n\nfunction is_good(s: string): bool\n    reads *\n    ensures is_good(s) ==> (forall i: int :: 0 <= i < |s| ==> (count_open(s, i) >= count_close(s, i)))\n{\n    // Function to check if a string of parentheses is good\n}\n\nfunction count_open(s: string, i: int): int\n    reads *\n    ensures 0 <= i < |s| ==> count_open(s, i) == ... // Implementation to count open parentheses\n{\n    // Count the number of '(' in the string s up to the index i\n}\n\nfunction count_close(s: string, i: int): int\n    reads *\n    ensures 0 <= i < |s| ==> count_close(s, i) == ... // Implementation to count close parentheses\n{\n    // Count the number of ')' in the string s up to the index i\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n",
+  "problem_id": "HumanEval/119",
+  "problem_data": {
+    "task_id": "HumanEval/119",
+    "prompt": "\ndef match_parens(lst):\n    '''\n    You are given a list of two strings, both strings consist of open\n    parentheses '(' or close parentheses ')' only.\n    Your job is to check if it is possible to concatenate the two strings in\n    some order, that the resulting string will be good.\n    A string S is considered to be good if and only if all parentheses in S\n    are balanced. For example: the string '(())()' is good, while the string\n    '())' is not.\n    Return 'Yes' if there's a way to make a good string, and return 'No' otherwise.\n\n    Examples:\n    match_parens(['()(', ')']) == 'Yes'\n    match_parens([')', ')']) == 'No'\n    '''\n",
+    "canonical_solution": "    def check(s):\n        val = 0\n        for i in s:\n            if i == '(':\n                val = val + 1\n            else:\n                val = val - 1\n            if val < 0:\n                return False\n        return True if val == 0 else False\n\n    S1 = lst[0] + lst[1]\n    S2 = lst[1] + lst[0]\n    return 'Yes' if check(S1) or check(S2) else 'No'\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(['()(', ')']) == 'Yes'\n    assert candidate([')', ')']) == 'No'\n    assert candidate(['(()(())', '())())']) == 'No'\n    assert candidate([')())', '(()()(']) == 'Yes'\n    assert candidate(['(())))', '(()())((']) == 'Yes'\n    assert candidate(['()', '())']) == 'No'\n    assert candidate(['(()(', '()))()']) == 'Yes'\n    assert candidate(['((((', '((())']) == 'No'\n    assert candidate([')(()', '(()(']) == 'No'\n    assert candidate([')(', ')(']) == 'No'\n    \n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(['(', ')']) == 'Yes'\n    assert candidate([')', '(']) == 'Yes' \n\n",
+    "entry_point": "match_parens"
+  },
+  "path": "results/formalize/6/119_1_dafny.json",
+  "method": "formalize",
+  "trial": 6,
+  "time_taken": 6.885803,
+  "time_start": "2025-04-25T04:35:09.946382",
+  "time_end": "2025-04-25T04:35:16.832185",
+  "prompt_tokens": 252,
+  "completion_tokens": 342,
+  "total_tokens": 594,
+  "raw": {
+    "id": "chatcmpl-BQ8oYiAjV3nm0Iui8snaGsXpWZIeV",
+    "object": "chat.completion",
+    "created": 1745570110,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod match_parens(lst: array<string>) returns (result: string)\n    requires |lst| == 2\n    requires forall i: int :: 0 <= i < |lst| ==> (lst[i] == \"(\" || lst[i] == \")\")\n    ensures result == \"Yes\" || result == \"No\"\n    ensures (result == \"Yes\" ==> (exists order: int :: order == 0 || order == 1 && is_good(lst[order] + lst[1 - order])))\n    ensures (result == \"No\" ==> (forall order: int :: order == 0 || order == 1 ==> !is_good(lst[order] + lst[1 - order])))\n{\n    // Implementation goes here\n}\n\nfunction is_good(s: string): bool\n    reads *\n    ensures is_good(s) ==> (forall i: int :: 0 <= i < |s| ==> (count_open(s, i) >= count_close(s, i)))\n{\n    // Function to check if a string of parentheses is good\n}\n\nfunction count_open(s: string, i: int): int\n    reads *\n    ensures 0 <= i < |s| ==> count_open(s, i) == ... // Implementation to count open parentheses\n{\n    // Count the number of '(' in the string s up to the index i\n}\n\nfunction count_close(s: string, i: int): int\n    reads *\n    ensures 0 <= i < |s| ==> count_close(s, i) == ... // Implementation to count close parentheses\n{\n    // Count the number of ')' in the string s up to the index i\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 252,
+      "completion_tokens": 342,
+      "total_tokens": 594,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00024,
+    "your_harvard_credits_still_available": 492.3431
+  }
+}

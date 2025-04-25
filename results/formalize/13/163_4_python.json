@@ -1,0 +1,60 @@
+{
+  "completion": "def generate_integers(a, b):\n    if a > b:\n        a, b = b, a\n    return [x for x in range(a, b + 1) if x % 2 == 0]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef generate_integers(a, b):\n    \"\"\"\n    Given two positive integers a and b, return the even digits between a\n    and b, in ascending order.\n\n    For example:\n    generate_integers(2, 8) => [2, 4, 6, 8]\n    generate_integers(8, 2) => [2, 4, 6, 8]\n    generate_integers(10, 14) => []\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method generate_integers(a: int, b: int) returns (result: seq<int>)\n    requires a >= 1 && b >= 1  // both a and b must be positive integers\n    ensures forall i :: (0 <= i < |result| ==> result[i] % 2 == 0) // all elements in result are even\n    ensures forall x :: (x in result ==> a <= x <= b) // all elements in result are within the range [a, b]\n    ensures |result| == (if a <= b then (b / 2) - ((a + 1) / 2) + 1 else (a / 2) - ((b + 1) / 2) + 1) // count of even numbers\n{\n    // Function implementation would be here\n}",
+  "problem_id": "HumanEval/163",
+  "problem_data": {
+    "task_id": "HumanEval/163",
+    "prompt": "\ndef generate_integers(a, b):\n    \"\"\"\n    Given two positive integers a and b, return the even digits between a\n    and b, in ascending order.\n\n    For example:\n    generate_integers(2, 8) => [2, 4, 6, 8]\n    generate_integers(8, 2) => [2, 4, 6, 8]\n    generate_integers(10, 14) => []\n    \"\"\"\n",
+    "canonical_solution": "    lower = max(2, min(a, b))\n    upper = min(8, max(a, b))\n\n    return [i for i in range(lower, upper+1) if i % 2 == 0]\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(2, 10) == [2, 4, 6, 8], \"Test 1\"\n    assert candidate(10, 2) == [2, 4, 6, 8], \"Test 2\"\n    assert candidate(132, 2) == [2, 4, 6, 8], \"Test 3\"\n    assert candidate(17,89) == [], \"Test 4\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "generate_integers"
+  },
+  "path": "results/formalize/13/163_4_python.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 1.372623,
+  "time_start": "2025-04-25T05:56:10.029817",
+  "time_end": "2025-04-25T05:56:11.402440",
+  "prompt_tokens": 413,
+  "completion_tokens": 53,
+  "total_tokens": 466,
+  "raw": {
+    "id": "chatcmpl-BQA4wFzhuD7RgYmAilc3ELeV5KFlU",
+    "object": "chat.completion",
+    "created": 1745574970,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef generate_integers(a, b):\n    if a > b:\n        a, b = b, a\n    return [x for x in range(a, b + 1) if x % 2 == 0]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 413,
+      "completion_tokens": 53,
+      "total_tokens": 466,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 490.87807
+  }
+}

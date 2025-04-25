@@ -1,0 +1,63 @@
+{
+  "completion": "def unique_digits(x):\n    def has_even_digit(n):\n        return any(int(digit) % 2 == 0 for digit in str(n))\n\n    result = [num for num in x if not has_even_digit(num)]\n    return sorted(result)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires |x| > 0 // The input list must be non-empty\n    ensures forall i: int :: 0 <= i < |result| ==> result[i] % 2 == 1 // All elements in the result are odd\n    ensures result == Sort(Filter(x, IsOddDigit)) // The result is the sorted list of all elements with no even digits\n{\n    // Implementation would go here\n}",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/3/104_2_python.json",
+  "method": "formalize",
+  "trial": 3,
+  "time_taken": 1.16705,
+  "time_start": "2025-04-25T00:10:57.330234",
+  "time_end": "2025-04-25T00:10:58.497284",
+  "prompt_tokens": 334,
+  "completion_tokens": 57,
+  "total_tokens": 391,
+  "raw": {
+    "id": "chatcmpl-BQ4gr6GlFPEZRjg7fPQn7kVwdVIux",
+    "object": "chat.completion",
+    "created": 1745554257,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef unique_digits(x):\n    def has_even_digit(n):\n        return any(int(digit) % 2 == 0 for digit in str(n))\n\n    result = [num for num in x if not has_even_digit(num)]\n    return sorted(result)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 334,
+      "completion_tokens": 57,
+      "total_tokens": 391,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 492.96633
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 3
+}

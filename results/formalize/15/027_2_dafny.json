@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod flip_case(string: string) returns (result: string)\n    requires string != null\n    ensures |result| == |string| // The length of the result string is the same as the input string.\n    ensures forall i :: 0 <= i < |string| ==> \n        (result[i] == string[i].ToLower() <==> string[i] >= 'A' && string[i] <= 'Z') && \n        (result[i] == string[i].ToUpper() <==> string[i] >= 'a' && string[i] <= 'z') // The case is flipped for each character.\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+  "problem_id": "HumanEval/27",
+  "problem_data": {
+    "task_id": "HumanEval/27",
+    "prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+    "canonical_solution": "    return string.swapcase()\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('Hello!') == 'hELLO!'\n    assert candidate('These violent delights have violent ends') == 'tHESE VIOLENT DELIGHTS HAVE VIOLENT ENDS'\n",
+    "entry_point": "flip_case"
+  },
+  "path": "results/formalize/15/027_2_dafny.json",
+  "method": "formalize",
+  "trial": 15,
+  "time_taken": 3.415137,
+  "time_start": "2025-04-25T06:07:45.505466",
+  "time_end": "2025-04-25T06:07:48.920603",
+  "prompt_tokens": 135,
+  "completion_tokens": 143,
+  "total_tokens": 278,
+  "raw": {
+    "id": "chatcmpl-BQAG9Rd642QVJmHvMApPw7MMvTduX",
+    "object": "chat.completion",
+    "created": 1745575665,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod flip_case(string: string) returns (result: string)\n    requires string != null\n    ensures |result| == |string| // The length of the result string is the same as the input string.\n    ensures forall i :: 0 <= i < |string| ==> \n        (result[i] == string[i].ToLower() <==> string[i] >= 'A' && string[i] <= 'Z') && \n        (result[i] == string[i].ToUpper() <==> string[i] >= 'a' && string[i] <= 'z') // The case is flipped for each character.\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 135,
+      "completion_tokens": 143,
+      "total_tokens": 278,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 490.64906
+  }
+}

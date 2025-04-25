@@ -1,0 +1,60 @@
+{
+  "completion": "def encode(message):\n    vowels = 'aeiouAEIOU'\n    encoded_message = []\n\n    for char in message:\n        if char.isalpha():  # Check if the character is a letter\n            # Swap case\n            if char.islower():\n                swapped_char = char.upper()\n            else:\n                swapped_char = char.lower()\n\n            # Replace vowels with the letter 2 places ahead\n            if swapped_char in vowels:\n                if swapped_char.lower() == 'a':\n                    swapped_char = 'c' if swapped_char.islower() else 'C'\n                elif swapped_char.lower() == 'e':\n                    swapped_char = 'g' if swapped_char.islower() else 'G'\n                elif swapped_char.lower() == 'i':\n                    swapped_char = 'k' if swapped_char.islower() else 'K'\n                elif swapped_char.lower() == 'o':\n                    swapped_char = 'q' if swapped_char.islower() else 'Q'\n                elif swapped_char.lower() == 'u':\n                    swapped_char = 'w' if swapped_char.islower() else 'W'\n\n            encoded_message.append(swapped_char)\n        else:\n            encoded_message.append(char)  # Keep non-letter characters unchanged\n\n    return ''.join(encoded_message)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method encode(message: string) returns (encodedMessage: string)\n    requires message != null\n    ensures forall i :: 0 <= i < message.Length ==> \n        (if message[i] >= 'a' && message[i] <= 'z' then encodedMessage[i] == char.ToUpper(message[i]) \n         else if message[i] >= 'A' && message[i] <= 'Z' then encodedMessage[i] == char.ToLower(message[i]) \n         else encodedMessage[i] == message[i]) &&\n        (if message[i] == 'a' then encodedMessage[i] == 'c' \n         else if message[i] == 'e' then encodedMessage[i] == 'g' \n         else if message[i] == 'i' then encodedMessage[i] == 'k' \n         else if message[i] == 'o' then encodedMessage[i] == 'q' \n         else if message[i] == 'u' then encodedMessage[i] == 'w' \n         else true)",
+  "problem_id": "HumanEval/93",
+  "problem_data": {
+    "task_id": "HumanEval/93",
+    "prompt": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+    "canonical_solution": "    vowels = \"aeiouAEIOU\"\n    vowels_replace = dict([(i, chr(ord(i) + 2)) for i in vowels])\n    message = message.swapcase()\n    return ''.join([vowels_replace[i] if i in vowels else i for i in message])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "encode"
+  },
+  "path": "results/formalize/28/093_4_python.json",
+  "method": "formalize",
+  "trial": 28,
+  "time_taken": 4.338117,
+  "time_start": "2025-04-25T08:33:20.330293",
+  "time_end": "2025-04-25T08:33:24.668410",
+  "prompt_tokens": 450,
+  "completion_tokens": 260,
+  "total_tokens": 710,
+  "raw": {
+    "id": "chatcmpl-BQCX2gBjSax7O1pHnrFTZrL3cfbPS",
+    "object": "chat.completion",
+    "created": 1745584400,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef encode(message):\n    vowels = 'aeiouAEIOU'\n    encoded_message = []\n\n    for char in message:\n        if char.isalpha():  # Check if the character is a letter\n            # Swap case\n            if char.islower():\n                swapped_char = char.upper()\n            else:\n                swapped_char = char.lower()\n\n            # Replace vowels with the letter 2 places ahead\n            if swapped_char in vowels:\n                if swapped_char.lower() == 'a':\n                    swapped_char = 'c' if swapped_char.islower() else 'C'\n                elif swapped_char.lower() == 'e':\n                    swapped_char = 'g' if swapped_char.islower() else 'G'\n                elif swapped_char.lower() == 'i':\n                    swapped_char = 'k' if swapped_char.islower() else 'K'\n                elif swapped_char.lower() == 'o':\n                    swapped_char = 'q' if swapped_char.islower() else 'Q'\n                elif swapped_char.lower() == 'u':\n                    swapped_char = 'w' if swapped_char.islower() else 'W'\n\n            encoded_message.append(swapped_char)\n        else:\n            encoded_message.append(char)  # Keep non-letter characters unchanged\n\n    return ''.join(encoded_message)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 450,
+      "completion_tokens": 260,
+      "total_tokens": 710,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00022,
+    "your_harvard_credits_still_available": 487.89668
+  }
+}

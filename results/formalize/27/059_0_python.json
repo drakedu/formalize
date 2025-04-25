@@ -1,0 +1,60 @@
+{
+  "completion": "def largest_prime_factor(n: int):\n    largest_factor = None\n    factor = 2\n    \n    while n > 1:\n        if n % factor == 0:\n            largest_factor = factor\n            n //= factor\n        else:\n            factor += 1\n            \n    return largest_factor",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method largest_prime_factor(n: int) returns (result: int)\n    requires n > 1 // n must be greater than 1\n    requires not IsPrime(n) // n must not be a prime number\n    ensures result > 1 // result must be greater than 1\n    ensures IsPrime(result) // result must be a prime number\n    ensures result | n // result must be a factor of n\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/59",
+  "problem_data": {
+    "task_id": "HumanEval/59",
+    "prompt": "\n\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n",
+    "canonical_solution": "    def is_prime(k):\n        if k < 2:\n            return False\n        for i in range(2, k - 1):\n            if k % i == 0:\n                return False\n        return True\n    largest = 1\n    for j in range(2, n + 1):\n        if n % j == 0 and is_prime(j):\n            largest = max(largest, j)\n    return largest\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(15) == 5\n    assert candidate(27) == 3\n    assert candidate(63) == 7\n    assert candidate(330) == 11\n    assert candidate(13195) == 29\n\n",
+    "entry_point": "largest_prime_factor"
+  },
+  "path": "results/formalize/27/059_0_python.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 1.306669,
+  "time_start": "2025-04-25T08:19:52.263100",
+  "time_end": "2025-04-25T08:19:53.569769",
+  "prompt_tokens": 290,
+  "completion_tokens": 67,
+  "total_tokens": 357,
+  "raw": {
+    "id": "chatcmpl-BQCK0SeXLNQsoUIGrcF6FTDdvTkk0",
+    "object": "chat.completion",
+    "created": 1745583592,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef largest_prime_factor(n: int):\n    largest_factor = None\n    factor = 2\n    \n    while n > 1:\n        if n % factor == 0:\n            largest_factor = factor\n            n //= factor\n        else:\n            factor += 1\n            \n    return largest_factor\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 290,
+      "completion_tokens": 67,
+      "total_tokens": 357,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 488.16733
+  }
+}

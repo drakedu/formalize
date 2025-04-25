@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod max_fill(grid: array<array<int>>, capacity: int) returns (result: int)\n    requires grid != null && capacity > 0 && capacity <= 10\n    requires forall i, j :: 0 <= i < grid.Length && 0 <= j < grid[i].Length ==> (grid[i][j] == 0 || grid[i][j] == 1)\n    requires 1 <= grid.Length <= 100 && 1 <= grid[0].Length <= 100\n    ensures result >= 0\n    ensures result == Sum(i | i in 0 .. grid.Length, Sum(j | j in 0 .. grid[i].Length, grid[i][j])) / capacity + (if Sum(i | i in 0 .. grid.Length, Sum(j | j in 0 .. grid[i].Length, grid[i][j])) % capacity > 0 then 1 else 0)\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef max_fill(grid, capacity):\n    import math\n    \"\"\"\n    You are given a rectangular grid of wells. Each row represents a single well,\n    and each 1 in a row represents a single unit of water.\n    Each well has a corresponding bucket that can be used to extract water from it, \n    and all buckets have the same capacity.\n    Your task is to use the buckets to empty the wells.\n    Output the number of times you need to lower the buckets.\n\n    Example 1:\n        Input: \n            grid : [[0,0,1,0], [0,1,0,0], [1,1,1,1]]\n            bucket_capacity : 1\n        Output: 6\n\n    Example 2:\n        Input: \n            grid : [[0,0,1,1], [0,0,0,0], [1,1,1,1], [0,1,1,1]]\n            bucket_capacity : 2\n        Output: 5\n    \n    Example 3:\n        Input: \n            grid : [[0,0,0], [0,0,0]]\n            bucket_capacity : 5\n        Output: 0\n\n    Constraints:\n        * all wells have the same length\n        * 1 <= grid.length <= 10^2\n        * 1 <= grid[:,1].length <= 10^2\n        * grid[i][j] -> 0 | 1\n        * 1 <= capacity <= 10\n    \"\"\"\n",
+  "problem_id": "HumanEval/115",
+  "problem_data": {
+    "task_id": "HumanEval/115",
+    "prompt": "\ndef max_fill(grid, capacity):\n    import math\n    \"\"\"\n    You are given a rectangular grid of wells. Each row represents a single well,\n    and each 1 in a row represents a single unit of water.\n    Each well has a corresponding bucket that can be used to extract water from it, \n    and all buckets have the same capacity.\n    Your task is to use the buckets to empty the wells.\n    Output the number of times you need to lower the buckets.\n\n    Example 1:\n        Input: \n            grid : [[0,0,1,0], [0,1,0,0], [1,1,1,1]]\n            bucket_capacity : 1\n        Output: 6\n\n    Example 2:\n        Input: \n            grid : [[0,0,1,1], [0,0,0,0], [1,1,1,1], [0,1,1,1]]\n            bucket_capacity : 2\n        Output: 5\n    \n    Example 3:\n        Input: \n            grid : [[0,0,0], [0,0,0]]\n            bucket_capacity : 5\n        Output: 0\n\n    Constraints:\n        * all wells have the same length\n        * 1 <= grid.length <= 10^2\n        * 1 <= grid[:,1].length <= 10^2\n        * grid[i][j] -> 0 | 1\n        * 1 <= capacity <= 10\n    \"\"\"\n",
+    "canonical_solution": "    return sum([math.ceil(sum(arr)/capacity) for arr in grid])\n",
+    "test": "def check(candidate):\n\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([[0,0,1,0], [0,1,0,0], [1,1,1,1]], 1) == 6, \"Error\"\n    assert candidate([[0,0,1,1], [0,0,0,0], [1,1,1,1], [0,1,1,1]], 2) == 5, \"Error\"\n    assert candidate([[0,0,0], [0,0,0]], 5) == 0, \"Error\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate([[1,1,1,1], [1,1,1,1]], 2) == 4, \"Error\"\n    assert candidate([[1,1,1,1], [1,1,1,1]], 9) == 2, \"Error\"\n\n",
+    "entry_point": "max_fill"
+  },
+  "path": "results/formalize/14/115_0_dafny.json",
+  "method": "formalize",
+  "trial": 14,
+  "time_taken": 3.659943,
+  "time_start": "2025-04-25T06:01:58.874657",
+  "time_end": "2025-04-25T06:02:02.534600",
+  "prompt_tokens": 410,
+  "completion_tokens": 203,
+  "total_tokens": 613,
+  "raw": {
+    "id": "chatcmpl-BQAAZcQ2tSKkn8X0lI1Ar9bnDcjcM",
+    "object": "chat.completion",
+    "created": 1745575319,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod max_fill(grid: array<array<int>>, capacity: int) returns (result: int)\n    requires grid != null && capacity > 0 && capacity <= 10\n    requires forall i, j :: 0 <= i < grid.Length && 0 <= j < grid[i].Length ==> (grid[i][j] == 0 || grid[i][j] == 1)\n    requires 1 <= grid.Length <= 100 && 1 <= grid[0].Length <= 100\n    ensures result >= 0\n    ensures result == Sum(i | i in 0 .. grid.Length, Sum(j | j in 0 .. grid[i].Length, grid[i][j])) / capacity + (if Sum(i | i in 0 .. grid.Length, Sum(j | j in 0 .. grid[i].Length, grid[i][j])) % capacity > 0 then 1 else 0)\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 410,
+      "completion_tokens": 203,
+      "total_tokens": 613,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00018,
+    "your_harvard_credits_still_available": 490.74914
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod get_row(lst: seq<seq<int>>, x: int) returns (result: seq<(int, int)>)\n    requires forall i :: 0 <= i < |lst| ==> forall j :: 0 <= j < |lst[i]| ==> lst[i][j] is int\n    requires |lst| <= 10^6 // Assuming a reasonable upper limit for performance\n    requires forall i :: 0 <= i < |lst| ==> |lst[i]| <= 10^6 // Also assuming each row should not exceed this limit\n    ensures forall (r, c) :: (r, c) in result ==> 0 <= r < |lst| && 0 <= c < |lst[r]| && lst[r][c] == x\n    ensures |result| == CountOccurrences(lst, x) // Function to count occurrences of x in lst\n    ensures result == SortCoordinates(result) // Function to sort coordinates as specified\n\n// Helper function to count occurrences of x in lst\nfunction CountOccurrences(lst: seq<seq<int>>, x: int): int\n    reads lst\n    decreases |lst|\n    {\n        if |lst| == 0 then\n            return 0;\n        else\n            return CountOccurrences(lst[1..], x) + CountInRow(lst[0], x);\n    }\n\n// Helper function to count occurrences of x in a single row\nfunction CountInRow(row: seq<int>, x: int): int\n    reads row\n    decreases |row|\n    {\n        if |row| == 0 then\n            return 0;\n        else if row[0] == x then\n            return 1 + CountInRow(row[1..], x);\n        else\n            return CountInRow(row[1..], x);\n    }\n\n// Helper function to sort the coordinates\nfunction SortCoordinates(coords: seq<(int, int)>): seq<(int, int)>\n    reads coords\n    // Implementation of sorting logic\n```\n",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n",
+  "problem_id": "HumanEval/87",
+  "problem_data": {
+    "task_id": "HumanEval/87",
+    "prompt": "\ndef get_row(lst, x):\n    \"\"\"\n    You are given a 2 dimensional data, as a nested lists,\n    which is similar to matrix, however, unlike matrices,\n    each row may contain a different number of columns.\n    Given lst, and integer x, find integers x in the list,\n    and return list of tuples, [(x1, y1), (x2, y2) ...] such that\n    each tuple is a coordinate - (row, columns), starting with 0.\n    Sort coordinates initially by rows in ascending order.\n    Also, sort coordinates of the row by columns in descending order.\n    \n    Examples:\n    get_row([\n      [1,2,3,4,5,6],\n      [1,2,3,4,1,6],\n      [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    get_row([], 1) == []\n    get_row([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n    \"\"\"\n",
+    "canonical_solution": "    coords = [(i, j) for i in range(len(lst)) for j in range(len(lst[i])) if lst[i][j] == x]\n    return sorted(sorted(coords, key=lambda x: x[1], reverse=True), key=lambda x: x[0])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 4), (1, 0), (2, 5), (2, 0)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6]\n    ], 2) == [(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]\n    assert candidate([\n        [1,2,3,4,5,6],\n        [1,2,3,4,5,6],\n        [1,1,3,4,5,6],\n        [1,2,1,4,5,6],\n        [1,2,3,1,5,6],\n        [1,2,3,4,1,6],\n        [1,2,3,4,5,1]\n    ], 1) == [(0, 0), (1, 0), (2, 1), (2, 0), (3, 2), (3, 0), (4, 3), (4, 0), (5, 4), (5, 0), (6, 5), (6, 0)]\n    assert candidate([], 1) == []\n    assert candidate([[1]], 2) == []\n    assert candidate([[], [1], [1, 2, 3]], 3) == [(2, 2)]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "get_row"
+  },
+  "path": "results/formalize/27/087_2_dafny.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 7.875536,
+  "time_start": "2025-04-25T08:21:55.061708",
+  "time_end": "2025-04-25T08:22:02.937244",
+  "prompt_tokens": 346,
+  "completion_tokens": 413,
+  "total_tokens": 759,
+  "raw": {
+    "id": "chatcmpl-BQCLzz7TWhBpM6rYe7z0ilmTzdBU5",
+    "object": "chat.completion",
+    "created": 1745583715,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod get_row(lst: seq<seq<int>>, x: int) returns (result: seq<(int, int)>)\n    requires forall i :: 0 <= i < |lst| ==> forall j :: 0 <= j < |lst[i]| ==> lst[i][j] is int\n    requires |lst| <= 10^6 // Assuming a reasonable upper limit for performance\n    requires forall i :: 0 <= i < |lst| ==> |lst[i]| <= 10^6 // Also assuming each row should not exceed this limit\n    ensures forall (r, c) :: (r, c) in result ==> 0 <= r < |lst| && 0 <= c < |lst[r]| && lst[r][c] == x\n    ensures |result| == CountOccurrences(lst, x) // Function to count occurrences of x in lst\n    ensures result == SortCoordinates(result) // Function to sort coordinates as specified\n\n// Helper function to count occurrences of x in lst\nfunction CountOccurrences(lst: seq<seq<int>>, x: int): int\n    reads lst\n    decreases |lst|\n    {\n        if |lst| == 0 then\n            return 0;\n        else\n            return CountOccurrences(lst[1..], x) + CountInRow(lst[0], x);\n    }\n\n// Helper function to count occurrences of x in a single row\nfunction CountInRow(row: seq<int>, x: int): int\n    reads row\n    decreases |row|\n    {\n        if |row| == 0 then\n            return 0;\n        else if row[0] == x then\n            return 1 + CountInRow(row[1..], x);\n        else\n            return CountInRow(row[1..], x);\n    }\n\n// Helper function to sort the coordinates\nfunction SortCoordinates(coords: seq<(int, int)>): seq<(int, int)>\n    reads coords\n    // Implementation of sorting logic\n```\n",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 346,
+      "completion_tokens": 413,
+      "total_tokens": 759,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00029,
+    "your_harvard_credits_still_available": 488.12927
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "completion": "from typing import List\n\ndef parse_music(music_string: str) -> List[int]:\n    beats = []\n    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    notes = music_string.split()\n    \n    for note in notes:\n        if note in note_map:\n            beats.append(note_map[note])\n    \n    return beats",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "// Specification for the parse_music function\nmethod parse_music(music_string: string) returns (beats: seq<int>)\n    requires music_string != null\n    ensures |beats| > 0 ==> \n        forall i :: 0 <= i < |beats| ==> \n            (beats[i] == 4 || beats[i] == 2 || beats[i] == 1)",
+  "problem_id": "HumanEval/17",
+  "problem_data": {
+    "task_id": "HumanEval/17",
+    "prompt": "from typing import List\n\n\ndef parse_music(music_string: str) -> List[int]:\n    \"\"\" Input to this function is a string representing musical notes in a special ASCII format.\n    Your task is to parse this string and return list of integers corresponding to how many beats does each\n    not last.\n\n    Here is a legend:\n    'o' - whole note, lasts four beats\n    'o|' - half note, lasts two beats\n    '.|' - quater note, lasts one beat\n\n    >>> parse_music('o o| .| o| o| .| .| .| .| o o')\n    [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n    \"\"\"\n",
+    "canonical_solution": "    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    return [note_map[x] for x in music_string.split(' ') if x]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('o o o o') == [4, 4, 4, 4]\n    assert candidate('.| .| .| .|') == [1, 1, 1, 1]\n    assert candidate('o| o| .| .| o o o o') == [2, 2, 1, 1, 4, 4, 4, 4]\n    assert candidate('o| .| o| .| o o| o o|') == [2, 1, 2, 1, 4, 2, 4, 2]\n",
+    "entry_point": "parse_music"
+  },
+  "path": "results/formalize/2/017_1_python.json",
+  "method": "formalize",
+  "trial": 2,
+  "time_taken": 7.800529,
+  "time_start": "2025-04-24T22:08:11.636609",
+  "time_end": "2025-04-24T22:08:19.437138",
+  "prompt_tokens": 378,
+  "completion_tokens": 84,
+  "total_tokens": 462,
+  "raw": {
+    "id": "chatcmpl-BQ2m32wtmR83jzlzUR9HsfHKWrMsN",
+    "object": "chat.completion",
+    "created": 1745546891,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef parse_music(music_string: str) -> List[int]:\n    beats = []\n    note_map = {'o': 4, 'o|': 2, '.|': 1}\n    notes = music_string.split()\n    \n    for note in notes:\n        if note in note_map:\n            beats.append(note_map[note])\n    \n    return beats\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 378,
+      "completion_tokens": 84,
+      "total_tokens": 462,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 493.26377
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 1
+}

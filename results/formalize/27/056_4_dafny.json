@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod correct_bracketing(brackets: string) returns (result: bool)\n    requires brackets != null\n    ensures result == (CountOpeningBrackets(brackets) == CountClosingBrackets(brackets) && \n                      AllOpeningBracketsBalanced(brackets))\n{\n    // Implementation would go here\n}\n\nfunction CountOpeningBrackets(brackets: string): int\n    reads brackets\n    ensures 0 <= result <= |brackets|\n{\n    var count := 0;\n    var i := 0;\n    while (i < |brackets|)\n        invariant 0 <= count <= i\n        invariant count == CountOpeningBrackets(brackets[..i])\n    {\n        if (brackets[i] == '<') {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\nfunction CountClosingBrackets(brackets: string): int\n    reads brackets\n    ensures 0 <= result <= |brackets|\n{\n    var count := 0;\n    var i := 0;\n    while (i < |brackets|)\n        invariant 0 <= count <= i\n        invariant count == CountClosingBrackets(brackets[..i])\n    {\n        if (brackets[i] == '>') {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\nfunction AllOpeningBracketsBalanced(brackets: string): bool\n    reads brackets\n    ensures result == true || result == false\n{\n    var balance := 0;\n    var i := 0;\n    while (i < |brackets|)\n        invariant -1 <= balance <= i\n    {\n        if (brackets[i] == '<') {\n            balance := balance + 1;\n        } else if (brackets[i] == '>') {\n            balance := balance - 1;\n        }\n        if (balance < 0) {\n            return false;\n        }\n        i := i + 1;\n    }\n    return balance == 0;\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"<\" and \">\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"<\")\n    False\n    >>> correct_bracketing(\"<>\")\n    True\n    >>> correct_bracketing(\"<<><>>\")\n    True\n    >>> correct_bracketing(\"><<>\")\n    False\n    \"\"\"\n",
+  "problem_id": "HumanEval/56",
+  "problem_data": {
+    "task_id": "HumanEval/56",
+    "prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"<\" and \">\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"<\")\n    False\n    >>> correct_bracketing(\"<>\")\n    True\n    >>> correct_bracketing(\"<<><>>\")\n    True\n    >>> correct_bracketing(\"><<>\")\n    False\n    \"\"\"\n",
+    "canonical_solution": "    depth = 0\n    for b in brackets:\n        if b == \"<\":\n            depth += 1\n        else:\n            depth -= 1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(\"<>\")\n    assert candidate(\"<<><>>\")\n    assert candidate(\"<><><<><>><>\")\n    assert candidate(\"<><><<<><><>><>><<><><<>>>\")\n    assert not candidate(\"<<<><>>>>\")\n    assert not candidate(\"><<>\")\n    assert not candidate(\"<\")\n    assert not candidate(\"<<<<\")\n    assert not candidate(\">\")\n    assert not candidate(\"<<>\")\n    assert not candidate(\"<><><<><>><>><<>\")\n    assert not candidate(\"<><><<><>><>>><>\")\n\n",
+    "entry_point": "correct_bracketing"
+  },
+  "path": "results/formalize/27/056_4_dafny.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 7.902225,
+  "time_start": "2025-04-25T08:20:14.342237",
+  "time_end": "2025-04-25T08:20:22.244462",
+  "prompt_tokens": 180,
+  "completion_tokens": 428,
+  "total_tokens": 608,
+  "raw": {
+    "id": "chatcmpl-BQCKMUrJ3kZMMAHpqqbyigWwFztiA",
+    "object": "chat.completion",
+    "created": 1745583614,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod correct_bracketing(brackets: string) returns (result: bool)\n    requires brackets != null\n    ensures result == (CountOpeningBrackets(brackets) == CountClosingBrackets(brackets) && \n                      AllOpeningBracketsBalanced(brackets))\n{\n    // Implementation would go here\n}\n\nfunction CountOpeningBrackets(brackets: string): int\n    reads brackets\n    ensures 0 <= result <= |brackets|\n{\n    var count := 0;\n    var i := 0;\n    while (i < |brackets|)\n        invariant 0 <= count <= i\n        invariant count == CountOpeningBrackets(brackets[..i])\n    {\n        if (brackets[i] == '<') {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\nfunction CountClosingBrackets(brackets: string): int\n    reads brackets\n    ensures 0 <= result <= |brackets|\n{\n    var count := 0;\n    var i := 0;\n    while (i < |brackets|)\n        invariant 0 <= count <= i\n        invariant count == CountClosingBrackets(brackets[..i])\n    {\n        if (brackets[i] == '>') {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\nfunction AllOpeningBracketsBalanced(brackets: string): bool\n    reads brackets\n    ensures result == true || result == false\n{\n    var balance := 0;\n    var i := 0;\n    while (i < |brackets|)\n        invariant -1 <= balance <= i\n    {\n        if (brackets[i] == '<') {\n            balance := balance + 1;\n        } else if (brackets[i] == '>') {\n            balance := balance - 1;\n        }\n        if (balance < 0) {\n            return false;\n        }\n        i := i + 1;\n    }\n    return balance == 0;\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 180,
+      "completion_tokens": 428,
+      "total_tokens": 608,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00028,
+    "your_harvard_credits_still_available": 488.15981
+  }
+}

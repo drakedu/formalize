@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod fruit_distribution(s: string, n: int) returns (mangos: int)\n    requires s != \"\" // The input string must not be empty\n    requires n >= 0 // The total number of fruits must be non-negative\n    ensures mangos >= 0 // The number of mangoes must be non-negative\n    ensures mangos == n - (count_apples(s) + count_oranges(s)) // The number of mangoes is correctly computed\n{\n    // Implementation would go here\n}\n\n// Helper methods to count apples and oranges\nmethod count_apples(s: string) returns (count: int)\n    // This method should implement the logic to extract the number of apples from the string\n{}\n\nmethod count_oranges(s: string) returns (count: int)\n    // This method should implement the logic to extract the number of oranges from the string\n{}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n",
+  "problem_id": "HumanEval/67",
+  "problem_data": {
+    "task_id": "HumanEval/67",
+    "prompt": "\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n",
+    "canonical_solution": "    lis = list()\n    for i in s.split(' '):\n        if i.isdigit():\n            lis.append(int(i))\n    return n - sum(lis)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"5 apples and 6 oranges\",19) == 8\n    assert candidate(\"5 apples and 6 oranges\",21) == 10\n    assert candidate(\"0 apples and 1 oranges\",3) == 2\n    assert candidate(\"1 apples and 0 oranges\",3) == 2\n    assert candidate(\"2 apples and 3 oranges\",100) == 95\n    assert candidate(\"2 apples and 3 oranges\",5) == 0\n    assert candidate(\"1 apples and 100 oranges\",120) == 19\n",
+    "entry_point": "fruit_distribution"
+  },
+  "path": "results/formalize/11/067_3_dafny.json",
+  "method": "formalize",
+  "trial": 11,
+  "time_taken": 3.779882,
+  "time_start": "2025-04-25T05:31:07.150887",
+  "time_end": "2025-04-25T05:31:10.930769",
+  "prompt_tokens": 297,
+  "completion_tokens": 185,
+  "total_tokens": 482,
+  "raw": {
+    "id": "chatcmpl-BQ9gh2ThDjLykNmPvAMS0cDrQFhlC",
+    "object": "chat.completion",
+    "created": 1745573467,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod fruit_distribution(s: string, n: int) returns (mangos: int)\n    requires s != \"\" // The input string must not be empty\n    requires n >= 0 // The total number of fruits must be non-negative\n    ensures mangos >= 0 // The number of mangoes must be non-negative\n    ensures mangos == n - (count_apples(s) + count_oranges(s)) // The number of mangoes is correctly computed\n{\n    // Implementation would go here\n}\n\n// Helper methods to count apples and oranges\nmethod count_apples(s: string) returns (count: int)\n    // This method should implement the logic to extract the number of apples from the string\n{}\n\nmethod count_oranges(s: string) returns (count: int)\n    // This method should implement the logic to extract the number of oranges from the string\n{}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 297,
+      "completion_tokens": 185,
+      "total_tokens": 482,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 491.40853
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "def is_bored(S):\n    sentences = [s.strip() for s in S.split('.') + S.split('?') + S.split('!')]\n    count = sum(1 for sentence in sentences if sentence.startswith('I'))\n    return count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method is_bored(S: string) returns (count: int)\n    requires S != null\n    ensures count >= 0\n    ensures count == CountBoredoms(S)\n\n    // CountBoredoms is a helper function that counts the number of sentences\n    // starting with \"I\". It is an abstract notion for the sake of the specification.\n    // The actual implementation would be provided in the method body.\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/91",
+  "problem_data": {
+    "task_id": "HumanEval/91",
+    "prompt": "\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n",
+    "canonical_solution": "    import re\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence[0:2] == 'I ' for sentence in sentences)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "is_bored"
+  },
+  "path": "results/formalize/12/091_3_python.json",
+  "method": "formalize",
+  "trial": 12,
+  "time_taken": 1.816469,
+  "time_start": "2025-04-25T05:41:56.733294",
+  "time_end": "2025-04-25T05:41:58.549763",
+  "prompt_tokens": 332,
+  "completion_tokens": 55,
+  "total_tokens": 387,
+  "raw": {
+    "id": "chatcmpl-BQ9rAbdW322ydVGy22oHEVWEQ4kkR",
+    "object": "chat.completion",
+    "created": 1745574116,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef is_bored(S):\n    sentences = [s.strip() for s in S.split('.') + S.split('?') + S.split('!')]\n    count = sum(1 for sentence in sentences if sentence.startswith('I'))\n    return count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 332,
+      "completion_tokens": 55,
+      "total_tokens": 387,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 491.18222
+  }
+}

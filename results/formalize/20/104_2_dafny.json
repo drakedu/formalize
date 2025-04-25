@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in the list must be positive integers.\n    ensures forall y :: y in result ==> y in x // All elements in the result must be in the input list.\n    ensures |result| == CountUniqueDigits(x) // The result should have the correct number of unique elements with no even digits.\n    ensures result == Sort(result) // The result should be sorted in increasing order.\n{\n    // Implementation goes here\n}\n\n// Helper function to count the unique elements without any even digits.\nfunction CountUniqueDigits(x: seq<int>) : int\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0\n    ensures CountUniqueDigits(x) >= 0\n{\n    // Count logic goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/20/104_2_dafny.json",
+  "method": "formalize",
+  "trial": 20,
+  "time_taken": 4.176704,
+  "time_start": "2025-04-25T07:03:28.919967",
+  "time_end": "2025-04-25T07:03:33.096671",
+  "prompt_tokens": 188,
+  "completion_tokens": 194,
+  "total_tokens": 382,
+  "raw": {
+    "id": "chatcmpl-BQB85d1dX73BcRQRrsGLRgZZWqAer",
+    "object": "chat.completion",
+    "created": 1745579009,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in the list must be positive integers.\n    ensures forall y :: y in result ==> y in x // All elements in the result must be in the input list.\n    ensures |result| == CountUniqueDigits(x) // The result should have the correct number of unique elements with no even digits.\n    ensures result == Sort(result) // The result should be sorted in increasing order.\n{\n    // Implementation goes here\n}\n\n// Helper function to count the unique elements without any even digits.\nfunction CountUniqueDigits(x: seq<int>) : int\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0\n    ensures CountUniqueDigits(x) >= 0\n{\n    // Count logic goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 188,
+      "completion_tokens": 194,
+      "total_tokens": 382,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00014,
+    "your_harvard_credits_still_available": 489.53987
+  }
+}

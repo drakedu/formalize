@@ -1,0 +1,60 @@
+{
+  "completion": "def closest_integer(value):\n    num = float(value)\n    if num > 0:\n        return int(num + 0.5)\n    else:\n        return int(num - 0.5)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef closest_integer(value):\n    '''\n    Create a function that takes a value (string) representing a number\n    and returns the closest integer to it. If the number is equidistant\n    from two integers, round it away from zero.\n\n    Examples\n    >>> closest_integer(\"10\")\n    10\n    >>> closest_integer(\"15.3\")\n    15\n\n    Note:\n    Rounding away from zero means that if the given number is equidistant\n    from two integers, the one you should return is the one that is the\n    farthest from zero. For example closest_integer(\"14.5\") should\n    return 15 and closest_integer(\"-14.5\") should return -15.\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method closest_integer(value: string) returns (result: int)\n    requires value != \"\"\n    requires value == \"0\" || value == \"1\" || value == \"2\" || value == \"3\" || value == \"4\" || value == \"5\" || value == \"6\" || value == \"7\" || value == \"8\" || value == \"9\" || \n             value == \"10\" || value == \"11\" || value == \"12\" || value == \"13\" || value == \"14\" || value == \"15\" || value == \"16\" || value == \"17\" || value == \"18\" || value == \"19\" || \n             value == \"20\" || value == \"21\" || value == \"22\" || value == \"23\" || value == \"24\" || value == \"25\" || value == \"26\" || value == \"27\" || value == \"28\" || value == \"29\" || \n             value == \"30\" || value == \"31\" || value == \"32\" || value == \"33\" || value == \"34\" || value == \"35\" || value == \"36\" || value == \"37\" || value == \"38\" || value == \"39\" || \n             value == \"40\" || value == \"41\" || value == \"42\" || value == \"43\" || value == \"44\" || value == \"45\" || value == \"46\" || value == \"47\" || value == \"48\" || value == \"49\" || \n             value == \"50\" || value == \"51\" || value == \"52\" || value == \"53\" || value == \"54\" || value == \"55\" || value == \"56\" || value == \"57\" || value == \"58\" || value == \"59\" || \n             value == \"60\" || value == \"61\" || value == \"62\" || value == \"63\" || value == \"64\" || value == \"65\" || value == \"66\" || value == \"67\" || value == \"68\" || value == \"69\" || \n             value == \"70\" || value == \"71\" || value == \"72\" || value == \"73\" || value == \"74\" || value == \"75\" || value == \"76\" || value == \"77\" || value == \"78\" || value == \"79\" || \n             value == \"80\" || value == \"81\" || value == \"82\" || value == \"83\" || value == \"84\" || value == \"85\" || value == \"86\" || value == \"87\" || value == \"88\" || value == \"89\" || \n             value == \"90\" || value == \"91\" || value == \"92\" || value == \"93\" || value == \"94\" || value == \"95\" || value == \"96\" || value == \"97\" || value == \"98\" || value == \"99\" || \n             value == \"-1\" || value == \"-2\" || value == \"-3\" || value == \"-4\" || value == \"-5\" || value == \"-6\" || value == \"-7\" || value == \"-8\" || value == \"-9\" || value == \"-10\" || \n             value == \"-11\" || value == \"-12\" || value == \"-13\" || value == \"-14\" || value == \"-15\" || value == \"-16\" || value == \"-17\" || value == \"-18\" || value == \"-19\" || value == \"-20\" || \n             value == \"-21\" || value == \"-22\" || value == \"-23\" || value == \"-24\" || value == \"-25\" || value == \"-26\" || value == \"-27\" || value == \"-28\" || value == \"-29\" || value == \"-30\" || \n             value == \"-31\" || value == \"-32\" || value == \"-33\" || value == \"-34\" || value == \"-35\" || value == \"-36\" || value == \"-37\" || value == \"-38\" || value == \"-39\" || value == \"-40\" || \n             value == \"-41\" || value == \"-42\" || value == \"-43\" || value == \"-44\" || value == \"-45\" || value == \"-46\" || value == \"-47\" || value == \"-48\" || value == \"-49\" || value == \"-50\" || \n             value == \"-51\" || value == \"-52\" || value == \"-53\" || value == \"-54\" || value == \"-55\" || value == \"-56\" || value == \"-57\" || value == \"-58\" || value == \"-59\" || value == \"-60\" || \n             value == \"-61\" || value == \"-62\" || value == \"-63\" || value == \"-64\" || value == \"-65\" || value == \"-66\" || value == \"-67\" || value == \"-68\" || value == \"-69\" || value == \"-70\" || \n             value == \"-71\" || value == \"-72\" || value == \"-73\" || value == \"-74\" || value == \"-75\" || value == \"-76\" || value == \"-77\" || value == \"-78\" || value == \"-79\" || value == \"-80\" || \n             value == \"-81\" || value == \"-82\" || value == \"-83\" || value == \"-84\" || value == \"-85\" || value == \"-86\" || value == \"-87\" || value == \"-88\" || value == \"-89\" || value == \"-90\" || \n             value == \"-91\" || value == \"-92\" || value == \"-93\" || value == \"-94\" || value == \"-95\" || value == \"-96\" || value == \"-97\" || value == \"-98\" || value == \"-99\" \n    ensures (result == floor(to_real(value)) || result == ceil(to_real(value))) && \n            (if abs(to_real(value) - floor(to_real(value))) < 0.5 then result == floor(to_real(value)) else\n             if abs(to_real(value) - ceil(to_real(value))) < 0.5 then result == ceil(to_real(value)) else \n             (if to_real(value) > 0 then result == ceil(to_real(value)) else result == floor(to_real(value))))",
+  "problem_id": "HumanEval/99",
+  "problem_data": {
+    "task_id": "HumanEval/99",
+    "prompt": "\ndef closest_integer(value):\n    '''\n    Create a function that takes a value (string) representing a number\n    and returns the closest integer to it. If the number is equidistant\n    from two integers, round it away from zero.\n\n    Examples\n    >>> closest_integer(\"10\")\n    10\n    >>> closest_integer(\"15.3\")\n    15\n\n    Note:\n    Rounding away from zero means that if the given number is equidistant\n    from two integers, the one you should return is the one that is the\n    farthest from zero. For example closest_integer(\"14.5\") should\n    return 15 and closest_integer(\"-14.5\") should return -15.\n    '''\n",
+    "canonical_solution": "    from math import floor, ceil\n\n    if value.count('.') == 1:\n        # remove trailing zeros\n        while (value[-1] == '0'):\n            value = value[:-1]\n\n    num = float(value)\n    if value[-2:] == '.5':\n        if num > 0:\n            res = ceil(num)\n        else:\n            res = floor(num)\n    elif len(value) > 0:\n        res = int(round(num))\n    else:\n        res = 0\n\n    return res\n\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"10\") == 10, \"Test 1\"\n    assert candidate(\"14.5\") == 15, \"Test 2\"\n    assert candidate(\"-15.5\") == -16, \"Test 3\"\n    assert candidate(\"15.3\") == 15, \"Test 3\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"0\") == 0, \"Test 0\"\n\n",
+    "entry_point": "closest_integer"
+  },
+  "path": "results/formalize/29/099_4_python.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 1.228722,
+  "time_start": "2025-04-25T08:44:36.789280",
+  "time_end": "2025-04-25T08:44:38.018002",
+  "prompt_tokens": 1642,
+  "completion_tokens": 46,
+  "total_tokens": 1688,
+  "raw": {
+    "id": "chatcmpl-BQChwTSA7yjQfFWNP5O8yBb7BtRsE",
+    "object": "chat.completion",
+    "created": 1745585076,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef closest_integer(value):\n    num = float(value)\n    if num > 0:\n        return int(num + 0.5)\n    else:\n        return int(num - 0.5)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 1642,
+      "completion_tokens": 46,
+      "total_tokens": 1688,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00027,
+    "your_harvard_credits_still_available": 487.68713
+  }
+}

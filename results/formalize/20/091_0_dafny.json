@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod is_bored(S: string) returns (count: int)\n    requires S != null\n    ensures count >= 0\n    ensures count == CountBoredoms(S)\n\n    // Auxiliary function to count the boredoms\n    function CountBoredoms(S: string): int\n        reads S\n        decreases |S|\n        ensures result >= 0\n    {\n        var sentences := SplitSentences(S);\n        var b := 0;\n        foreach s in sentences {\n            if IsBoredom(s) {\n                b := b + 1;\n            }\n        }\n        return b;\n    }\n\n    // Function to split the string into sentences\n    function SplitSentences(S: string): seq<string>\n        reads S\n        ensures |result| >= 0\n    {\n        // Implementation detail\n    }\n\n    // Function to check if a sentence is a boredom\n    function IsBoredom(s: string): bool\n        reads s\n    {\n        // Implementation detail\n    }\n```\n",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n",
+  "problem_id": "HumanEval/91",
+  "problem_data": {
+    "task_id": "HumanEval/91",
+    "prompt": "\ndef is_bored(S):\n    \"\"\"\n    You'll be given a string of words, and your task is to count the number\n    of boredoms. A boredom is a sentence that starts with the word \"I\".\n    Sentences are delimited by '.', '?' or '!'.\n   \n    For example:\n    >>> is_bored(\"Hello world\")\n    0\n    >>> is_bored(\"The sky is blue. The sun is shining. I love this weather\")\n    1\n    \"\"\"\n",
+    "canonical_solution": "    import re\n    sentences = re.split(r'[.?!]\\s*', S)\n    return sum(sentence[0:2] == 'I ' for sentence in sentences)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Hello world\") == 0, \"Test 1\"\n    assert candidate(\"Is the sky blue?\") == 0, \"Test 2\"\n    assert candidate(\"I love It !\") == 1, \"Test 3\"\n    assert candidate(\"bIt\") == 0, \"Test 4\"\n    assert candidate(\"I feel good today. I will be productive. will kill It\") == 2, \"Test 5\"\n    assert candidate(\"You and I are going for a walk\") == 0, \"Test 6\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "is_bored"
+  },
+  "path": "results/formalize/20/091_0_dafny.json",
+  "method": "formalize",
+  "trial": 20,
+  "time_taken": 5.089661,
+  "time_start": "2025-04-25T07:02:11.703640",
+  "time_end": "2025-04-25T07:02:16.793301",
+  "prompt_tokens": 194,
+  "completion_tokens": 214,
+  "total_tokens": 408,
+  "raw": {
+    "id": "chatcmpl-BQB6pWSisFLEdFFdMfWlwuMPiDvZj",
+    "object": "chat.completion",
+    "created": 1745578931,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod is_bored(S: string) returns (count: int)\n    requires S != null\n    ensures count >= 0\n    ensures count == CountBoredoms(S)\n\n    // Auxiliary function to count the boredoms\n    function CountBoredoms(S: string): int\n        reads S\n        decreases |S|\n        ensures result >= 0\n    {\n        var sentences := SplitSentences(S);\n        var b := 0;\n        foreach s in sentences {\n            if IsBoredom(s) {\n                b := b + 1;\n            }\n        }\n        return b;\n    }\n\n    // Function to split the string into sentences\n    function SplitSentences(S: string): seq<string>\n        reads S\n        ensures |result| >= 0\n    {\n        // Implementation detail\n    }\n\n    // Function to check if a sentence is a boredom\n    function IsBoredom(s: string): bool\n        reads s\n    {\n        // Implementation detail\n    }\n```\n",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 194,
+      "completion_tokens": 214,
+      "total_tokens": 408,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 489.55946
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique(l: seq<int>) returns (result: seq<int>)\n    requires l != []\n    ensures result == SeqDistinct(SeqSort(l))\n{\n    // Implementation will go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n",
+  "problem_id": "HumanEval/34",
+  "problem_data": {
+    "task_id": "HumanEval/34",
+    "prompt": "\n\ndef unique(l: list):\n    \"\"\"Return sorted unique elements in a list\n    >>> unique([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [0, 2, 3, 5, 9, 123]\n    \"\"\"\n",
+    "canonical_solution": "    return sorted(list(set(l)))\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([5, 3, 5, 2, 3, 3, 9, 0, 123]) == [0, 2, 3, 5, 9, 123]\n\n",
+    "entry_point": "unique"
+  },
+  "path": "results/formalize/20/034_2_dafny.json",
+  "method": "formalize",
+  "trial": 20,
+  "time_taken": 1.522267,
+  "time_start": "2025-04-25T06:59:09.383512",
+  "time_end": "2025-04-25T06:59:10.905779",
+  "prompt_tokens": 160,
+  "completion_tokens": 45,
+  "total_tokens": 205,
+  "raw": {
+    "id": "chatcmpl-BQB3tmb9oYEQnlP4aBtT8O6SB9BJy",
+    "object": "chat.completion",
+    "created": 1745578749,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique(l: seq<int>) returns (result: seq<int>)\n    requires l != []\n    ensures result == SeqDistinct(SeqSort(l))\n{\n    // Implementation will go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 160,
+      "completion_tokens": 45,
+      "total_tokens": 205,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 489.61956
+  }
+}

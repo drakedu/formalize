@@ -1,0 +1,60 @@
+{
+  "completion": "def bf(planet1, planet2):\n    planets = [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    \n    if planet1 not in planets or planet2 not in planets:\n        return ()\n    \n    index1 = planets.index(planet1)\n    index2 = planets.index(planet2)\n    \n    if index1 > index2:\n        index1, index2 = index2, index1\n    \n    return tuple(planets[index1 + 1:index2])",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef bf(planet1, planet2):\n    '''\n    There are eight planets in our solar system: the closerst to the Sun \n    is Mercury, the next one is Venus, then Earth, Mars, Jupiter, Saturn, \n    Uranus, Neptune.\n    Write a function that takes two planet names as strings planet1 and planet2. \n    The function should return a tuple containing all planets whose orbits are \n    located between the orbit of planet1 and the orbit of planet2, sorted by \n    the proximity to the sun. \n    The function should return an empty tuple if planet1 or planet2\n    are not correct planet names. \n    Examples\n    bf(\"Jupiter\", \"Neptune\") ==> (\"Saturn\", \"Uranus\")\n    bf(\"Earth\", \"Mercury\") ==> (\"Venus\")\n    bf(\"Mercury\", \"Uranus\") ==> (\"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\")\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method bf(planet1: string, planet2: string) returns (result: tuple<string>)\n    requires planet1 in [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    requires planet2 in [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    ensures result == tuple<string>({}) || \n            (forall p: string :: p in result ==> \n                (p != planet1 && p != planet2) && \n                (getOrbitIndex(p) > getOrbitIndex(planet1) && getOrbitIndex(p) < getOrbitIndex(planet2)) &&\n                isSortedByProximity(result))\n{\n    // Implementation goes here\n}\n\nfunction getOrbitIndex(planet: string) : int\n{\n    if (planet == \"Mercury\") return 0;\n    else if (planet == \"Venus\") return 1;\n    else if (planet == \"Earth\") return 2;\n    else if (planet == \"Mars\") return 3;\n    else if (planet == \"Jupiter\") return 4;\n    else if (planet == \"Saturn\") return 5;\n    else if (planet == \"Uranus\") return 6;\n    else if (planet == \"Neptune\") return 7;\n    else return -1; // Invalid planet\n}\n\nfunction isSortedByProximity(planets: tuple<string>) : bool\n{\n    // Implementation of a function to check if the planets in the tuple are in order of their proximity to the sun.\n}",
+  "problem_id": "HumanEval/148",
+  "problem_data": {
+    "task_id": "HumanEval/148",
+    "prompt": "\ndef bf(planet1, planet2):\n    '''\n    There are eight planets in our solar system: the closerst to the Sun \n    is Mercury, the next one is Venus, then Earth, Mars, Jupiter, Saturn, \n    Uranus, Neptune.\n    Write a function that takes two planet names as strings planet1 and planet2. \n    The function should return a tuple containing all planets whose orbits are \n    located between the orbit of planet1 and the orbit of planet2, sorted by \n    the proximity to the sun. \n    The function should return an empty tuple if planet1 or planet2\n    are not correct planet names. \n    Examples\n    bf(\"Jupiter\", \"Neptune\") ==> (\"Saturn\", \"Uranus\")\n    bf(\"Earth\", \"Mercury\") ==> (\"Venus\")\n    bf(\"Mercury\", \"Uranus\") ==> (\"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\")\n    '''\n",
+    "canonical_solution": "    planet_names = (\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\")\n    if planet1 not in planet_names or planet2 not in planet_names or planet1 == planet2:\n        return ()\n    planet1_index = planet_names.index(planet1)\n    planet2_index = planet_names.index(planet2)\n    if planet1_index < planet2_index:\n        return (planet_names[planet1_index + 1: planet2_index])\n    else:\n        return (planet_names[planet2_index + 1 : planet1_index])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Jupiter\", \"Neptune\") == (\"Saturn\", \"Uranus\"), \"First test error: \" + str(len(candidate(\"Jupiter\", \"Neptune\")))      \n    assert candidate(\"Earth\", \"Mercury\") == (\"Venus\",), \"Second test error: \" + str(candidate(\"Earth\", \"Mercury\"))  \n    assert candidate(\"Mercury\", \"Uranus\") == (\"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\"), \"Third test error: \" + str(candidate(\"Mercury\", \"Uranus\"))      \n    assert candidate(\"Neptune\", \"Venus\") == (\"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\"), \"Fourth test error: \" + str(candidate(\"Neptune\", \"Venus\"))  \n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"Earth\", \"Earth\") == ()\n    assert candidate(\"Mars\", \"Earth\") == ()\n    assert candidate(\"Jupiter\", \"Makemake\") == ()\n\n",
+    "entry_point": "bf"
+  },
+  "path": "results/formalize/13/148_2_python.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 1.992336,
+  "time_start": "2025-04-25T05:55:14.682444",
+  "time_end": "2025-04-25T05:55:16.674780",
+  "prompt_tokens": 692,
+  "completion_tokens": 122,
+  "total_tokens": 814,
+  "raw": {
+    "id": "chatcmpl-BQA42RL2Z1iUzytK8zJPhJxhppnpJ",
+    "object": "chat.completion",
+    "created": 1745574914,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef bf(planet1, planet2):\n    planets = [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    \n    if planet1 not in planets or planet2 not in planets:\n        return ()\n    \n    index1 = planets.index(planet1)\n    index2 = planets.index(planet2)\n    \n    if index1 > index2:\n        index1, index2 = index2, index1\n    \n    return tuple(planets[index1 + 1:index2])\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 692,
+      "completion_tokens": 122,
+      "total_tokens": 814,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00017,
+    "your_harvard_credits_still_available": 490.89652
+  }
+}

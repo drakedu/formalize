@@ -1,0 +1,60 @@
+{
+  "completion": "def flip_case(string: str) -> str:\n    return ''.join(char.lower() if char.isupper() else char.upper() for char in string)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method flip_case(string: string) returns (result: string)\n    requires string != null\n    ensures |result| == |string| // result has the same length as the input string\n    ensures forall i :: 0 <= i < |string| ==> (result[i] == char.ToUpper(string[i]) || result[i] == char.ToLower(string[i])) // each character in result is the case-flipped version of the corresponding character in the input string\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/27",
+  "problem_data": {
+    "task_id": "HumanEval/27",
+    "prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+    "canonical_solution": "    return string.swapcase()\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('Hello!') == 'hELLO!'\n    assert candidate('These violent delights have violent ends') == 'tHESE VIOLENT DELIGHTS HAVE VIOLENT ENDS'\n",
+    "entry_point": "flip_case"
+  },
+  "path": "results/formalize/12/027_3_python.json",
+  "method": "formalize",
+  "trial": 12,
+  "time_taken": 1.11597,
+  "time_start": "2025-04-25T05:38:53.565795",
+  "time_end": "2025-04-25T05:38:54.681765",
+  "prompt_tokens": 282,
+  "completion_tokens": 36,
+  "total_tokens": 318,
+  "raw": {
+    "id": "chatcmpl-BQ9oDGv5GyPOqWSm9ZBwdj9HDC7WC",
+    "object": "chat.completion",
+    "created": 1745573933,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef flip_case(string: str) -> str:\n    return ''.join(char.lower() if char.isupper() else char.upper() for char in string)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 282,
+      "completion_tokens": 36,
+      "total_tokens": 318,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 6e-05,
+    "your_harvard_credits_still_available": 491.24873
+  }
+}

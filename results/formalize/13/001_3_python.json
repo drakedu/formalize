@@ -1,0 +1,60 @@
+{
+  "completion": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    paren_string = paren_string.replace(' ', '')\n    groups = []\n    balance = 0\n    current_group = []\n\n    for char in paren_string:\n        if char == '(':\n            if balance == 0 and current_group:\n                groups.append(''.join(current_group))\n                current_group = []\n            current_group.append(char)\n            balance += 1\n        elif char == ')':\n            current_group.append(char)\n            balance -= 1\n            if balance == 0:\n                groups.append(''.join(current_group))\n                current_group = []\n\n    return groups",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures groups != null\n    ensures |groups| >= 0\n    ensures forall g :: g in groups ==> g != null && g.Length > 0 && g[0] == '(' && g[g.Length - 1] == ')'\n    ensures forall i, j :: 0 <= i < j < |groups| ==> groups[i] != groups[j]\n    ensures forall i :: 0 <= i < |groups| ==> (groups[i].Count('(') == groups[i].Count(')'))\n    ensures forall g :: g in groups ==> exists start, end :: 0 <= start < end < paren_string.Length && paren_string[start..end] == g",
+  "problem_id": "HumanEval/1",
+  "problem_data": {
+    "task_id": "HumanEval/1",
+    "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+    "entry_point": "separate_paren_groups"
+  },
+  "path": "results/formalize/13/001_3_python.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 2.245789,
+  "time_start": "2025-04-25T05:47:28.525072",
+  "time_end": "2025-04-25T05:47:30.770861",
+  "prompt_tokens": 450,
+  "completion_tokens": 144,
+  "total_tokens": 594,
+  "raw": {
+    "id": "chatcmpl-BQ9wWTrJzrXhDXgumkBG0hKNlIunT",
+    "object": "chat.completion",
+    "created": 1745574448,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    paren_string = paren_string.replace(' ', '')\n    groups = []\n    balance = 0\n    current_group = []\n\n    for char in paren_string:\n        if char == '(':\n            if balance == 0 and current_group:\n                groups.append(''.join(current_group))\n                current_group = []\n            current_group.append(char)\n            balance += 1\n        elif char == ')':\n            current_group.append(char)\n            balance -= 1\n            if balance == 0:\n                groups.append(''.join(current_group))\n                current_group = []\n\n    return groups\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 450,
+      "completion_tokens": 144,
+      "total_tokens": 594,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 491.06732
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "def is_nested(string):\n    stack = []\n    nested = False\n\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if stack:\n                stack.pop()\n                if stack:  # If stack is not empty after popping, we have a nested bracket\n                    nested = True\n\n    return nested",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method is_nested(string: string) returns (result: bool)\n    requires string != null // Ensure the input string is not null\n    requires forall i :: 0 <= i < string.Length ==> (string[i] == '[' || string[i] == ']') // Ensure string contains only brackets\n    ensures result == (exists subseq :: is_valid_subsequence(subseq) && contains_nested(subseq))\n{\n    // Implementation goes here\n}\n\npredicate is_valid_subsequence(subseq: seq<char>)\n    reads subseq\n{\n    // Define the condition for a valid subsequence of brackets\n}\n\npredicate contains_nested(subseq: seq<char>)\n    reads subseq\n{\n    // Define the condition for the subsequence to contain at least one nested bracket\n}",
+  "problem_id": "HumanEval/132",
+  "problem_data": {
+    "task_id": "HumanEval/132",
+    "prompt": "\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') \u279e True\n    is_nested('[]]]]]]][[[[[]') \u279e False\n    is_nested('[][]') \u279e False\n    is_nested('[]') \u279e False\n    is_nested('[[][]]') \u279e True\n    is_nested('[[]][[') \u279e True\n    '''\n",
+    "canonical_solution": "    opening_bracket_index = []\n    closing_bracket_index = []\n    for i in range(len(string)):\n        if string[i] == '[':\n            opening_bracket_index.append(i)\n        else:\n            closing_bracket_index.append(i)\n    closing_bracket_index.reverse()\n    cnt = 0\n    i = 0\n    l = len(closing_bracket_index)\n    for idx in opening_bracket_index:\n        if i < l and idx < closing_bracket_index[i]:\n            cnt += 1\n            i += 1\n    return cnt >= 2\n\n    \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n",
+    "entry_point": "is_nested"
+  },
+  "path": "results/formalize/24/132_1_python.json",
+  "method": "formalize",
+  "trial": 24,
+  "time_taken": 1.660795,
+  "time_start": "2025-04-25T07:47:55.130617",
+  "time_end": "2025-04-25T07:47:56.791412",
+  "prompt_tokens": 418,
+  "completion_tokens": 79,
+  "total_tokens": 497,
+  "raw": {
+    "id": "chatcmpl-BQBp5LnsdUnGIth9VUTEX9f3elZ1Z",
+    "object": "chat.completion",
+    "created": 1745581675,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef is_nested(string):\n    stack = []\n    nested = False\n\n    for char in string:\n        if char == '[':\n            stack.append(char)\n        elif char == ']':\n            if stack:\n                stack.pop()\n                if stack:  # If stack is not empty after popping, we have a nested bracket\n                    nested = True\n\n    return nested\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 418,
+      "completion_tokens": 79,
+      "total_tokens": 497,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00011,
+    "your_harvard_credits_still_available": 488.69261
+  }
+}

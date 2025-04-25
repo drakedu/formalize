@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod iscube(a: int) returns (result: bool)\n    requires true\n    ensures result == (exists n: int :: n * n * n == a)\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef iscube(a):\n    '''\n    Write a function that takes an integer a and returns True \n    if this ingeger is a cube of some integer number.\n    Note: you may assume the input is always valid.\n    Examples:\n    iscube(1) ==> True\n    iscube(2) ==> False\n    iscube(-1) ==> True\n    iscube(64) ==> True\n    iscube(0) ==> True\n    iscube(180) ==> False\n    '''\n",
+  "problem_id": "HumanEval/77",
+  "problem_data": {
+    "task_id": "HumanEval/77",
+    "prompt": "\ndef iscube(a):\n    '''\n    Write a function that takes an integer a and returns True \n    if this ingeger is a cube of some integer number.\n    Note: you may assume the input is always valid.\n    Examples:\n    iscube(1) ==> True\n    iscube(2) ==> False\n    iscube(-1) ==> True\n    iscube(64) ==> True\n    iscube(0) ==> True\n    iscube(180) ==> False\n    '''\n",
+    "canonical_solution": "    a = abs(a)\n    return int(round(a ** (1. / 3))) ** 3 == a\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(1) == True, \"First test error: \" + str(candidate(1))\n    assert candidate(2) == False, \"Second test error: \" + str(candidate(2))\n    assert candidate(-1) == True, \"Third test error: \" + str(candidate(-1))\n    assert candidate(64) == True, \"Fourth test error: \" + str(candidate(64))\n    assert candidate(180) == False, \"Fifth test error: \" + str(candidate(180))\n    assert candidate(1000) == True, \"Sixth test error: \" + str(candidate(1000))\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == True, \"1st edge test error: \" + str(candidate(0))\n    assert candidate(1729) == False, \"2nd edge test error: \" + str(candidate(1728))\n\n",
+    "entry_point": "iscube"
+  },
+  "path": "results/formalize/3/077_4_dafny.json",
+  "method": "formalize",
+  "trial": 3,
+  "time_taken": 1.026052,
+  "time_start": "2025-04-24T23:57:19.060663",
+  "time_end": "2025-04-24T23:57:20.086715",
+  "prompt_tokens": 197,
+  "completion_tokens": 49,
+  "total_tokens": 246,
+  "raw": {
+    "id": "chatcmpl-BQ4TfKLkfjR0oMEVvtEKogLHEKIrV",
+    "object": "chat.completion",
+    "created": 1745553439,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod iscube(a: int) returns (result: bool)\n    requires true\n    ensures result == (exists n: int :: n * n * n == a)\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 197,
+      "completion_tokens": 49,
+      "total_tokens": 246,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 5e-05,
+    "your_harvard_credits_still_available": 492.99971
+  }
+}

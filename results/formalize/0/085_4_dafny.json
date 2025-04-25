@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod Add(lst: seq<int>) returns (result: int)\n    requires |lst| > 0\n    requires forall i :: 0 <= i < |lst| ==> lst[i] is int\n    ensures result == SumEvenAtOddIndices(lst)\n{\n    // Implementation will go here\n}\n\nfunction SumEvenAtOddIndices(lst: seq<int>): int\n    requires |lst| > 0\n    ensures SumEvenAtOddIndices(lst) == \n        (if |lst| == 0 then 0 \n         else \n            (if lst[0] % 2 == 0 && 0 % 2 == 1 then lst[0] + SumEvenAtOddIndices(Tail(lst)) \n             else SumEvenAtOddIndices(Tail(lst))))\n    decreases |lst|\n{\n    if |lst| == 0 then \n        0 \n    else \n        (if |lst| % 2 == 0 && lst[0] % 2 == 0 then lst[0] + SumEvenAtOddIndices(Tail(lst)) \n         else SumEvenAtOddIndices(Tail(lst)))\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n",
+  "problem_id": "HumanEval/85",
+  "problem_data": {
+    "task_id": "HumanEval/85",
+    "prompt": "\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n",
+    "canonical_solution": "    return sum([lst[i] for i in range(1, len(lst), 2) if lst[i]%2 == 0])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([4, 88]) == 88\n    assert candidate([4, 5, 6, 7, 2, 122]) == 122\n    assert candidate([4, 0, 6, 7]) == 0\n    assert candidate([4, 4, 6, 8]) == 12\n\n    # Check some edge cases that are easy to work out by hand.\n    \n",
+    "entry_point": "add"
+  },
+  "path": "results/formalize/0/085_4_dafny.json",
+  "method": "formalize",
+  "trial": 0,
+  "time_taken": 3.876034,
+  "time_start": "2025-04-24T20:04:07.280998",
+  "time_end": "2025-04-24T20:04:11.157032",
+  "prompt_tokens": 142,
+  "completion_tokens": 240,
+  "total_tokens": 382,
+  "raw": {
+    "id": "chatcmpl-BQ0pzs64WeOtXQimWBt2Wrt5G7Sfw",
+    "object": "chat.completion",
+    "created": 1745539447,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod Add(lst: seq<int>) returns (result: int)\n    requires |lst| > 0\n    requires forall i :: 0 <= i < |lst| ==> lst[i] is int\n    ensures result == SumEvenAtOddIndices(lst)\n{\n    // Implementation will go here\n}\n\nfunction SumEvenAtOddIndices(lst: seq<int>): int\n    requires |lst| > 0\n    ensures SumEvenAtOddIndices(lst) == \n        (if |lst| == 0 then 0 \n         else \n            (if lst[0] % 2 == 0 && 0 % 2 == 1 then lst[0] + SumEvenAtOddIndices(Tail(lst)) \n             else SumEvenAtOddIndices(Tail(lst))))\n    decreases |lst|\n{\n    if |lst| == 0 then \n        0 \n    else \n        (if |lst| % 2 == 0 && lst[0] % 2 == 0 then lst[0] + SumEvenAtOddIndices(Tail(lst)) \n         else SumEvenAtOddIndices(Tail(lst)))\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 142,
+      "completion_tokens": 240,
+      "total_tokens": 382,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00016,
+    "your_harvard_credits_still_available": 493.59015
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "def double_the_difference(lst):\n    return sum(x ** 2 for x in lst if isinstance(x, int) and x >= 0 and x % 2 == 1)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef double_the_difference(lst):\n    '''\n    Given a list of numbers, return the sum of squares of the numbers\n    in the list that are odd. Ignore numbers that are negative or not integers.\n    \n    double_the_difference([1, 3, 2, 0]) == 1 + 9 + 0 + 0 = 10\n    double_the_difference([-1, -2, 0]) == 0\n    double_the_difference([9, -2]) == 81\n    double_the_difference([0]) == 0  \n   \n    If the input list is empty, return 0.\n    '''\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method double_the_difference(lst: seq<int>) returns (result: int)\n    requires forall i :: 0 <= i < |lst| ==> lst[i] >= 0 // all numbers in the list must be non-negative integers\n    ensures result == sum(i * i | i <- lst | i % 2 == 1 && i >= 0) // sum of squares of odd non-negative integers\n{\n    // implementation goes here\n}",
+  "problem_id": "HumanEval/151",
+  "problem_data": {
+    "task_id": "HumanEval/151",
+    "prompt": "\ndef double_the_difference(lst):\n    '''\n    Given a list of numbers, return the sum of squares of the numbers\n    in the list that are odd. Ignore numbers that are negative or not integers.\n    \n    double_the_difference([1, 3, 2, 0]) == 1 + 9 + 0 + 0 = 10\n    double_the_difference([-1, -2, 0]) == 0\n    double_the_difference([9, -2]) == 81\n    double_the_difference([0]) == 0  \n   \n    If the input list is empty, return 0.\n    '''\n",
+    "canonical_solution": "    return sum([i**2 for i in lst if i > 0 and i%2!=0 and \".\" not in str(i)])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([]) == 0 , \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([5, 4]) == 25 , \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate([0.1, 0.2, 0.3]) == 0 , \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate([-10, -20, -30]) == 0 , \"This prints if this assert fails 4 (good for debugging!)\"\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([-1, -2, 8]) == 0, \"This prints if this assert fails 5 (also good for debugging!)\"\n    assert candidate([0.2, 3, 5]) == 34, \"This prints if this assert fails 6 (also good for debugging!)\"\n    lst = list(range(-99, 100, 2))\n    odd_sum = sum([i**2 for i in lst if i%2!=0 and i > 0])\n    assert candidate(lst) == odd_sum , \"This prints if this assert fails 7 (good for debugging!)\"\n\n",
+    "entry_point": "double_the_difference"
+  },
+  "path": "results/formalize/21/151_0_python.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 1.289569,
+  "time_start": "2025-04-25T07:17:15.322944",
+  "time_end": "2025-04-25T07:17:16.612513",
+  "prompt_tokens": 359,
+  "completion_tokens": 42,
+  "total_tokens": 401,
+  "raw": {
+    "id": "chatcmpl-BQBLPrqwGQPpTjOpq1JWM2PeM3lPs",
+    "object": "chat.completion",
+    "created": 1745579835,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef double_the_difference(lst):\n    return sum(x ** 2 for x in lst if isinstance(x, int) and x >= 0 and x % 2 == 1)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 359,
+      "completion_tokens": 42,
+      "total_tokens": 401,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 489.27417
+  }
+}

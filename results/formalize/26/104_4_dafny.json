@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires |x| > 0 // The input list must not be empty\n    ensures forall i :: 0 <= i < |result| ==> result[i] >= 0 // All elements in the result are non-negative\n    ensures result == SeqSort(SeqFilter(x, IsOddDigit)) // The result is the sorted list of elements without any even digits\n{\n    // Implementation goes here\n}\n\n// Helper function to determine if an integer contains only odd digits\nmethod IsOddDigit(n: int) returns (isOdd: bool)\n    requires n >= 0 // The number must be non-negative\n    ensures isOdd ==> forall d :: IsDigit(d, n) ==> d % 2 != 0 // If true, all digits of n are odd\n{\n    // Implementation goes here\n}\n\n// Helper function to obtain the digits of an integer\nmethod IsDigit(d: int, n: int) returns (isDigit: bool)\n    requires n >= 0 && d >= 0 // Both the digit and the number must be non-negative\n    ensures isDigit ==> d in DigitList(n) // If true, d is a digit of n\n{\n    // Implementation goes here\n}\n\n// Helper function to get the list of digits of an integer\nmethod DigitList(n: int) returns (digits: seq<int>)\n    requires n >= 0 // The number must be non-negative\n    ensures |digits| > 0 ==> forall i :: 0 <= i < |digits| ==> 0 <= digits[i] < 10 // All digits are valid\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/26/104_4_dafny.json",
+  "method": "formalize",
+  "trial": 26,
+  "time_taken": 6.206198,
+  "time_start": "2025-04-25T08:11:55.474281",
+  "time_end": "2025-04-25T08:12:01.680479",
+  "prompt_tokens": 188,
+  "completion_tokens": 352,
+  "total_tokens": 540,
+  "raw": {
+    "id": "chatcmpl-BQCCJBNtsOSJs8MSAZ4BsndcOSLOy",
+    "object": "chat.completion",
+    "created": 1745583115,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires |x| > 0 // The input list must not be empty\n    ensures forall i :: 0 <= i < |result| ==> result[i] >= 0 // All elements in the result are non-negative\n    ensures result == SeqSort(SeqFilter(x, IsOddDigit)) // The result is the sorted list of elements without any even digits\n{\n    // Implementation goes here\n}\n\n// Helper function to determine if an integer contains only odd digits\nmethod IsOddDigit(n: int) returns (isOdd: bool)\n    requires n >= 0 // The number must be non-negative\n    ensures isOdd ==> forall d :: IsDigit(d, n) ==> d % 2 != 0 // If true, all digits of n are odd\n{\n    // Implementation goes here\n}\n\n// Helper function to obtain the digits of an integer\nmethod IsDigit(d: int, n: int) returns (isDigit: bool)\n    requires n >= 0 && d >= 0 // Both the digit and the number must be non-negative\n    ensures isDigit ==> d in DigitList(n) // If true, d is a digit of n\n{\n    // Implementation goes here\n}\n\n// Helper function to get the list of digits of an integer\nmethod DigitList(n: int) returns (digits: seq<int>)\n    requires n >= 0 // The number must be non-negative\n    ensures |digits| > 0 ==> forall i :: 0 <= i < |digits| ==> 0 <= digits[i] < 10 // All digits are valid\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 188,
+      "completion_tokens": 352,
+      "total_tokens": 540,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00023,
+    "your_harvard_credits_still_available": 488.3025
+  }
+}

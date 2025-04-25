@@ -1,0 +1,60 @@
+{
+  "completion": "def special_factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        factorial = 1\n        for j in range(1, i + 1):\n            factorial *= j\n        result *= factorial\n    return result",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method special_factorial(n: int) returns (result: int)\n    requires n > 0\n    ensures result == (n * (n - 1) * (n - 2) * ... * 1) * ((n - 1) * (n - 2) * ... * 1) * ... * (1)\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/139",
+  "problem_data": {
+    "task_id": "HumanEval/139",
+    "prompt": "\ndef special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n",
+    "canonical_solution": "    fact_i = 1\n    special_fact = 1\n    for i in range(1, n+1):\n        fact_i *= i\n        special_fact *= fact_i\n    return special_fact\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(4) == 288, \"Test 4\"\n    assert candidate(5) == 34560, \"Test 5\"\n    assert candidate(7) == 125411328000, \"Test 7\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(1) == 1, \"Test 1\"\n\n",
+    "entry_point": "special_factorial"
+  },
+  "path": "results/formalize/7/139_1_python.json",
+  "method": "formalize",
+  "trial": 7,
+  "time_taken": 1.211025,
+  "time_start": "2025-04-25T04:55:45.565117",
+  "time_end": "2025-04-25T04:55:46.776142",
+  "prompt_tokens": 307,
+  "completion_tokens": 63,
+  "total_tokens": 370,
+  "raw": {
+    "id": "chatcmpl-BQ98ToBDPKsrASoQjbGh85Biukc9y",
+    "object": "chat.completion",
+    "created": 1745571345,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef special_factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        factorial = 1\n        for j in range(1, i + 1):\n            factorial *= j\n        result *= factorial\n    return result\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 307,
+      "completion_tokens": 63,
+      "total_tokens": 370,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 492.11285
+  }
+}

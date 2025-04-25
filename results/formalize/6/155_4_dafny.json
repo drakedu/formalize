@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod even_odd_count(num: int) returns (evenCount: int, oddCount: int)\n    requires num >= -10^9 && num <= 10^9 // Assuming num is within the range of a typical integer\n    ensures evenCount >= 0 && oddCount >= 0 // The counts of even and odd digits cannot be negative\n    ensures evenCount + oddCount == |str(abs(num))| // The total count of even and odd digits equals the number of digits in the absolute value of num\n{\n    // Implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef even_odd_count(num):\n    \"\"\"Given an integer. return a tuple that has the number of even and odd digits respectively.\n\n     Example:\n        even_odd_count(-12) ==> (1, 1)\n        even_odd_count(123) ==> (1, 2)\n    \"\"\"\n",
+  "problem_id": "HumanEval/155",
+  "problem_data": {
+    "task_id": "HumanEval/155",
+    "prompt": "\ndef even_odd_count(num):\n    \"\"\"Given an integer. return a tuple that has the number of even and odd digits respectively.\n\n     Example:\n        even_odd_count(-12) ==> (1, 1)\n        even_odd_count(123) ==> (1, 2)\n    \"\"\"\n",
+    "canonical_solution": "    even_count = 0\n    odd_count = 0\n    for i in str(abs(num)):\n        if int(i)%2==0:\n            even_count +=1\n        else:\n            odd_count +=1\n    return (even_count, odd_count)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(7) == (0, 1)\n    assert candidate(-78) == (1, 1)\n    assert candidate(3452) == (2, 2)\n    assert candidate(346211) == (3, 3)\n    assert candidate(-345821) == (3, 3)\n    assert candidate(-2) == (1, 0)\n    assert candidate(-45347) == (2, 3)\n    assert candidate(0) == (1, 0)\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "even_odd_count"
+  },
+  "path": "results/formalize/6/155_4_dafny.json",
+  "method": "formalize",
+  "trial": 6,
+  "time_taken": 3.921884,
+  "time_start": "2025-04-25T04:47:02.260761",
+  "time_end": "2025-04-25T04:47:06.182645",
+  "prompt_tokens": 155,
+  "completion_tokens": 123,
+  "total_tokens": 278,
+  "raw": {
+    "id": "chatcmpl-BQ902h5RtKIgELbVB2SUY4p3W5N9x",
+    "object": "chat.completion",
+    "created": 1745570822,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod even_odd_count(num: int) returns (evenCount: int, oddCount: int)\n    requires num >= -10^9 && num <= 10^9 // Assuming num is within the range of a typical integer\n    ensures evenCount >= 0 && oddCount >= 0 // The counts of even and odd digits cannot be negative\n    ensures evenCount + oddCount == |str(abs(num))| // The total count of even and odd digits equals the number of digits in the absolute value of num\n{\n    // Implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 155,
+      "completion_tokens": 123,
+      "total_tokens": 278,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 492.28917
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "def correct_bracketing(brackets: str) -> bool:\n    balance = 0\n    for char in brackets:\n        if char == '(':\n            balance += 1\n        elif char == ')':\n            balance -= 1\n        if balance < 0:\n            return False\n    return balance == 0",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method correct_bracketing(brackets: string) returns (result: bool)\n    requires brackets != null\n    ensures result == (forall i :: 0 <= i < |brackets| ==>\n                      (CountOpenBrackets(brackets, i) == CountCloseBrackets(brackets, i)))\n{\n    // Implementation goes here\n}\n\nfunction CountOpenBrackets(brackets: string, index: int): int\n    requires 0 <= index < |brackets|\n    ensures 0 <= CountOpenBrackets(brackets, index) <= index + 1\n{\n    // Implementation for counting open brackets\n}\n\nfunction CountCloseBrackets(brackets: string, index: int): int\n    requires 0 <= index < |brackets|\n    ensures 0 <= CountCloseBrackets(brackets, index) <= index + 1\n{\n    // Implementation for counting close brackets\n}",
+  "problem_id": "HumanEval/61",
+  "problem_data": {
+    "task_id": "HumanEval/61",
+    "prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n",
+    "canonical_solution": "    depth = 0\n    for b in brackets:\n        if b == \"(\":\n            depth += 1\n        else:\n            depth -= 1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(\"()\")\n    assert candidate(\"(()())\")\n    assert candidate(\"()()(()())()\")\n    assert candidate(\"()()((()()())())(()()(()))\")\n    assert not candidate(\"((()())))\")\n    assert not candidate(\")(()\")\n    assert not candidate(\"(\")\n    assert not candidate(\"((((\")\n    assert not candidate(\")\")\n    assert not candidate(\"(()\")\n    assert not candidate(\"()()(()())())(()\")\n    assert not candidate(\"()()(()())()))()\")\n\n",
+    "entry_point": "correct_bracketing"
+  },
+  "path": "results/formalize/1/061_2_python.json",
+  "method": "formalize",
+  "trial": 1,
+  "time_taken": 1.337241,
+  "time_start": "2025-04-24T21:08:21.329211",
+  "time_end": "2025-04-24T21:08:22.666452",
+  "prompt_tokens": 406,
+  "completion_tokens": 72,
+  "total_tokens": 478,
+  "raw": {
+    "id": "chatcmpl-BQ1q9014YdgZKWvKg7KfS5edoPbSg",
+    "object": "chat.completion",
+    "created": 1745543301,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef correct_bracketing(brackets: str) -> bool:\n    balance = 0\n    for char in brackets:\n        if char == '(':\n            balance += 1\n        elif char == ')':\n            balance -= 1\n        if balance < 0:\n            return False\n    return balance == 0\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 406,
+      "completion_tokens": 72,
+      "total_tokens": 478,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 493.42088
+  }
+}

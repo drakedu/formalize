@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod all_prefixes(string: string) returns (result: seq<string>)\n    requires string.Length >= 0\n    ensures |result| == string.Length + 1 // includes the empty prefix\n    ensures forall i :: 0 <= i < |result| ==> result[i] == string[0..i] // each prefix is correct\n{\n    // Implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n",
+  "problem_id": "HumanEval/14",
+  "problem_data": {
+    "task_id": "HumanEval/14",
+    "prompt": "from typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n\n    for i in range(len(string)):\n        result.append(string[:i+1])\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == []\n    assert candidate('asdfgh') == ['a', 'as', 'asd', 'asdf', 'asdfg', 'asdfgh']\n    assert candidate('WWW') == ['W', 'WW', 'WWW']\n",
+    "entry_point": "all_prefixes"
+  },
+  "path": "results/formalize/4/014_4_dafny.json",
+  "method": "formalize",
+  "trial": 4,
+  "time_taken": 1.600944,
+  "time_start": "2025-04-25T00:51:42.921474",
+  "time_end": "2025-04-25T00:51:44.522418",
+  "prompt_tokens": 145,
+  "completion_tokens": 85,
+  "total_tokens": 230,
+  "raw": {
+    "id": "chatcmpl-BQ5KJBQlfgCEHcuNEM5Ying2O7C1X",
+    "object": "chat.completion",
+    "created": 1745556703,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod all_prefixes(string: string) returns (result: seq<string>)\n    requires string.Length >= 0\n    ensures |result| == string.Length + 1 // includes the empty prefix\n    ensures forall i :: 0 <= i < |result| ==> result[i] == string[0..i] // each prefix is correct\n{\n    // Implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 145,
+      "completion_tokens": 85,
+      "total_tokens": 230,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 492.8673
+  }
+}

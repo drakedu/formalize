@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod filter_integers(values: seq<object>) returns (result: seq<int>)\n    requires |values| > 0 // The input list must be non-empty.\n    ensures forall i: int :: 0 <= i < |result| ==> result[i] in [v | v in values, v is int] // The result contains only integers from the input list.\n    ensures |result| <= |values| // The result cannot have more elements than the input list.\n{\n    // Implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+  "problem_id": "HumanEval/22",
+  "problem_data": {
+    "task_id": "HumanEval/22",
+    "prompt": "from typing import List, Any\n\n\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter given list of any python values only for integers\n    >>> filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n",
+    "canonical_solution": "    return [x for x in values if isinstance(x, int)]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([4, {}, [], 23.2, 9, 'adasd']) == [4, 9]\n    assert candidate([3, 'c', 3, 3, 'a', 'b']) == [3, 3, 3]\n",
+    "entry_point": "filter_integers"
+  },
+  "path": "results/formalize/19/022_1_dafny.json",
+  "method": "formalize",
+  "trial": 19,
+  "time_taken": 2.134317,
+  "time_start": "2025-04-25T06:48:28.779107",
+  "time_end": "2025-04-25T06:48:30.913424",
+  "prompt_tokens": 180,
+  "completion_tokens": 112,
+  "total_tokens": 292,
+  "raw": {
+    "id": "chatcmpl-BQAtZQI8LGKmiq3hmP0Bs7iv6bgG0",
+    "object": "chat.completion",
+    "created": 1745578109,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod filter_integers(values: seq<object>) returns (result: seq<int>)\n    requires |values| > 0 // The input list must be non-empty.\n    ensures forall i: int :: 0 <= i < |result| ==> result[i] in [v | v in values, v is int] // The result contains only integers from the input list.\n    ensures |result| <= |values| // The result cannot have more elements than the input list.\n{\n    // Implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 180,
+      "completion_tokens": 112,
+      "total_tokens": 292,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 489.84361
+  }
+}

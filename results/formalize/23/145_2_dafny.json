@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod order_by_points(nums: seq<int>) returns (sorted: seq<int>)\n    requires nums != null\n    ensures sorted != null\n    ensures |sorted| == |nums|\n    ensures forall i, j: int :: 0 <= i < j < |sorted| ==> \n        (digit_sum(sorted[i]) < digit_sum(sorted[j]) || \n         (digit_sum(sorted[i]) == digit_sum(sorted[j]) && index_in_original(sorted[i], nums) < index_in_original(sorted[j], nums)))\n{\n    // Implementation goes here\n}\n\nmethod digit_sum(n: int) returns (sum: int)\n    requires true\n    ensures sum >= 0\n    ensures sum == sum_of_digits(n)\n{\n    // Implementation goes here\n}\n\nmethod index_in_original(value: int, nums: seq<int>) returns (index: int)\n    requires nums != null\n    ensures index >= 0\n    ensures index < |nums| ==> nums[index] == value\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef order_by_points(nums):\n    \"\"\"\n    Write a function which sorts the given list of integers\n    in ascending order according to the sum of their digits.\n    Note: if there are several items with similar sum of their digits,\n    order them based on their index in original list.\n\n    For example:\n    >>> order_by_points([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]\n    >>> order_by_points([]) == []\n    \"\"\"\n",
+  "problem_id": "HumanEval/145",
+  "problem_data": {
+    "task_id": "HumanEval/145",
+    "prompt": "\ndef order_by_points(nums):\n    \"\"\"\n    Write a function which sorts the given list of integers\n    in ascending order according to the sum of their digits.\n    Note: if there are several items with similar sum of their digits,\n    order them based on their index in original list.\n\n    For example:\n    >>> order_by_points([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]\n    >>> order_by_points([]) == []\n    \"\"\"\n",
+    "canonical_solution": "    def digits_sum(n):\n        neg = 1\n        if n < 0: n, neg = -1 * n, -1 \n        n = [int(i) for i in str(n)]\n        n[0] = n[0] * neg\n        return sum(n)\n    return sorted(nums, key=digits_sum)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]\n    assert candidate([1234,423,463,145,2,423,423,53,6,37,3457,3,56,0,46]) == [0, 2, 3, 6, 53, 423, 423, 423, 1234, 145, 37, 46, 56, 463, 3457]\n    assert candidate([]) == []\n    assert candidate([1, -11, -32, 43, 54, -98, 2, -3]) == [-3, -32, -98, -11, 1, 2, 43, 54]\n    assert candidate([1,2,3,4,5,6,7,8,9,10,11]) == [1, 10, 2, 11, 3, 4, 5, 6, 7, 8, 9]\n    assert candidate([0,6,6,-76,-21,23,4]) == [-76, -21, 0, 4, 23, 6, 6]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "order_by_points"
+  },
+  "path": "results/formalize/23/145_2_dafny.json",
+  "method": "formalize",
+  "trial": 23,
+  "time_taken": 4.419028,
+  "time_start": "2025-04-25T07:38:59.439442",
+  "time_end": "2025-04-25T07:39:03.858470",
+  "prompt_tokens": 202,
+  "completion_tokens": 213,
+  "total_tokens": 415,
+  "raw": {
+    "id": "chatcmpl-BQBgR9A20AgsAFcoaA4Trb16vaNBn",
+    "object": "chat.completion",
+    "created": 1745581139,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod order_by_points(nums: seq<int>) returns (sorted: seq<int>)\n    requires nums != null\n    ensures sorted != null\n    ensures |sorted| == |nums|\n    ensures forall i, j: int :: 0 <= i < j < |sorted| ==> \n        (digit_sum(sorted[i]) < digit_sum(sorted[j]) || \n         (digit_sum(sorted[i]) == digit_sum(sorted[j]) && index_in_original(sorted[i], nums) < index_in_original(sorted[j], nums)))\n{\n    // Implementation goes here\n}\n\nmethod digit_sum(n: int) returns (sum: int)\n    requires true\n    ensures sum >= 0\n    ensures sum == sum_of_digits(n)\n{\n    // Implementation goes here\n}\n\nmethod index_in_original(value: int, nums: seq<int>) returns (index: int)\n    requires nums != null\n    ensures index >= 0\n    ensures index < |nums| ==> nums[index] == value\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 202,
+      "completion_tokens": 213,
+      "total_tokens": 415,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 488.87457
+  }
+}

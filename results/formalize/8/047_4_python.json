@@ -1,0 +1,60 @@
+{
+  "completion": "def median(l: list):\n    if not l:\n        raise ValueError(\"List must not be empty\")\n    l.sort()\n    n = len(l)\n    if n % 2 == 1:\n        return l[n // 2]\n    else:\n        return (l[n // 2 - 1] + l[n // 2]) / 2.0",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method median(l: seq<int>) returns (m: real)\n    requires |l| > 0 // The list must not be empty\n    ensures (|l| % 2 == 1 ==> m == l[|l| / 2]) // If the length is odd, m is the middle element\n    ensures (|l| % 2 == 0 ==> m == (l[|l| / 2 - 1] + l[|l| / 2]) / 2.0) // If the length is even, m is the average of the two middle elements\n    decreases |l| // Ensures termination\n{\n    // Implementation will go here\n}",
+  "problem_id": "HumanEval/47",
+  "problem_data": {
+    "task_id": "HumanEval/47",
+    "prompt": "\n\ndef median(l: list):\n    \"\"\"Return median of elements in the list l.\n    >>> median([3, 1, 2, 4, 5])\n    3\n    >>> median([-10, 4, 6, 1000, 10, 20])\n    15.0\n    \"\"\"\n",
+    "canonical_solution": "    l = sorted(l)\n    if len(l) % 2 == 1:\n        return l[len(l) // 2]\n    else:\n        return (l[len(l) // 2 - 1] + l[len(l) // 2]) / 2.0\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == 3\n    assert candidate([-10, 4, 6, 1000, 10, 20]) == 8.0\n    assert candidate([5]) == 5\n    assert candidate([6, 5]) == 5.5\n    assert candidate([8, 1, 3, 9, 9, 2, 7]) == 7 \n\n",
+    "entry_point": "median"
+  },
+  "path": "results/formalize/8/047_4_python.json",
+  "method": "formalize",
+  "trial": 8,
+  "time_taken": 1.427607,
+  "time_start": "2025-04-25T05:00:15.459970",
+  "time_end": "2025-04-25T05:00:16.887577",
+  "prompt_tokens": 352,
+  "completion_tokens": 83,
+  "total_tokens": 435,
+  "raw": {
+    "id": "chatcmpl-BQ9Cpp6EWfErHXQnGT8jRh3v8X67d",
+    "object": "chat.completion",
+    "created": 1745571615,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef median(l: list):\n    if not l:\n        raise ValueError(\"List must not be empty\")\n    l.sort()\n    n = len(l)\n    if n % 2 == 1:\n        return l[n // 2]\n    else:\n        return (l[n // 2 - 1] + l[n // 2]) / 2.0\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 352,
+      "completion_tokens": 83,
+      "total_tokens": 435,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 492.02571
+  }
+}

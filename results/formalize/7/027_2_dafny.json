@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod flip_case(string: string) returns (result: string)\n    requires string != null\n    ensures |result| == |string|\n    ensures forall i :: 0 <= i < |string| ==> (result[i] == char.ToLower(string[i]) || result[i] == char.ToUpper(string[i]))\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+  "problem_id": "HumanEval/27",
+  "problem_data": {
+    "task_id": "HumanEval/27",
+    "prompt": "\n\ndef flip_case(string: str) -> str:\n    \"\"\" For a given string, flip lowercase characters to uppercase and uppercase to lowercase.\n    >>> flip_case('Hello')\n    'hELLO'\n    \"\"\"\n",
+    "canonical_solution": "    return string.swapcase()\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate('Hello!') == 'hELLO!'\n    assert candidate('These violent delights have violent ends') == 'tHESE VIOLENT DELIGHTS HAVE VIOLENT ENDS'\n",
+    "entry_point": "flip_case"
+  },
+  "path": "results/formalize/7/027_2_dafny.json",
+  "method": "formalize",
+  "trial": 7,
+  "time_taken": 1.770957,
+  "time_start": "2025-04-25T04:49:11.139186",
+  "time_end": "2025-04-25T04:49:12.910143",
+  "prompt_tokens": 135,
+  "completion_tokens": 78,
+  "total_tokens": 213,
+  "raw": {
+    "id": "chatcmpl-BQ927NTe8DekzWtFmiMjb5Z4Longx",
+    "object": "chat.completion",
+    "created": 1745570951,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod flip_case(string: string) returns (result: string)\n    requires string != null\n    ensures |result| == |string|\n    ensures forall i :: 0 <= i < |string| ==> (result[i] == char.ToLower(string[i]) || result[i] == char.ToUpper(string[i]))\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 135,
+      "completion_tokens": 78,
+      "total_tokens": 213,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 6e-05,
+    "your_harvard_credits_still_available": 492.25181
+  }
+}

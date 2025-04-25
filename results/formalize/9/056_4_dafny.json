@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod correct_bracketing(brackets: string) returns (result: bool)\n    requires |brackets| > 0 // The input string must not be empty\n    ensures result == (CountOpenBrackets(brackets) == CountCloseBrackets(brackets) && \n                       AllOpenBracketsClosed(brackets))\n{\n    // Method implementation would go here\n}\n\nmethod CountOpenBrackets(brackets: string) returns (count: int)\n    ensures count >= 0\n{\n    // Implementation to count \"<\" in brackets\n}\n\nmethod CountCloseBrackets(brackets: string) returns (count: int)\n    ensures count >= 0\n{\n    // Implementation to count \">\" in brackets\n}\n\nmethod AllOpenBracketsClosed(brackets: string) returns (closed: bool)\n    ensures closed == (CheckAllOpenBracketsClosed(brackets))\n{\n    // Implementation to check if all open brackets have corresponding close brackets\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"<\" and \">\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"<\")\n    False\n    >>> correct_bracketing(\"<>\")\n    True\n    >>> correct_bracketing(\"<<><>>\")\n    True\n    >>> correct_bracketing(\"><<>\")\n    False\n    \"\"\"\n",
+  "problem_id": "HumanEval/56",
+  "problem_data": {
+    "task_id": "HumanEval/56",
+    "prompt": "\n\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"<\" and \">\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"<\")\n    False\n    >>> correct_bracketing(\"<>\")\n    True\n    >>> correct_bracketing(\"<<><>>\")\n    True\n    >>> correct_bracketing(\"><<>\")\n    False\n    \"\"\"\n",
+    "canonical_solution": "    depth = 0\n    for b in brackets:\n        if b == \"<\":\n            depth += 1\n        else:\n            depth -= 1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(\"<>\")\n    assert candidate(\"<<><>>\")\n    assert candidate(\"<><><<><>><>\")\n    assert candidate(\"<><><<<><><>><>><<><><<>>>\")\n    assert not candidate(\"<<<><>>>>\")\n    assert not candidate(\"><<>\")\n    assert not candidate(\"<\")\n    assert not candidate(\"<<<<\")\n    assert not candidate(\">\")\n    assert not candidate(\"<<>\")\n    assert not candidate(\"<><><<><>><>><<>\")\n    assert not candidate(\"<><><<><>><>>><>\")\n\n",
+    "entry_point": "correct_bracketing"
+  },
+  "path": "results/formalize/9/056_4_dafny.json",
+  "method": "formalize",
+  "trial": 9,
+  "time_taken": 5.038513,
+  "time_start": "2025-04-25T05:10:58.969554",
+  "time_end": "2025-04-25T05:11:04.008067",
+  "prompt_tokens": 180,
+  "completion_tokens": 198,
+  "total_tokens": 378,
+  "raw": {
+    "id": "chatcmpl-BQ9NDwiH2azEPBr0bYlQOeiB8y3QM",
+    "object": "chat.completion",
+    "created": 1745572259,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod correct_bracketing(brackets: string) returns (result: bool)\n    requires |brackets| > 0 // The input string must not be empty\n    ensures result == (CountOpenBrackets(brackets) == CountCloseBrackets(brackets) && \n                       AllOpenBracketsClosed(brackets))\n{\n    // Method implementation would go here\n}\n\nmethod CountOpenBrackets(brackets: string) returns (count: int)\n    ensures count >= 0\n{\n    // Implementation to count \"<\" in brackets\n}\n\nmethod CountCloseBrackets(brackets: string) returns (count: int)\n    ensures count >= 0\n{\n    // Implementation to count \">\" in brackets\n}\n\nmethod AllOpenBracketsClosed(brackets: string) returns (closed: bool)\n    ensures closed == (CheckAllOpenBracketsClosed(brackets))\n{\n    // Implementation to check if all open brackets have corresponding close brackets\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 180,
+      "completion_tokens": 198,
+      "total_tokens": 378,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00014,
+    "your_harvard_credits_still_available": 491.8156
+  }
+}

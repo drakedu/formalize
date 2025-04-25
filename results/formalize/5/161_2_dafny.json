@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod solve(s: string) returns (result: string)\n    requires s != null\n    ensures (s.Length == 0 ==> result == \"\") &&\n            (s.Length > 0 && !ContainsLetters(s) ==> result == ReverseString(s)) &&\n            (ContainsLetters(s) ==> result == TransformCase(s))\n{\n    // Implementation goes here\n}\n\nfunction method ContainsLetters(s: string): bool\n    requires s != null\n    ensures ContainsLetters(s) <==> (exists i: int :: 0 <= i < s.Length && IsLetter(s[i]))\n\nfunction method TransformCase(s: string): string\n    requires s != null\n    ensures result.Length == s.Length\n    ensures forall i: int :: 0 <= i < s.Length ==> \n        (IsLetter(s[i]) ==> (result[i] == ToUpper(s[i]) || result[i] == ToLower(s[i]))) &&\n        (not IsLetter(s[i]) ==> result[i] == s[i])\n\nfunction method ReverseString(s: string): string\n    requires s != null\n    ensures result.Length == s.Length\n    ensures forall i: int :: 0 <= i < s.Length ==> result[i] == s[s.Length - 1 - i]\n\nfunction method IsLetter(c: char): bool\n    ensures IsLetter(c) <==> (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))\n\nfunction method ToUpper(c: char): char\n    requires IsLetter(c)\n    ensures IsLetter(result) && result == c.ToUpper()\n\nfunction method ToLower(c: char): char\n    requires IsLetter(c)\n    ensures IsLetter(result) && result == c.ToLower()\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef solve(s):\n    \"\"\"You are given a string s.\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \n    otherwise keep it as it is.\n    If the string contains no letters, reverse the string.\n    The function should return the resulted string.\n    Examples\n    solve(\"1234\") = \"4321\"\n    solve(\"ab\") = \"AB\"\n    solve(\"#a@C\") = \"#A@c\"\n    \"\"\"\n",
+  "problem_id": "HumanEval/161",
+  "problem_data": {
+    "task_id": "HumanEval/161",
+    "prompt": "\ndef solve(s):\n    \"\"\"You are given a string s.\n    if s[i] is a letter, reverse its case from lower to upper or vise versa, \n    otherwise keep it as it is.\n    If the string contains no letters, reverse the string.\n    The function should return the resulted string.\n    Examples\n    solve(\"1234\") = \"4321\"\n    solve(\"ab\") = \"AB\"\n    solve(\"#a@C\") = \"#A@c\"\n    \"\"\"\n",
+    "canonical_solution": "    flg = 0\n    idx = 0\n    new_str = list(s)\n    for i in s:\n        if i.isalpha():\n            new_str[idx] = i.swapcase()\n            flg = 1\n        idx += 1\n    s = \"\"\n    for i in new_str:\n        s += i\n    if flg == 0:\n        return s[len(s)::-1]\n    return s\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"AsDf\") == \"aSdF\"\n    assert candidate(\"1234\") == \"4321\"\n    assert candidate(\"ab\") == \"AB\"\n    assert candidate(\"#a@C\") == \"#A@c\"\n    assert candidate(\"#AsdfW^45\") == \"#aSDFw^45\"\n    assert candidate(\"#6@2\") == \"2@6#\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"#$a^D\") == \"#$A^d\"\n    assert candidate(\"#ccc\") == \"#CCC\"\n\n    # Don't remove this line:\n",
+    "entry_point": "solve"
+  },
+  "path": "results/formalize/5/161_2_dafny.json",
+  "method": "formalize",
+  "trial": 5,
+  "time_taken": 7.333024,
+  "time_start": "2025-04-25T03:37:33.894684",
+  "time_end": "2025-04-25T03:37:41.227708",
+  "prompt_tokens": 194,
+  "completion_tokens": 361,
+  "total_tokens": 555,
+  "raw": {
+    "id": "chatcmpl-BQ7uoS6aI1WbAD06l9hdA4BMieZm8",
+    "object": "chat.completion",
+    "created": 1745566654,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod solve(s: string) returns (result: string)\n    requires s != null\n    ensures (s.Length == 0 ==> result == \"\") &&\n            (s.Length > 0 && !ContainsLetters(s) ==> result == ReverseString(s)) &&\n            (ContainsLetters(s) ==> result == TransformCase(s))\n{\n    // Implementation goes here\n}\n\nfunction method ContainsLetters(s: string): bool\n    requires s != null\n    ensures ContainsLetters(s) <==> (exists i: int :: 0 <= i < s.Length && IsLetter(s[i]))\n\nfunction method TransformCase(s: string): string\n    requires s != null\n    ensures result.Length == s.Length\n    ensures forall i: int :: 0 <= i < s.Length ==> \n        (IsLetter(s[i]) ==> (result[i] == ToUpper(s[i]) || result[i] == ToLower(s[i]))) &&\n        (not IsLetter(s[i]) ==> result[i] == s[i])\n\nfunction method ReverseString(s: string): string\n    requires s != null\n    ensures result.Length == s.Length\n    ensures forall i: int :: 0 <= i < s.Length ==> result[i] == s[s.Length - 1 - i]\n\nfunction method IsLetter(c: char): bool\n    ensures IsLetter(c) <==> (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'))\n\nfunction method ToUpper(c: char): char\n    requires IsLetter(c)\n    ensures IsLetter(result) && result == c.ToUpper()\n\nfunction method ToLower(c: char): char\n    requires IsLetter(c)\n    ensures IsLetter(result) && result == c.ToLower()\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 194,
+      "completion_tokens": 361,
+      "total_tokens": 555,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00024,
+    "your_harvard_credits_still_available": 492.48423
+  }
+}

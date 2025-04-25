@@ -1,0 +1,60 @@
+{
+  "completion": "def anti_shuffle(s):\n    words = s.split(' ')\n    ordered_words = []\n    \n    for word in words:\n        if word:\n            ordered_word = ''.join(sorted(word))\n            ordered_words.append(ordered_word)\n        else:\n            ordered_words.append('')\n    \n    result = []\n    space_index = 0\n    \n    for original_word in words:\n        if original_word == '':\n            result.append(' ')\n        else:\n            result.append(ordered_words[space_index])\n            space_index += 1\n    \n    return ' '.join(result)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method anti_shuffle(s: string) returns (result: string)\n    requires s != null\n    ensures |result| == |s| // The length of the output string is the same as the input string\n    ensures forall i :: 0 <= i < |s| ==> (result[i] == s[i] ==> result[i] == s[i]) || (result[i] != s[i] ==> result[i] in { c | c in s && c != ' ' } && result[i] is in ascending order with respect to ascii value) // Each non-space character in the result is a character from the input, ordered correctly\n    ensures countSpaces(s) == countSpaces(result) // The number of spaces in the input and the output are the same\n{\n    // Implementation will go here\n}\n\nfunction countSpaces(s: string): int\n    requires s != null\n    ensures countSpaces(s) >= 0\n{\n    var count := 0;\n    var i := 0;\n    while i < |s|\n        invariant 0 <= count <= i // count of spaces is non-negative and at most i\n        invariant i <= |s| // i does not exceed the length of s\n    {\n        if s[i] == ' ' {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}",
+  "problem_id": "HumanEval/86",
+  "problem_data": {
+    "task_id": "HumanEval/86",
+    "prompt": "\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n",
+    "canonical_solution": "    return ' '.join([''.join(sorted(list(i))) for i in s.split(' ')])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Hi') == 'Hi'\n    assert candidate('hello') == 'ehllo'\n    assert candidate('number') == 'bemnru'\n    assert candidate('abcd') == 'abcd'\n    assert candidate('Hello World!!!') == 'Hello !!!Wdlor'\n    assert candidate('') == ''\n    assert candidate('Hi. My name is Mister Robot. How are you?') == '.Hi My aemn is Meirst .Rboot How aer ?ouy'\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "anti_shuffle"
+  },
+  "path": "results/formalize/16/086_1_python.json",
+  "method": "formalize",
+  "trial": 16,
+  "time_taken": 2.073539,
+  "time_start": "2025-04-25T06:20:07.056583",
+  "time_end": "2025-04-25T06:20:09.130122",
+  "prompt_tokens": 545,
+  "completion_tokens": 115,
+  "total_tokens": 660,
+  "raw": {
+    "id": "chatcmpl-BQAS79o9RmbAgRNhAGX97D4J7XYFW",
+    "object": "chat.completion",
+    "created": 1745576407,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef anti_shuffle(s):\n    words = s.split(' ')\n    ordered_words = []\n    \n    for word in words:\n        if word:\n            ordered_word = ''.join(sorted(word))\n            ordered_words.append(ordered_word)\n        else:\n            ordered_words.append('')\n    \n    result = []\n    space_index = 0\n    \n    for original_word in words:\n        if original_word == '':\n            result.append(' ')\n        else:\n            result.append(ordered_words[space_index])\n            space_index += 1\n    \n    return ' '.join(result)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 545,
+      "completion_tokens": 115,
+      "total_tokens": 660,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 490.38151
+  }
+}

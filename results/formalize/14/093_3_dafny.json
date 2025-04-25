@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod encode(message: string) returns (encodedMessage: string)\n    requires message != null\n    ensures forall i: int :: 0 <= i < message.Length ==> \n            (message[i] == 'a' || message[i] == 'e' || message[i] == 'i' || message[i] == 'o' || message[i] == 'u' || \n             message[i] == 'A' || message[i] == 'E' || message[i] == 'I' || message[i] == 'O' || message[i] == 'U' ==> \n             encodedMessage[i] == char((char(message[i]) + 2) % 26 + (if message[i] >= 'a' && message[i] <= 'z' then 'a' else 'A')))\n            && (message[i] >= 'a' && message[i] <= 'z' ==> encodedMessage[i] == char(message[i] - 'a' + 'A')) \n            || (message[i] >= 'A' && message[i] <= 'Z' ==> encodedMessage[i] == char(message[i] - 'A' + 'a')))\n            && (message[i] < 'a' || message[i] > 'z' && message[i] < 'A' || message[i] > 'Z' ==> \n                encodedMessage[i] == message[i])\n    ensures encodedMessage.Length == message.Length\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+  "problem_id": "HumanEval/93",
+  "problem_data": {
+    "task_id": "HumanEval/93",
+    "prompt": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+    "canonical_solution": "    vowels = \"aeiouAEIOU\"\n    vowels_replace = dict([(i, chr(ord(i) + 2)) for i in vowels])\n    message = message.swapcase()\n    return ''.join([vowels_replace[i] if i in vowels else i for i in message])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('TEST') == 'tgst', \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('Mudasir') == 'mWDCSKR', \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('YES') == 'ygs', \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('This is a message') == 'tHKS KS C MGSSCGG', \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(\"I DoNt KnOw WhAt tO WrItE\") == 'k dQnT kNqW wHcT Tq wRkTg', \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "encode"
+  },
+  "path": "results/formalize/14/093_3_dafny.json",
+  "method": "formalize",
+  "trial": 14,
+  "time_taken": 8.341057,
+  "time_start": "2025-04-25T06:01:02.856536",
+  "time_end": "2025-04-25T06:01:11.197593",
+  "prompt_tokens": 196,
+  "completion_tokens": 298,
+  "total_tokens": 494,
+  "raw": {
+    "id": "chatcmpl-BQA9ftKFj2VjVCtUkuk0hqMDDwDPm",
+    "object": "chat.completion",
+    "created": 1745575263,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod encode(message: string) returns (encodedMessage: string)\n    requires message != null\n    ensures forall i: int :: 0 <= i < message.Length ==> \n            (message[i] == 'a' || message[i] == 'e' || message[i] == 'i' || message[i] == 'o' || message[i] == 'u' || \n             message[i] == 'A' || message[i] == 'E' || message[i] == 'I' || message[i] == 'O' || message[i] == 'U' ==> \n             encodedMessage[i] == char((char(message[i]) + 2) % 26 + (if message[i] >= 'a' && message[i] <= 'z' then 'a' else 'A')))\n            && (message[i] >= 'a' && message[i] <= 'z' ==> encodedMessage[i] == char(message[i] - 'a' + 'A')) \n            || (message[i] >= 'A' && message[i] <= 'Z' ==> encodedMessage[i] == char(message[i] - 'A' + 'a')))\n            && (message[i] < 'a' || message[i] > 'z' && message[i] < 'A' || message[i] > 'Z' ==> \n                encodedMessage[i] == message[i])\n    ensures encodedMessage.Length == message.Length\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 196,
+      "completion_tokens": 298,
+      "total_tokens": 494,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.0002,
+    "your_harvard_credits_still_available": 490.76828
+  }
+}

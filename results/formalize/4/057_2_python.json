@@ -1,0 +1,60 @@
+{
+  "completion": "def monotonic(l: list) -> bool:\n    if not l:\n        return False\n    \n    increasing = True\n    decreasing = True\n    \n    for i in range(1, len(l)):\n        if l[i] > l[i - 1]:\n            decreasing = False\n        elif l[i] < l[i - 1]:\n            increasing = False\n            \n    return increasing or decreasing",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method monotonic(l: seq<int>) returns (result: bool)\n    requires |l| > 0\n    ensures result == (forall i, j :: 0 <= i < j < |l| ==> (l[i] <= l[j] || l[i] >= l[j]))\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/57",
+  "problem_data": {
+    "task_id": "HumanEval/57",
+    "prompt": "\n\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n",
+    "canonical_solution": "    if l == sorted(l) or l == sorted(l, reverse=True):\n        return True\n    return False\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 2, 4, 10]) == True\n    assert candidate([1, 2, 4, 20]) == True\n    assert candidate([1, 20, 4, 10]) == False\n    assert candidate([4, 1, 0, -10]) == True\n    assert candidate([4, 1, 1, 0]) == True\n    assert candidate([1, 2, 3, 2, 5, 60]) == False\n    assert candidate([1, 2, 3, 4, 5, 60]) == True\n    assert candidate([9, 9, 9, 9]) == True\n\n",
+    "entry_point": "monotonic"
+  },
+  "path": "results/formalize/4/057_2_python.json",
+  "method": "formalize",
+  "trial": 4,
+  "time_taken": 1.649614,
+  "time_start": "2025-04-25T01:12:38.359794",
+  "time_end": "2025-04-25T01:12:40.009408",
+  "prompt_tokens": 285,
+  "completion_tokens": 85,
+  "total_tokens": 370,
+  "raw": {
+    "id": "chatcmpl-BQ5eYm1DWwVuDUr8eUmmVvOF4h16V",
+    "object": "chat.completion",
+    "created": 1745557958,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef monotonic(l: list) -> bool:\n    if not l:\n        return False\n    \n    increasing = True\n    decreasing = True\n    \n    for i in range(1, len(l)):\n        if l[i] > l[i - 1]:\n            decreasing = False\n        elif l[i] < l[i - 1]:\n            increasing = False\n            \n    return increasing or decreasing\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 285,
+      "completion_tokens": 85,
+      "total_tokens": 370,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 492.82465
+  }
+}

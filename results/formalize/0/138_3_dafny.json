@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod is_equal_to_sum_even(n: int) returns (result: bool)\n    requires n >= 0\n    ensures result == (exists a, b, c, d: int :: a > 0 && b > 0 && c > 0 && d > 0 && a % 2 == 0 && b % 2 == 0 && c % 2 == 0 && d % 2 == 0 && a + b + c + d == n)\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef is_equal_to_sum_even(n):\n    \"\"\"Evaluate whether the given number n can be written as the sum of exactly 4 positive even numbers\n    Example\n    is_equal_to_sum_even(4) == False\n    is_equal_to_sum_even(6) == False\n    is_equal_to_sum_even(8) == True\n    \"\"\"\n",
+  "problem_id": "HumanEval/138",
+  "problem_data": {
+    "task_id": "HumanEval/138",
+    "prompt": "\ndef is_equal_to_sum_even(n):\n    \"\"\"Evaluate whether the given number n can be written as the sum of exactly 4 positive even numbers\n    Example\n    is_equal_to_sum_even(4) == False\n    is_equal_to_sum_even(6) == False\n    is_equal_to_sum_even(8) == True\n    \"\"\"\n",
+    "canonical_solution": "    return n%2 == 0 and n >= 8\n",
+    "test": "def check(candidate):\n    assert candidate(4) == False\n    assert candidate(6) == False\n    assert candidate(8) == True\n    assert candidate(10) == True\n    assert candidate(11) == False\n    assert candidate(12) == True\n    assert candidate(13) == False\n    assert candidate(16) == True\n",
+    "entry_point": "is_equal_to_sum_even"
+  },
+  "path": "results/formalize/0/138_3_dafny.json",
+  "method": "formalize",
+  "trial": 0,
+  "time_taken": 1.85459,
+  "time_start": "2025-04-24T20:26:36.084405",
+  "time_end": "2025-04-24T20:26:37.938995",
+  "prompt_tokens": 164,
+  "completion_tokens": 115,
+  "total_tokens": 279,
+  "raw": {
+    "id": "chatcmpl-BQ1BkuGgnCB3ZxTfgwSSqvi1VXJYi",
+    "object": "chat.completion",
+    "created": 1745540796,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod is_equal_to_sum_even(n: int) returns (result: bool)\n    requires n >= 0\n    ensures result == (exists a, b, c, d: int :: a > 0 && b > 0 && c > 0 && d > 0 && a % 2 == 0 && b % 2 == 0 && c % 2 == 0 && d % 2 == 0 && a + b + c + d == n)\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 164,
+      "completion_tokens": 115,
+      "total_tokens": 279,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 493.51609
+  }
+}

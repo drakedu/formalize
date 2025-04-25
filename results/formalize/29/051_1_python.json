@@ -1,0 +1,60 @@
+{
+  "completion": "def remove_vowels(text):\n    vowels = \"aeiouAEIOU\"\n    return ''.join(char for char in text if char not in vowels)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef remove_vowels(text):\n    \"\"\"\n    remove_vowels is a function that takes string and returns string without vowels.\n    >>> remove_vowels('')\n    ''\n    >>> remove_vowels(\"abcdef\\nghijklm\")\n    'bcdf\\nghjklm'\n    >>> remove_vowels('abcdef')\n    'bcdf'\n    >>> remove_vowels('aaaaa')\n    ''\n    >>> remove_vowels('aaBAA')\n    'B'\n    >>> remove_vowels('zbcd')\n    'zbcd'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method remove_vowels(text: string) returns (result: string)\n    requires text != null\n    ensures forall i: int :: 0 <= i < text.Length ==> (text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' || text[i] == 'u' || \n                                                        text[i] == 'A' || text[i] == 'E' || text[i] == 'I' || text[i] == 'O' || text[i] == 'U' \n                                                        ==> result.Contains(text[i]) == false) \n    && result.Length + (text.Length - CountVowels(text)) == text.Length\n    ensures result == RemoveVowelsFromString(text)\n{\n    // Implementation goes here\n}\n\nfunction CountVowels(text: string): int\n    requires text != null\n    ensures CountVowels(text) == (|{i | 0 <= i < text.Length && (text[i] == 'a' || text[i] == 'e' || text[i] == 'i' || text[i] == 'o' || text[i] == 'u' || \n                                                               text[i] == 'A' || text[i] == 'E' || text[i] == 'I' || text[i] == 'O' || text[i] == 'U')}|)\n{\n    // Implementation goes here\n}\n\nfunction RemoveVowelsFromString(text: string): string\n    requires text != null\n    ensures RemoveVowelsFromString(text) == // Implementation to remove vowels from text\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/51",
+  "problem_data": {
+    "task_id": "HumanEval/51",
+    "prompt": "\n\ndef remove_vowels(text):\n    \"\"\"\n    remove_vowels is a function that takes string and returns string without vowels.\n    >>> remove_vowels('')\n    ''\n    >>> remove_vowels(\"abcdef\\nghijklm\")\n    'bcdf\\nghjklm'\n    >>> remove_vowels('abcdef')\n    'bcdf'\n    >>> remove_vowels('aaaaa')\n    ''\n    >>> remove_vowels('aaBAA')\n    'B'\n    >>> remove_vowels('zbcd')\n    'zbcd'\n    \"\"\"\n",
+    "canonical_solution": "    return \"\".join([s for s in text if s.lower() not in [\"a\", \"e\", \"i\", \"o\", \"u\"]])\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate(\"abcdef\\nghijklm\") == 'bcdf\\nghjklm'\n    assert candidate('fedcba') == 'fdcb'\n    assert candidate('eeeee') == ''\n    assert candidate('acBAA') == 'cB'\n    assert candidate('EcBOO') == 'cB'\n    assert candidate('ybcd') == 'ybcd'\n\n",
+    "entry_point": "remove_vowels"
+  },
+  "path": "results/formalize/29/051_1_python.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 1.157233,
+  "time_start": "2025-04-25T08:40:46.110756",
+  "time_end": "2025-04-25T08:40:47.267989",
+  "prompt_tokens": 584,
+  "completion_tokens": 36,
+  "total_tokens": 620,
+  "raw": {
+    "id": "chatcmpl-BQCeEA91WOiBuLMVVb0B04Ea1HIVl",
+    "object": "chat.completion",
+    "created": 1745584846,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef remove_vowels(text):\n    vowels = \"aeiouAEIOU\"\n    return ''.join(char for char in text if char not in vowels)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 584,
+      "completion_tokens": 36,
+      "total_tokens": 620,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 487.75763
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "completion": "def prod_signs(arr):\n    if not arr:\n        return None\n\n    magnitude_sum = sum(abs(x) for x in arr)\n    sign_product = 1\n\n    for x in arr:\n        if x > 0:\n            sign_product *= 1\n        elif x < 0:\n            sign_product *= -1\n        else:\n            return 0\n\n    return magnitude_sum if sign_product == 1 else -magnitude_sum if sign_product == -1 else 0",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method prod_signs(arr: seq<int>) returns (result: int?)\n    requires arr != null\n    ensures result == null <==> arr == []\n    ensures result == sum(|x| |x in arr|) * sign_product(arr)\n    ensures sign_product(arr) == 1 ==> result == sum(|x| |x in arr|)\n    ensures sign_product(arr) == -1 ==> result == -sum(|x| |x in arr|)\n    ensures sign_product(arr) == 0 ==> result == 0\n{\n    // Implementation will go here\n}",
+  "problem_id": "HumanEval/128",
+  "problem_data": {
+    "task_id": "HumanEval/128",
+    "prompt": "\ndef prod_signs(arr):\n    \"\"\"\n    You are given an array arr of integers and you need to return\n    sum of magnitudes of integers multiplied by product of all signs\n    of each number in the array, represented by 1, -1 or 0.\n    Note: return None for empty arr.\n\n    Example:\n    >>> prod_signs([1, 2, 2, -4]) == -9\n    >>> prod_signs([0, 1]) == 0\n    >>> prod_signs([]) == None\n    \"\"\"\n",
+    "canonical_solution": "    if not arr: return None\n    prod = 0 if 0 in arr else (-1) ** len(list(filter(lambda x: x < 0, arr)))\n    return prod * sum([abs(i) for i in arr])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([1, 2, 2, -4]) == -9\n    assert candidate([0, 1]) == 0\n    assert candidate([1, 1, 1, 2, 3, -1, 1]) == -10\n    assert candidate([]) == None\n    assert candidate([2, 4,1, 2, -1, -1, 9]) == 20\n    assert candidate([-1, 1, -1, 1]) == 4\n    assert candidate([-1, 1, 1, 1]) == -4\n    assert candidate([-1, 1, 1, 0]) == 0\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "prod_signs"
+  },
+  "path": "results/formalize/21/128_2_python.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 2.618963,
+  "time_start": "2025-04-25T07:15:46.709069",
+  "time_end": "2025-04-25T07:15:49.328032",
+  "prompt_tokens": 371,
+  "completion_tokens": 107,
+  "total_tokens": 478,
+  "raw": {
+    "id": "chatcmpl-BQBJyYyh5OQScosrbdWb7JRExSyzb",
+    "object": "chat.completion",
+    "created": 1745579746,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n\n    magnitude_sum = sum(abs(x) for x in arr)\n    sign_product = 1\n\n    for x in arr:\n        if x > 0:\n            sign_product *= 1\n        elif x < 0:\n            sign_product *= -1\n        else:\n            return 0\n\n    return magnitude_sum if sign_product == 1 else -magnitude_sum if sign_product == -1 else 0\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 371,
+      "completion_tokens": 107,
+      "total_tokens": 478,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00011,
+    "your_harvard_credits_still_available": 489.30256
+  },
+  "k": 5,
+  "temperature": 0.7,
+  "votes": 1
+}

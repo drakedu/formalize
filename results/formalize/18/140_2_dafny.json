@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod fix_spaces(text: string) returns (result: string)\n    requires text != null\n    ensures forall i: int :: 0 <= i < |text| ==> (text[i] == ' ' ==> result[i] == '_') \n    && (countConsecutiveSpaces(text) > 2 ==> result == replaceConsecutiveSpaces(text))\n    && (countConsecutiveSpaces(text) <= 2 ==> result == replaceSingleSpaces(text))\n{\n    // Implementation goes here\n}\n\nfunction countConsecutiveSpaces(text: string) : int\n    ensures result >= 0\n    ensures result <= |text|\n{\n    // Implementation to count spaces\n}\n\nfunction replaceConsecutiveSpaces(text: string) : string\n    ensures |result| == |text| - countConsecutiveSpaces(text) + 1\n{\n    // Implementation to replace consecutive spaces\n}\n\nfunction replaceSingleSpaces(text: string) : string\n    ensures |result| == |text| - countSingleSpaces(text) + countSingleUnderscores(text)\n{\n    // Implementation to replace single spaces\n}\n\nfunction countSingleSpaces(text: string) : int\n    ensures result >= 0\n    ensures result <= |text|\n{\n    // Implementation to count single spaces\n}\n\nfunction countSingleUnderscores(text: string) : int\n    ensures result == countSingleSpaces(text)\n{\n    // Implementation to count underscores\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n",
+  "problem_id": "HumanEval/140",
+  "problem_data": {
+    "task_id": "HumanEval/140",
+    "prompt": "\ndef fix_spaces(text):\n    \"\"\"\n    Given a string text, replace all spaces in it with underscores, \n    and if a string has more than 2 consecutive spaces, \n    then replace all consecutive spaces with - \n    \n    fix_spaces(\"Example\") == \"Example\"\n    fix_spaces(\"Example 1\") == \"Example_1\"\n    fix_spaces(\" Example 2\") == \"_Example_2\"\n    fix_spaces(\" Example   3\") == \"_Example-3\"\n    \"\"\"\n",
+    "canonical_solution": "    new_text = \"\"\n    i = 0\n    start, end = 0, 0\n    while i < len(text):\n        if text[i] == \" \":\n            end += 1\n        else:\n            if end - start > 2:\n                new_text += \"-\"+text[i]\n            elif end - start > 0:\n                new_text += \"_\"*(end - start)+text[i]\n            else:\n                new_text += text[i]\n            start, end = i+1, i+1\n        i+=1\n    if end - start > 2:\n        new_text += \"-\"\n    elif end - start > 0:\n        new_text += \"_\"\n    return new_text\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"Example\") == \"Example\", \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(\"Mudasir Hanif \") == \"Mudasir_Hanif_\", \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate(\"Yellow Yellow  Dirty  Fellow\") == \"Yellow_Yellow__Dirty__Fellow\", \"This prints if this assert fails 3 (good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"Exa   mple\") == \"Exa-mple\", \"This prints if this assert fails 4 (good for debugging!)\"\n    assert candidate(\"   Exa 1 2 2 mple\") == \"-Exa_1_2_2_mple\", \"This prints if this assert fails 4 (good for debugging!)\"\n\n",
+    "entry_point": "fix_spaces"
+  },
+  "path": "results/formalize/18/140_2_dafny.json",
+  "method": "formalize",
+  "trial": 18,
+  "time_taken": 6.278071,
+  "time_start": "2025-04-25T06:45:48.441019",
+  "time_end": "2025-04-25T06:45:54.719090",
+  "prompt_tokens": 193,
+  "completion_tokens": 292,
+  "total_tokens": 485,
+  "raw": {
+    "id": "chatcmpl-BQAqyAoRUv35cDM6ZcQj5xD7g09Fl",
+    "object": "chat.completion",
+    "created": 1745577948,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod fix_spaces(text: string) returns (result: string)\n    requires text != null\n    ensures forall i: int :: 0 <= i < |text| ==> (text[i] == ' ' ==> result[i] == '_') \n    && (countConsecutiveSpaces(text) > 2 ==> result == replaceConsecutiveSpaces(text))\n    && (countConsecutiveSpaces(text) <= 2 ==> result == replaceSingleSpaces(text))\n{\n    // Implementation goes here\n}\n\nfunction countConsecutiveSpaces(text: string) : int\n    ensures result >= 0\n    ensures result <= |text|\n{\n    // Implementation to count spaces\n}\n\nfunction replaceConsecutiveSpaces(text: string) : string\n    ensures |result| == |text| - countConsecutiveSpaces(text) + 1\n{\n    // Implementation to replace consecutive spaces\n}\n\nfunction replaceSingleSpaces(text: string) : string\n    ensures |result| == |text| - countSingleSpaces(text) + countSingleUnderscores(text)\n{\n    // Implementation to replace single spaces\n}\n\nfunction countSingleSpaces(text: string) : int\n    ensures result >= 0\n    ensures result <= |text|\n{\n    // Implementation to count single spaces\n}\n\nfunction countSingleUnderscores(text: string) : int\n    ensures result == countSingleSpaces(text)\n{\n    // Implementation to count underscores\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 193,
+      "completion_tokens": 292,
+      "total_tokens": 485,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0002,
+    "your_harvard_credits_still_available": 489.89485
+  }
+}

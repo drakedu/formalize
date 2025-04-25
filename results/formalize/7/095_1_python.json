@@ -1,0 +1,60 @@
+{
+  "completion": "def check_dict_case(d):\n    if not d:\n        return False\n    \n    all_lower = all(isinstance(k, str) and k.islower() for k in d.keys())\n    all_upper = all(isinstance(k, str) and k.isupper() for k in d.keys())\n    \n    return all_lower or all_upper",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef check_dict_case(dict):\n    \"\"\"\n    Given a dictionary, return True if all keys are strings in lower \n    case or all keys are strings in upper case, else return False.\n    The function should return False is the given dictionary is empty.\n    Examples:\n    check_dict_case({\"a\":\"apple\", \"b\":\"banana\"}) should return True.\n    check_dict_case({\"a\":\"apple\", \"A\":\"banana\", \"B\":\"banana\"}) should return False.\n    check_dict_case({\"a\":\"apple\", 8:\"banana\", \"a\":\"apple\"}) should return False.\n    check_dict_case({\"Name\":\"John\", \"Age\":\"36\", \"City\":\"Houston\"}) should return False.\n    check_dict_case({\"STATE\":\"NC\", \"ZIP\":\"12345\" }) should return True.\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method check_dict_case(dict: map<string, string>) returns (result: bool)\n    requires dict != null\n    requires forall k: string, v: string :: dict[k] | (k is string)\n    ensures result == (forall k: string :: dict[k] | is_lower_case(k) || is_upper_case(k))\n    ensures dict != {} ==> result == (forall k: string :: dict[k] | is_lower_case(k) || is_upper_case(k))\n{\n    // Method implementation would go here\n}\n\nmethod is_lower_case(s: string) returns (result: bool)\n    ensures result == (forall i: int :: 0 <= i < s.Length ==> 'a' <= s[i] && s[i] <= 'z')\n{\n    // Implementation to check if s is all lower case\n}\n\nmethod is_upper_case(s: string) returns (result: bool)\n    ensures result == (forall i: int :: 0 <= i < s.Length ==> 'A' <= s[i] && s[i] <= 'Z')\n{\n    // Implementation to check if s is all upper case\n}",
+  "problem_id": "HumanEval/95",
+  "problem_data": {
+    "task_id": "HumanEval/95",
+    "prompt": "\ndef check_dict_case(dict):\n    \"\"\"\n    Given a dictionary, return True if all keys are strings in lower \n    case or all keys are strings in upper case, else return False.\n    The function should return False is the given dictionary is empty.\n    Examples:\n    check_dict_case({\"a\":\"apple\", \"b\":\"banana\"}) should return True.\n    check_dict_case({\"a\":\"apple\", \"A\":\"banana\", \"B\":\"banana\"}) should return False.\n    check_dict_case({\"a\":\"apple\", 8:\"banana\", \"a\":\"apple\"}) should return False.\n    check_dict_case({\"Name\":\"John\", \"Age\":\"36\", \"City\":\"Houston\"}) should return False.\n    check_dict_case({\"STATE\":\"NC\", \"ZIP\":\"12345\" }) should return True.\n    \"\"\"\n",
+    "canonical_solution": "    if len(dict.keys()) == 0:\n        return False\n    else:\n        state = \"start\"\n        for key in dict.keys():\n\n            if isinstance(key, str) == False:\n                state = \"mixed\"\n                break\n            if state == \"start\":\n                if key.isupper():\n                    state = \"upper\"\n                elif key.islower():\n                    state = \"lower\"\n                else:\n                    break\n            elif (state == \"upper\" and not key.isupper()) or (state == \"lower\" and not key.islower()):\n                    state = \"mixed\"\n                    break\n            else:\n                break\n        return state == \"upper\" or state == \"lower\" \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate({\"p\":\"pineapple\", \"b\":\"banana\"}) == True, \"First test error: \" + str(candidate({\"p\":\"pineapple\", \"b\":\"banana\"}))\n    assert candidate({\"p\":\"pineapple\", \"A\":\"banana\", \"B\":\"banana\"}) == False, \"Second test error: \" + str(candidate({\"p\":\"pineapple\", \"A\":\"banana\", \"B\":\"banana\"}))\n    assert candidate({\"p\":\"pineapple\", 5:\"banana\", \"a\":\"apple\"}) == False, \"Third test error: \" + str(candidate({\"p\":\"pineapple\", 5:\"banana\", \"a\":\"apple\"}))\n    assert candidate({\"Name\":\"John\", \"Age\":\"36\", \"City\":\"Houston\"}) == False, \"Fourth test error: \" + str(candidate({\"Name\":\"John\", \"Age\":\"36\", \"City\":\"Houston\"}))\n    assert candidate({\"STATE\":\"NC\", \"ZIP\":\"12345\" }) == True, \"Fifth test error: \" + str(candidate({\"STATE\":\"NC\", \"ZIP\":\"12345\" }))      \n    assert candidate({\"fruit\":\"Orange\", \"taste\":\"Sweet\" }) == True, \"Fourth test error: \" + str(candidate({\"fruit\":\"Orange\", \"taste\":\"Sweet\" }))      \n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate({}) == False, \"1st edge test error: \" + str(candidate({}))\n\n",
+    "entry_point": "check_dict_case"
+  },
+  "path": "results/formalize/7/095_1_python.json",
+  "method": "formalize",
+  "trial": 7,
+  "time_taken": 1.727016,
+  "time_start": "2025-04-25T04:53:00.818324",
+  "time_end": "2025-04-25T04:53:02.545340",
+  "prompt_tokens": 529,
+  "completion_tokens": 73,
+  "total_tokens": 602,
+  "raw": {
+    "id": "chatcmpl-BQ95pHIM3qOfGTd6Zuab4LvM3rraC",
+    "object": "chat.completion",
+    "created": 1745571181,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef check_dict_case(d):\n    if not d:\n        return False\n    \n    all_lower = all(isinstance(k, str) and k.islower() for k in d.keys())\n    all_upper = all(isinstance(k, str) and k.isupper() for k in d.keys())\n    \n    return all_lower or all_upper\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 529,
+      "completion_tokens": 73,
+      "total_tokens": 602,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00012,
+    "your_harvard_credits_still_available": 492.17368
+  }
+}

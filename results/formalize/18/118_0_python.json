@@ -1,0 +1,60 @@
+{
+  "completion": "def get_closest_vowel(word):\n    vowels = \"aeiouAEIOU\"\n    length = len(word)\n\n    for i in range(length - 2, 0, -1):\n        if word[i] in vowels and word[i - 1] not in vowels and word[i + 1] not in vowels:\n            return word[i]\n    \n    return \"\"",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef get_closest_vowel(word):\n    \"\"\"You are given a word. Your task is to find the closest vowel that stands between \n    two consonants from the right side of the word (case sensitive).\n    \n    Vowels in the beginning and ending doesn't count. Return empty string if you didn't\n    find any vowel met the above condition. \n\n    You may assume that the given string contains English letter only.\n\n    Example:\n    get_closest_vowel(\"yogurt\") ==> \"u\"\n    get_closest_vowel(\"FULL\") ==> \"U\"\n    get_closest_vowel(\"quick\") ==> \"\"\n    get_closest_vowel(\"ab\") ==> \"\"\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method get_closest_vowel(word: string) returns (result: string)\n    requires word != null // The input string should not be null\n    requires word.Length > 0 // The word must have at least one character\n    ensures result == \"\" || (result == \"a\" || result == \"e\" || result == \"i\" || result == \"o\" || result == \"u\" || result == \"A\" || result == \"E\" || result == \"I\" || result == \"O\" || result == \"U\") // Result must be a vowel or empty\n    ensures (result == \"\" ==> (forall i: int :: 0 <= i < word.Length ==> !(word[i] == result && (i == 0 || i == word.Length - 1)))) // If result is empty, no vowel must be found between consonants\n    ensures (result != \"\" ==> exists i: int :: 0 < i < word.Length - 1 && word[i] == result && (word[i - 1] != 'a' && word[i - 1] != 'e' && word[i - 1] != 'i' && word[i - 1] != 'o' && word[i - 1] != 'u' && word[i - 1] != 'A' && word[i - 1] != 'E' && word[i - 1] != 'I' && word[i - 1] != 'O' && word[i - 1] != 'U') && (word[i + 1] != 'a' && word[i + 1] != 'e' && word[i + 1] != 'i' && word[i + 1] != 'o' && word[i + 1] != 'u' && word[i + 1] != 'A' && word[i + 1] != 'E' && word[i + 1] != 'I' && word[i + 1] != 'O' && word[i + 1] != 'U'))) // If result is a vowel, it must be between two consonants\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/118",
+  "problem_data": {
+    "task_id": "HumanEval/118",
+    "prompt": "\ndef get_closest_vowel(word):\n    \"\"\"You are given a word. Your task is to find the closest vowel that stands between \n    two consonants from the right side of the word (case sensitive).\n    \n    Vowels in the beginning and ending doesn't count. Return empty string if you didn't\n    find any vowel met the above condition. \n\n    You may assume that the given string contains English letter only.\n\n    Example:\n    get_closest_vowel(\"yogurt\") ==> \"u\"\n    get_closest_vowel(\"FULL\") ==> \"U\"\n    get_closest_vowel(\"quick\") ==> \"\"\n    get_closest_vowel(\"ab\") ==> \"\"\n    \"\"\"\n",
+    "canonical_solution": "    if len(word) < 3:\n        return \"\"\n\n    vowels = {\"a\", \"e\", \"i\", \"o\", \"u\", \"A\", \"E\", 'O', 'U', 'I'}\n    for i in range(len(word)-2, 0, -1):\n        if word[i] in vowels:\n            if (word[i+1] not in vowels) and (word[i-1] not in vowels):\n                return word[i]\n    return \"\"\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"yogurt\") == \"u\"\n    assert candidate(\"full\") == \"u\"\n    assert candidate(\"easy\") == \"\"\n    assert candidate(\"eAsy\") == \"\"\n    assert candidate(\"ali\") == \"\"\n    assert candidate(\"bad\") == \"a\"\n    assert candidate(\"most\") == \"o\"\n    assert candidate(\"ab\") == \"\"\n    assert candidate(\"ba\") == \"\"\n    assert candidate(\"quick\") == \"\"\n    assert candidate(\"anime\") == \"i\"\n    assert candidate(\"Asia\") == \"\"\n    assert candidate(\"Above\") == \"o\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "get_closest_vowel"
+  },
+  "path": "results/formalize/18/118_0_python.json",
+  "method": "formalize",
+  "trial": 18,
+  "time_taken": 1.756239,
+  "time_start": "2025-04-25T06:44:07.491588",
+  "time_end": "2025-04-25T06:44:09.247827",
+  "prompt_tokens": 729,
+  "completion_tokens": 82,
+  "total_tokens": 811,
+  "raw": {
+    "id": "chatcmpl-BQApL473sr4h4y2Mt9djjX9et7RcY",
+    "object": "chat.completion",
+    "created": 1745577847,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef get_closest_vowel(word):\n    vowels = \"aeiouAEIOU\"\n    length = len(word)\n\n    for i in range(length - 2, 0, -1):\n        if word[i] in vowels and word[i - 1] not in vowels and word[i + 1] not in vowels:\n            return word[i]\n    \n    return \"\"\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 729,
+      "completion_tokens": 82,
+      "total_tokens": 811,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 489.93257
+  }
+}

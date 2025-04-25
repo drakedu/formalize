@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures forall i :: 0 <= i < groups.Length ==> \n        (groups[i].Length > 0 && \n        (forall j :: 0 <= j < groups[i].Length ==> groups[i][j] == '(' || groups[i][j] == ')') &&\n        countChar(groups[i], '(') == countChar(groups[i], ')'))\n    ensures countChar(paren_string, '(') == sum(i | 0 <= i < groups.Length :: countChar(groups[i], '(')) &&\n            countChar(paren_string, ')') == sum(i | 0 <= i < groups.Length :: countChar(groups[i], ')'))\n    ensures groups.Length > 0 ==> \n        (forall i :: 0 <= i < groups.Length - 1 ==> \n            indexOf(paren_string, groups[i]) < indexOf(paren_string, groups[i + 1]))\n{\n    // Implementation goes here\n}\n\n// Helper function to count occurrences of a character in a string\nfunction countChar(s: string, c: char): int\n    requires s != null\n    ensures 0 <= countChar(s, c) <= s.Length\n{\n    var count := 0;\n    var i := 0;\n    while i < s.Length\n        invariant 0 <= i <= s.Length\n        invariant count == Count(c, s[0..i])\n    {\n        if s[i] == c {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\n// Helper function to find the index of a substring in a string\nfunction indexOf(s: string, sub: string): int\n    requires s != null && sub != null\n    ensures 0 <= indexOf(s, sub) <= s.Length\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+  "problem_id": "HumanEval/1",
+  "problem_data": {
+    "task_id": "HumanEval/1",
+    "prompt": "from typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    \"\"\" Input to this function is a string containing multiple groups of nested parentheses. Your goal is to\n    separate those group into separate strings and return the list of those.\n    Separate groups are balanced (each open brace is properly closed) and not nested within each other\n    Ignore any spaces in the input string.\n    >>> separate_paren_groups('( ) (( )) (( )( ))')\n    ['()', '(())', '(()())']\n    \"\"\"\n",
+    "canonical_solution": "    result = []\n    current_string = []\n    current_depth = 0\n\n    for c in paren_string:\n        if c == '(':\n            current_depth += 1\n            current_string.append(c)\n        elif c == ')':\n            current_depth -= 1\n            current_string.append(c)\n\n            if current_depth == 0:\n                result.append(''.join(current_string))\n                current_string.clear()\n\n    return result\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('(()()) ((())) () ((())()())') == [\n        '(()())', '((()))', '()', '((())()())'\n    ]\n    assert candidate('() (()) ((())) (((())))') == [\n        '()', '(())', '((()))', '(((())))'\n    ]\n    assert candidate('(()(())((())))') == [\n        '(()(())((())))'\n    ]\n    assert candidate('( ) (( )) (( )( ))') == ['()', '(())', '(()())']\n",
+    "entry_point": "separate_paren_groups"
+  },
+  "path": "results/formalize/29/001_4_dafny.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 8.539176,
+  "time_start": "2025-04-25T08:38:33.670920",
+  "time_end": "2025-04-25T08:38:42.210096",
+  "prompt_tokens": 201,
+  "completion_tokens": 439,
+  "total_tokens": 640,
+  "raw": {
+    "id": "chatcmpl-BQCc5FUUKDYzKCggXo9xJNE2pJ4jN",
+    "object": "chat.completion",
+    "created": 1745584713,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod separate_paren_groups(paren_string: string) returns (groups: seq<string>)\n    requires paren_string != null\n    requires forall i :: 0 <= i < paren_string.Length ==> (paren_string[i] == '(' || paren_string[i] == ')' || paren_string[i] == ' ')\n    ensures forall i :: 0 <= i < groups.Length ==> \n        (groups[i].Length > 0 && \n        (forall j :: 0 <= j < groups[i].Length ==> groups[i][j] == '(' || groups[i][j] == ')') &&\n        countChar(groups[i], '(') == countChar(groups[i], ')'))\n    ensures countChar(paren_string, '(') == sum(i | 0 <= i < groups.Length :: countChar(groups[i], '(')) &&\n            countChar(paren_string, ')') == sum(i | 0 <= i < groups.Length :: countChar(groups[i], ')'))\n    ensures groups.Length > 0 ==> \n        (forall i :: 0 <= i < groups.Length - 1 ==> \n            indexOf(paren_string, groups[i]) < indexOf(paren_string, groups[i + 1]))\n{\n    // Implementation goes here\n}\n\n// Helper function to count occurrences of a character in a string\nfunction countChar(s: string, c: char): int\n    requires s != null\n    ensures 0 <= countChar(s, c) <= s.Length\n{\n    var count := 0;\n    var i := 0;\n    while i < s.Length\n        invariant 0 <= i <= s.Length\n        invariant count == Count(c, s[0..i])\n    {\n        if s[i] == c {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n    return count;\n}\n\n// Helper function to find the index of a substring in a string\nfunction indexOf(s: string, sub: string): int\n    requires s != null && sub != null\n    ensures 0 <= indexOf(s, sub) <= s.Length\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 201,
+      "completion_tokens": 439,
+      "total_tokens": 640,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00029,
+    "your_harvard_credits_still_available": 487.79785
+  }
+}

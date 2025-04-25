@@ -1,0 +1,60 @@
+{
+  "completion": "def minSubArraySum(nums):\n    min_sum = float('inf')\n    current_sum = 0\n    \n    for num in nums:\n        current_sum += num\n        min_sum = min(min_sum, current_sum)\n        if current_sum > 0:\n            current_sum = 0\n            \n    return min_sum",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef minSubArraySum(nums):\n    \"\"\"\n    Given an array of integers nums, find the minimum sum of any non-empty sub-array\n    of nums.\n    Example\n    minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n    minSubArraySum([-1, -2, -3]) == -6\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method minSubArraySum(nums: seq<int>) returns (result: int)\n    requires |nums| > 0  // The array must be non-empty\n    ensures result == MinSubArraySum(nums) // The result should be the minimum sum of any non-empty sub-array\n{\n    // Implementation goes here\n}\n\nmethod MinSubArraySum(nums: seq<int>) returns (minSum: int)\n    requires |nums| > 0\n    ensures minSum < 0 || minSum == 0 // The minimum sum can be zero or negative\n    ensures minSum == MinSubArraySum(nums) // This ensures the function computes the minimum correctly\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/114",
+  "problem_data": {
+    "task_id": "HumanEval/114",
+    "prompt": "\ndef minSubArraySum(nums):\n    \"\"\"\n    Given an array of integers nums, find the minimum sum of any non-empty sub-array\n    of nums.\n    Example\n    minSubArraySum([2, 3, 4, 1, 2, 4]) == 1\n    minSubArraySum([-1, -2, -3]) == -6\n    \"\"\"\n",
+    "canonical_solution": "    max_sum = 0\n    s = 0\n    for num in nums:\n        s += -num\n        if (s < 0):\n            s = 0\n        max_sum = max(s, max_sum)\n    if max_sum == 0:\n        max_sum = max(-i for i in nums)\n    min_sum = -max_sum\n    return min_sum\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([2, 3, 4, 1, 2, 4]) == 1, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate([-1, -2, -3]) == -6\n    assert candidate([-1, -2, -3, 2, -10]) == -14\n    assert candidate([-9999999999999999]) == -9999999999999999\n    assert candidate([0, 10, 20, 1000000]) == 0\n    assert candidate([-1, -2, -3, 10, -5]) == -6\n    assert candidate([100, -1, -2, -3, 10, -5]) == -6\n    assert candidate([10, 11, 13, 8, 3, 4]) == 3\n    assert candidate([100, -33, 32, -1, 0, -2]) == -33\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([-10]) == -10, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate([7]) == 7\n    assert candidate([1, -1]) == -1\n",
+    "entry_point": "minSubArraySum"
+  },
+  "path": "results/formalize/27/114_1_python.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 2.312638,
+  "time_start": "2025-04-25T08:23:51.462544",
+  "time_end": "2025-04-25T08:23:53.775182",
+  "prompt_tokens": 363,
+  "completion_tokens": 70,
+  "total_tokens": 433,
+  "raw": {
+    "id": "chatcmpl-BQCNrNLmScB3uj7kwwGT8Qv7RvF4k",
+    "object": "chat.completion",
+    "created": 1745583831,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef minSubArraySum(nums):\n    min_sum = float('inf')\n    current_sum = 0\n    \n    for num in nums:\n        current_sum += num\n        min_sum = min(min_sum, current_sum)\n        if current_sum > 0:\n            current_sum = 0\n            \n    return min_sum\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 363,
+      "completion_tokens": 70,
+      "total_tokens": 433,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 9e-05,
+    "your_harvard_credits_still_available": 488.08107
+  }
+}

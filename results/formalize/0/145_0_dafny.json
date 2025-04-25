@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod order_by_points(nums: seq<int>) returns (sorted: seq<int>)\n    requires |nums| >= 0 // the input list can be of any length, including empty\n    ensures sorted == Seq.Sort(CompareByDigitSum(nums)) // sorted is the list sorted by digit sum\n    ensures |sorted| == |nums| // the output list has the same length as the input\n    ensures forall i, j :: 0 <= i < |nums| && 0 <= j < |nums| && i != j ==> \n        (CompareByDigitSum(nums)[i] < CompareByDigitSum(nums)[j] ==> \n        (sorted[i] == nums[i] ==> sorted[j] == nums[j])) // ordering by digit sum and original index\n{\n    // Implementation goes here\n}\n\nfunction CompareByDigitSum(nums: seq<int>): seq<int>\n    requires |nums| >= 0\n    ensures |result| == |nums| // the result has the same length as the input\n{\n    // Function for calculating the sum of digits of each integer\n}\n\nfunction SumOfDigits(n: int): int\n    requires n >= 0 // we are only concerned with non-negative integers for digit sum\n    ensures result >= 0 // the sum of digits is non-negative\n{\n    // Function implementation for calculating the sum of the digits of n\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef order_by_points(nums):\n    \"\"\"\n    Write a function which sorts the given list of integers\n    in ascending order according to the sum of their digits.\n    Note: if there are several items with similar sum of their digits,\n    order them based on their index in original list.\n\n    For example:\n    >>> order_by_points([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]\n    >>> order_by_points([]) == []\n    \"\"\"\n",
+  "problem_id": "HumanEval/145",
+  "problem_data": {
+    "task_id": "HumanEval/145",
+    "prompt": "\ndef order_by_points(nums):\n    \"\"\"\n    Write a function which sorts the given list of integers\n    in ascending order according to the sum of their digits.\n    Note: if there are several items with similar sum of their digits,\n    order them based on their index in original list.\n\n    For example:\n    >>> order_by_points([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]\n    >>> order_by_points([]) == []\n    \"\"\"\n",
+    "canonical_solution": "    def digits_sum(n):\n        neg = 1\n        if n < 0: n, neg = -1 * n, -1 \n        n = [int(i) for i in str(n)]\n        n[0] = n[0] * neg\n        return sum(n)\n    return sorted(nums, key=digits_sum)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 11, -1, -11, -12]) == [-1, -11, 1, -12, 11]\n    assert candidate([1234,423,463,145,2,423,423,53,6,37,3457,3,56,0,46]) == [0, 2, 3, 6, 53, 423, 423, 423, 1234, 145, 37, 46, 56, 463, 3457]\n    assert candidate([]) == []\n    assert candidate([1, -11, -32, 43, 54, -98, 2, -3]) == [-3, -32, -98, -11, 1, 2, 43, 54]\n    assert candidate([1,2,3,4,5,6,7,8,9,10,11]) == [1, 10, 2, 11, 3, 4, 5, 6, 7, 8, 9]\n    assert candidate([0,6,6,-76,-21,23,4]) == [-76, -21, 0, 4, 23, 6, 6]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "order_by_points"
+  },
+  "path": "results/formalize/0/145_0_dafny.json",
+  "method": "formalize",
+  "trial": 0,
+  "time_taken": 3.434526,
+  "time_start": "2025-04-24T20:30:01.879804",
+  "time_end": "2025-04-24T20:30:05.314330",
+  "prompt_tokens": 202,
+  "completion_tokens": 289,
+  "total_tokens": 491,
+  "raw": {
+    "id": "chatcmpl-BQ1F4KCK9fA6KRujg4aqfCXR5etaq",
+    "object": "chat.completion",
+    "created": 1745541002,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod order_by_points(nums: seq<int>) returns (sorted: seq<int>)\n    requires |nums| >= 0 // the input list can be of any length, including empty\n    ensures sorted == Seq.Sort(CompareByDigitSum(nums)) // sorted is the list sorted by digit sum\n    ensures |sorted| == |nums| // the output list has the same length as the input\n    ensures forall i, j :: 0 <= i < |nums| && 0 <= j < |nums| && i != j ==> \n        (CompareByDigitSum(nums)[i] < CompareByDigitSum(nums)[j] ==> \n        (sorted[i] == nums[i] ==> sorted[j] == nums[j])) // ordering by digit sum and original index\n{\n    // Implementation goes here\n}\n\nfunction CompareByDigitSum(nums: seq<int>): seq<int>\n    requires |nums| >= 0\n    ensures |result| == |nums| // the result has the same length as the input\n{\n    // Function for calculating the sum of digits of each integer\n}\n\nfunction SumOfDigits(n: int): int\n    requires n >= 0 // we are only concerned with non-negative integers for digit sum\n    ensures result >= 0 // the sum of digits is non-negative\n{\n    // Function implementation for calculating the sum of the digits of n\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 202,
+      "completion_tokens": 289,
+      "total_tokens": 491,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0002,
+    "your_harvard_credits_still_available": 493.50755
+  }
+}

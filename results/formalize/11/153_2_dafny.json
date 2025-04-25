@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod Strongest_Extension(class_name: string, extensions: seq<string>) returns (result: string)\n    requires class_name != \"\"\n    requires extensions != []\n    ensures result == class_name + \".\" + strongestExtension\n    ensures strongestExtension == extensions[strongestIndex]\n    ensures |extensions| > strongestIndex >= 0\n    ensures forall i :: 0 <= i < |extensions| ==> \n        (Strength(extensions[i]) < Strength(strongestExtension) => i > strongestIndex)\n{\n    var strongestIndex := 0;\n    var strongestExtension := extensions[0];\n    var strongestStrength := Strength(strongestExtension);\n\n    var i := 1;\n    while i < |extensions|\n        invariant 0 <= i <= |extensions|\n        invariant strongestIndex < |extensions|\n        invariant strongestStrength == Strength(strongestExtension)\n    {\n        if Strength(extensions[i]) > strongestStrength {\n            strongestIndex := i;\n            strongestExtension := extensions[i];\n            strongestStrength := Strength(strongestExtension);\n        }\n        i := i + 1;\n    }\n\n    result := class_name + \".\" + strongestExtension;\n}\n\nmethod Strength(extension: string) returns (strength: int)\n    ensures strength == CountUppercase(extension) - CountLowercase(extension)\n{\n    var upperCount := CountUppercase(extension);\n    var lowerCount := CountLowercase(extension);\n    strength := upperCount - lowerCount;\n}\n\nmethod CountUppercase(s: string) returns (count: int)\n    ensures count == |{ c | c in s && IsUpper(c) }|\n{\n    count := 0;\n    var i := 0;\n    while i < |s| \n        invariant 0 <= i <= |s|\n        invariant count == |{ c | j | 0 <= j < i && IsUpper(s[j]) }|\n    {\n        if IsUpper(s[i]) {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n}\n\nmethod CountLowercase(s: string) returns (count: int)\n    ensures count == |{ c | c in s && IsLower(c) }|\n{\n    count := 0;\n    var i := 0;\n    while i < |s| \n        invariant 0 <= i <= |s|\n        invariant count == |{ c | j | 0 <= j < i && IsLower(s[j]) }|\n    {\n        if IsLower(s[i]) {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n}\n\nmethod IsUpper(c: char) returns (result: bool)\n    ensures result <=> (c >= 'A' && c <= 'Z')\n{\n    result := c >= 'A' && c <= 'Z';\n}\n\nmethod IsLower(c: char) returns (result: bool)\n    ensures result <=> (c >= 'a' && c <= 'z')\n{\n    result := c >= 'a' && c <= 'z';\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef Strongest_Extension(class_name, extensions):\n    \"\"\"You will be given the name of a class (a string) and a list of extensions.\n    The extensions are to be used to load additional classes to the class. The\n    strength of the extension is as follows: Let CAP be the number of the uppercase\n    letters in the extension's name, and let SM be the number of lowercase letters \n    in the extension's name, the strength is given by the fraction CAP - SM. \n    You should find the strongest extension and return a string in this \n    format: ClassName.StrongestExtensionName.\n    If there are two or more extensions with the same strength, you should\n    choose the one that comes first in the list.\n    For example, if you are given \"Slices\" as the class and a list of the\n    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should\n    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension \n    (its strength is -1).\n    Example:\n    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'\n    \"\"\"\n",
+  "problem_id": "HumanEval/153",
+  "problem_data": {
+    "task_id": "HumanEval/153",
+    "prompt": "\ndef Strongest_Extension(class_name, extensions):\n    \"\"\"You will be given the name of a class (a string) and a list of extensions.\n    The extensions are to be used to load additional classes to the class. The\n    strength of the extension is as follows: Let CAP be the number of the uppercase\n    letters in the extension's name, and let SM be the number of lowercase letters \n    in the extension's name, the strength is given by the fraction CAP - SM. \n    You should find the strongest extension and return a string in this \n    format: ClassName.StrongestExtensionName.\n    If there are two or more extensions with the same strength, you should\n    choose the one that comes first in the list.\n    For example, if you are given \"Slices\" as the class and a list of the\n    extensions: ['SErviNGSliCes', 'Cheese', 'StuFfed'] then you should\n    return 'Slices.SErviNGSliCes' since 'SErviNGSliCes' is the strongest extension \n    (its strength is -1).\n    Example:\n    for Strongest_Extension('my_class', ['AA', 'Be', 'CC']) == 'my_class.AA'\n    \"\"\"\n",
+    "canonical_solution": "    strong = extensions[0]\n    my_val = len([x for x in extensions[0] if x.isalpha() and x.isupper()]) - len([x for x in extensions[0] if x.isalpha() and x.islower()])\n    for s in extensions:\n        val = len([x for x in s if x.isalpha() and x.isupper()]) - len([x for x in s if x.isalpha() and x.islower()])\n        if val > my_val:\n            strong = s\n            my_val = val\n\n    ans = class_name + \".\" + strong\n    return ans\n\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Watashi', ['tEN', 'niNE', 'eIGHt8OKe']) == 'Watashi.eIGHt8OKe'\n    assert candidate('Boku123', ['nani', 'NazeDa', 'YEs.WeCaNe', '32145tggg']) == 'Boku123.YEs.WeCaNe'\n    assert candidate('__YESIMHERE', ['t', 'eMptY', 'nothing', 'zeR00', 'NuLl__', '123NoooneB321']) == '__YESIMHERE.NuLl__'\n    assert candidate('K', ['Ta', 'TAR', 't234An', 'cosSo']) == 'K.TAR'\n    assert candidate('__HAHA', ['Tab', '123', '781345', '-_-']) == '__HAHA.123'\n    assert candidate('YameRore', ['HhAas', 'okIWILL123', 'WorkOut', 'Fails', '-_-']) == 'YameRore.okIWILL123'\n    assert candidate('finNNalLLly', ['Die', 'NowW', 'Wow', 'WoW']) == 'finNNalLLly.WoW'\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('_', ['Bb', '91245']) == '_.Bb'\n    assert candidate('Sp', ['671235', 'Bb']) == 'Sp.671235'\n    \n",
+    "entry_point": "Strongest_Extension"
+  },
+  "path": "results/formalize/11/153_2_dafny.json",
+  "method": "formalize",
+  "trial": 11,
+  "time_taken": 12.706789,
+  "time_start": "2025-04-25T05:36:43.501444",
+  "time_end": "2025-04-25T05:36:56.208233",
+  "prompt_tokens": 359,
+  "completion_tokens": 628,
+  "total_tokens": 987,
+  "raw": {
+    "id": "chatcmpl-BQ9m7z3a1ZwmtOukWLt765Lozwi9E",
+    "object": "chat.completion",
+    "created": 1745573803,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod Strongest_Extension(class_name: string, extensions: seq<string>) returns (result: string)\n    requires class_name != \"\"\n    requires extensions != []\n    ensures result == class_name + \".\" + strongestExtension\n    ensures strongestExtension == extensions[strongestIndex]\n    ensures |extensions| > strongestIndex >= 0\n    ensures forall i :: 0 <= i < |extensions| ==> \n        (Strength(extensions[i]) < Strength(strongestExtension) => i > strongestIndex)\n{\n    var strongestIndex := 0;\n    var strongestExtension := extensions[0];\n    var strongestStrength := Strength(strongestExtension);\n\n    var i := 1;\n    while i < |extensions|\n        invariant 0 <= i <= |extensions|\n        invariant strongestIndex < |extensions|\n        invariant strongestStrength == Strength(strongestExtension)\n    {\n        if Strength(extensions[i]) > strongestStrength {\n            strongestIndex := i;\n            strongestExtension := extensions[i];\n            strongestStrength := Strength(strongestExtension);\n        }\n        i := i + 1;\n    }\n\n    result := class_name + \".\" + strongestExtension;\n}\n\nmethod Strength(extension: string) returns (strength: int)\n    ensures strength == CountUppercase(extension) - CountLowercase(extension)\n{\n    var upperCount := CountUppercase(extension);\n    var lowerCount := CountLowercase(extension);\n    strength := upperCount - lowerCount;\n}\n\nmethod CountUppercase(s: string) returns (count: int)\n    ensures count == |{ c | c in s && IsUpper(c) }|\n{\n    count := 0;\n    var i := 0;\n    while i < |s| \n        invariant 0 <= i <= |s|\n        invariant count == |{ c | j | 0 <= j < i && IsUpper(s[j]) }|\n    {\n        if IsUpper(s[i]) {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n}\n\nmethod CountLowercase(s: string) returns (count: int)\n    ensures count == |{ c | c in s && IsLower(c) }|\n{\n    count := 0;\n    var i := 0;\n    while i < |s| \n        invariant 0 <= i <= |s|\n        invariant count == |{ c | j | 0 <= j < i && IsLower(s[j]) }|\n    {\n        if IsLower(s[i]) {\n            count := count + 1;\n        }\n        i := i + 1;\n    }\n}\n\nmethod IsUpper(c: char) returns (result: bool)\n    ensures result <=> (c >= 'A' && c <= 'Z')\n{\n    result := c >= 'A' && c <= 'Z';\n}\n\nmethod IsLower(c: char) returns (result: bool)\n    ensures result <=> (c >= 'a' && c <= 'z')\n{\n    result := c >= 'a' && c <= 'z';\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 359,
+      "completion_tokens": 628,
+      "total_tokens": 987,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00043,
+    "your_harvard_credits_still_available": 491.28611
+  }
+}

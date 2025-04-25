@@ -1,0 +1,60 @@
+{
+  "completion": "def fib4(n: int) -> int:\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 0\n    elif n == 2:\n        return 2\n    elif n == 3:\n        return 0\n    \n    fib = [0] * (n + 1)\n    fib[0], fib[1], fib[2], fib[3] = 0, 0, 2, 0\n    \n    for i in range(4, n + 1):\n        fib[i] = fib[i - 1] + fib[i - 2] + fib[i - 3] + fib[i - 4]\n    \n    return fib[n]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef fib4(n: int):\n    \"\"\"The Fib4 number sequence is a sequence similar to the Fibbonacci sequnece that's defined as follows:\n    fib4(0) -> 0\n    fib4(1) -> 0\n    fib4(2) -> 2\n    fib4(3) -> 0\n    fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).\n    Please write a function to efficiently compute the n-th element of the fib4 number sequence.  Do not use recursion.\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method fib4(n: int) returns (result: int)\n    requires n >= 0\n    ensures result == fib4_impl(n)\n{\n    var fib: array<int> := new int[n + 1];\n    if n >= 0 { fib[0] := 0; }\n    if n >= 1 { fib[1] := 0; }\n    if n >= 2 { fib[2] := 2; }\n    if n >= 3 { fib[3] := 0; }\n    \n    // Fill the array according to the fib4 definition\n    var i: int;\n    for i := 4 to n {\n        fib[i] := fib[i - 1] + fib[i - 2] + fib[i - 3] + fib[i - 4];\n    }\n    \n    result := fib[n];\n}\n\n// Auxiliary function to define the fib4 sequence correctly\nfunction fib4_impl(n: int): int\n    requires n >= 0\n    ensures fib4_impl(n) == (if n == 0 then 0\n                            else if n == 1 then 0\n                            else if n == 2 then 2\n                            else if n == 3 then 0\n                            else fib4_impl(n - 1) + fib4_impl(n - 2) + fib4_impl(n - 3) + fib4_impl(n - 4))\n{\n    if n == 0 then\n        return 0;\n    else if n == 1 then\n        return 0;\n    else if n == 2 then\n        return 2;\n    else if n == 3 then\n        return 0;\n    else\n        return fib4_impl(n - 1) + fib4_impl(n - 2) + fib4_impl(n - 3) + fib4_impl(n - 4);\n}",
+  "problem_id": "HumanEval/46",
+  "problem_data": {
+    "task_id": "HumanEval/46",
+    "prompt": "\n\ndef fib4(n: int):\n    \"\"\"The Fib4 number sequence is a sequence similar to the Fibbonacci sequnece that's defined as follows:\n    fib4(0) -> 0\n    fib4(1) -> 0\n    fib4(2) -> 2\n    fib4(3) -> 0\n    fib4(n) -> fib4(n-1) + fib4(n-2) + fib4(n-3) + fib4(n-4).\n    Please write a function to efficiently compute the n-th element of the fib4 number sequence.  Do not use recursion.\n    >>> fib4(5)\n    4\n    >>> fib4(6)\n    8\n    >>> fib4(7)\n    14\n    \"\"\"\n",
+    "canonical_solution": "    results = [0, 0, 2, 0]\n    if n < 4:\n        return results[n]\n\n    for _ in range(4, n + 1):\n        results.append(results[-1] + results[-2] + results[-3] + results[-4])\n        results.pop(0)\n\n    return results[-1]\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(5) == 4\n    assert candidate(8) == 28\n    assert candidate(10) == 104\n    assert candidate(12) == 386\n\n",
+    "entry_point": "fib4"
+  },
+  "path": "results/formalize/12/046_1_python.json",
+  "method": "formalize",
+  "trial": 12,
+  "time_taken": 2.474453,
+  "time_start": "2025-04-25T05:39:33.439173",
+  "time_end": "2025-04-25T05:39:35.913626",
+  "prompt_tokens": 692,
+  "completion_tokens": 157,
+  "total_tokens": 849,
+  "raw": {
+    "id": "chatcmpl-BQ9orBoNcfKKG2FfFh1v9Y3Ww4z0T",
+    "object": "chat.completion",
+    "created": 1745573973,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef fib4(n: int) -> int:\n    if n == 0:\n        return 0\n    elif n == 1:\n        return 0\n    elif n == 2:\n        return 2\n    elif n == 3:\n        return 0\n    \n    fib = [0] * (n + 1)\n    fib[0], fib[1], fib[2], fib[3] = 0, 0, 2, 0\n    \n    for i in range(4, n + 1):\n        fib[i] = fib[i - 1] + fib[i - 2] + fib[i - 3] + fib[i - 4]\n    \n    return fib[n]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 692,
+      "completion_tokens": 157,
+      "total_tokens": 849,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00019,
+    "your_harvard_credits_still_available": 491.23402
+  }
+}

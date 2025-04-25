@@ -1,0 +1,60 @@
+{
+  "completion": "def prime_fib(n: int):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    def fibonacci_gen():\n        a, b = 0, 1\n        while True:\n            yield b\n            a, b = b, a + b\n\n    prime_fibs = []\n    for fib in fibonacci_gen():\n        if is_prime(fib):\n            prime_fibs.append(fib)\n            if len(prime_fibs) == n:\n                return fib",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method prime_fib(n: int) returns (result: int)\n    requires n > 0\n    ensures result > 0 \n    ensures is_prime(result) && is_fibonacci(result) \n    ensures (forall k: int :: k >= 1 && k < n ==> prime_fib(k) < result)\n{\n    // Method implementation goes here\n}",
+  "problem_id": "HumanEval/39",
+  "problem_data": {
+    "task_id": "HumanEval/39",
+    "prompt": "\n\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n",
+    "canonical_solution": "    import math\n\n    def is_prime(p):\n        if p < 2:\n            return False\n        for k in range(2, min(int(math.sqrt(p)) + 1, p - 1)):\n            if p % k == 0:\n                return False\n        return True\n    f = [0, 1]\n    while True:\n        f.append(f[-1] + f[-2])\n        if is_prime(f[-1]):\n            n -= 1\n        if n == 0:\n            return f[-1]\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(1) == 2\n    assert candidate(2) == 3\n    assert candidate(3) == 5\n    assert candidate(4) == 13\n    assert candidate(5) == 89\n    assert candidate(6) == 233\n    assert candidate(7) == 1597\n    assert candidate(8) == 28657\n    assert candidate(9) == 514229\n    assert candidate(10) == 433494437\n\n",
+    "entry_point": "prime_fib"
+  },
+  "path": "results/formalize/14/039_4_python.json",
+  "method": "formalize",
+  "trial": 14,
+  "time_taken": 2.428224,
+  "time_start": "2025-04-25T05:58:17.158724",
+  "time_end": "2025-04-25T05:58:19.586948",
+  "prompt_tokens": 302,
+  "completion_tokens": 144,
+  "total_tokens": 446,
+  "raw": {
+    "id": "chatcmpl-BQA6zsLTGM4pMHVEZnNeGFiRKXb85",
+    "object": "chat.completion",
+    "created": 1745575097,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef prime_fib(n: int):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n\n    def fibonacci_gen():\n        a, b = 0, 1\n        while True:\n            yield b\n            a, b = b, a + b\n\n    prime_fibs = []\n    for fib in fibonacci_gen():\n        if is_prime(fib):\n            prime_fibs.append(fib)\n            if len(prime_fibs) == n:\n                return fib\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 302,
+      "completion_tokens": 144,
+      "total_tokens": 446,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00013,
+    "your_harvard_credits_still_available": 490.83145
+  }
+}

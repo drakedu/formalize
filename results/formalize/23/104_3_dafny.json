@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in x are positive integers\n    ensures result == Sort(Filter(x, NoEvenDigits)) // result is a sorted list of elements without even digits\n    ensures forall i :: 0 <= i < |result| ==> NoEvenDigits(result[i]) // Every element in the result has no even digits\n{\n    // Implementation goes here\n}\n\nmethod NoEvenDigits(n: int) returns (res: bool)\n    requires n >= 0\n    ensures res == (forall d :: d in Digits(n) ==> d % 2 != 0) // res is true if n has no even digits\n{\n    // Implementation goes here\n}\n\nmethod Digits(n: int) returns (d: set<int>)\n    requires n >= 0\n    ensures d == {d | d in [0..9] && n / 10^i % 10 == d && i >= 0} // d contains all digits of n\n{\n    // Implementation goes here\n}\n\nmethod Filter(s: seq<int>, pred: int -> bool) returns (filtered: seq<int>)\n    requires forall i :: 0 <= i < |s| ==> pred(s[i]) // Predicate holds for all elements\n    ensures |filtered| == |{s[i] | i | 0 <= i < |s| && pred(s[i])}| // filtered contains only elements that satisfy pred\n{\n    // Implementation goes here\n}\n\nmethod Sort(s: seq<int>) returns (sorted: seq<int>)\n    requires true // No specific requirements for sorting\n    ensures |sorted| == |s| // The sorted list has the same number of elements\n    ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j] // sorted is in increasing order\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/23/104_3_dafny.json",
+  "method": "formalize",
+  "trial": 23,
+  "time_taken": 8.349121,
+  "time_start": "2025-04-25T07:36:27.528522",
+  "time_end": "2025-04-25T07:36:35.877643",
+  "prompt_tokens": 188,
+  "completion_tokens": 419,
+  "total_tokens": 607,
+  "raw": {
+    "id": "chatcmpl-BQBdz9Gt13yWCiY7rAhHtY7CDWO1h",
+    "object": "chat.completion",
+    "created": 1745580987,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in x are positive integers\n    ensures result == Sort(Filter(x, NoEvenDigits)) // result is a sorted list of elements without even digits\n    ensures forall i :: 0 <= i < |result| ==> NoEvenDigits(result[i]) // Every element in the result has no even digits\n{\n    // Implementation goes here\n}\n\nmethod NoEvenDigits(n: int) returns (res: bool)\n    requires n >= 0\n    ensures res == (forall d :: d in Digits(n) ==> d % 2 != 0) // res is true if n has no even digits\n{\n    // Implementation goes here\n}\n\nmethod Digits(n: int) returns (d: set<int>)\n    requires n >= 0\n    ensures d == {d | d in [0..9] && n / 10^i % 10 == d && i >= 0} // d contains all digits of n\n{\n    // Implementation goes here\n}\n\nmethod Filter(s: seq<int>, pred: int -> bool) returns (filtered: seq<int>)\n    requires forall i :: 0 <= i < |s| ==> pred(s[i]) // Predicate holds for all elements\n    ensures |filtered| == |{s[i] | i | 0 <= i < |s| && pred(s[i])}| // filtered contains only elements that satisfy pred\n{\n    // Implementation goes here\n}\n\nmethod Sort(s: seq<int>) returns (sorted: seq<int>)\n    requires true // No specific requirements for sorting\n    ensures |sorted| == |s| // The sorted list has the same number of elements\n    ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j] // sorted is in increasing order\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 188,
+      "completion_tokens": 419,
+      "total_tokens": 607,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00027,
+    "your_harvard_credits_still_available": 488.92835
+  }
+}

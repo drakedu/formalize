@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod greatest_common_divisor(a: int, b: int) returns (gcd: int)\n    requires a >= 0 && b >= 0 // Precondition: Both a and b must be non-negative integers\n    ensures gcd >= 0 // Postcondition: The GCD is non-negative\n    ensures gcd == 0 ==> (a == 0 && b == 0) // If gcd is 0, then both a and b must be 0\n    ensures gcd > 0 ==> (a > 0 || b > 0) // If gcd is greater than 0, at least one of a or b must be greater than 0\n    ensures gcd divides a // Postcondition: gcd is a divisor of a\n    ensures gcd divides b // Postcondition: gcd is a divisor of b\n    ensures (forall x: int :: (x divides a && x divides b ==> x <= gcd) ) // Postcondition: gcd is the greatest common divisor\n{\n    // Function implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n",
+  "problem_id": "HumanEval/13",
+  "problem_data": {
+    "task_id": "HumanEval/13",
+    "prompt": "\n\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n",
+    "canonical_solution": "    while b:\n        a, b = b, a % b\n    return a\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate(3, 7) == 1\n    assert candidate(10, 15) == 5\n    assert candidate(49, 14) == 7\n    assert candidate(144, 60) == 12\n",
+    "entry_point": "greatest_common_divisor"
+  },
+  "path": "results/formalize/9/013_0_dafny.json",
+  "method": "formalize",
+  "trial": 9,
+  "time_taken": 4.341568,
+  "time_start": "2025-04-25T05:08:18.655434",
+  "time_end": "2025-04-25T05:08:22.997002",
+  "prompt_tokens": 157,
+  "completion_tokens": 218,
+  "total_tokens": 375,
+  "raw": {
+    "id": "chatcmpl-BQ9KcfwOlHQMkuRG3jksjOrXM5SxN",
+    "object": "chat.completion",
+    "created": 1745572098,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod greatest_common_divisor(a: int, b: int) returns (gcd: int)\n    requires a >= 0 && b >= 0 // Precondition: Both a and b must be non-negative integers\n    ensures gcd >= 0 // Postcondition: The GCD is non-negative\n    ensures gcd == 0 ==> (a == 0 && b == 0) // If gcd is 0, then both a and b must be 0\n    ensures gcd > 0 ==> (a > 0 || b > 0) // If gcd is greater than 0, at least one of a or b must be greater than 0\n    ensures gcd divides a // Postcondition: gcd is a divisor of a\n    ensures gcd divides b // Postcondition: gcd is a divisor of b\n    ensures (forall x: int :: (x divides a && x divides b ==> x <= gcd) ) // Postcondition: gcd is the greatest common divisor\n{\n    // Function implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 157,
+      "completion_tokens": 218,
+      "total_tokens": 375,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 491.86851
+  }
+}

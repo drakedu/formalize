@@ -1,0 +1,60 @@
+{
+  "completion": "def specialFilter(nums):\n    def isOdd(n):\n        return n % 2 != 0\n\n    def getFirstDigit(n):\n        while n >= 10:\n            n //= 10\n        return n\n\n    def getLastDigit(n):\n        return abs(n) % 10\n\n    def isFirstAndLastDigitOdd(n):\n        return isOdd(getFirstDigit(abs(n))) and isOdd(getLastDigit(n))\n\n    count = 0\n    for num in nums:\n        if num > 10 and isFirstAndLastDigitOdd(num):\n            count += 1\n            \n    return count",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef specialFilter(nums):\n    \"\"\"Write a function that takes an array of numbers as input and returns \n    the number of elements in the array that are greater than 10 and both \n    first and last digits of a number are odd (1, 3, 5, 7, 9).\n    For example:\n    specialFilter([15, -73, 14, -15]) => 1 \n    specialFilter([33, -2, -3, 45, 21, 109]) => 2\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method specialFilter(nums: seq<int>) returns (count: int)\n    requires nums != []\n    ensures count >= 0\n    ensures count == |{ n | n in nums && n > 10 && isFirstAndLastDigitOdd(n) }|\n{\n    // Implementation goes here\n}\n\nmethod isFirstAndLastDigitOdd(n: int) returns (result: bool)\n    ensures result == (isOdd(getFirstDigit(n)) && isOdd(getLastDigit(n)))\n{\n    // Implementation goes here\n}\n\nmethod isOdd(n: int) returns (result: bool)\n    ensures result == (n % 2 != 0)\n{\n    // Implementation goes here\n}\n\nmethod getFirstDigit(n: int) returns (digit: int)\n    requires n > 0\n    ensures digit in {1, 3, 5, 7, 9}\n{\n    // Implementation goes here\n}\n\nmethod getLastDigit(n: int) returns (digit: int)\n    requires n > 0\n    ensures digit in {1, 3, 5, 7, 9}\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/146",
+  "problem_data": {
+    "task_id": "HumanEval/146",
+    "prompt": "\ndef specialFilter(nums):\n    \"\"\"Write a function that takes an array of numbers as input and returns \n    the number of elements in the array that are greater than 10 and both \n    first and last digits of a number are odd (1, 3, 5, 7, 9).\n    For example:\n    specialFilter([15, -73, 14, -15]) => 1 \n    specialFilter([33, -2, -3, 45, 21, 109]) => 2\n    \"\"\"\n",
+    "canonical_solution": "    \n    count = 0\n    for num in nums:\n        if num > 10:\n            odd_digits = (1, 3, 5, 7, 9)\n            number_as_string = str(num)\n            if int(number_as_string[0]) in odd_digits and int(number_as_string[-1]) in odd_digits:\n                count += 1\n        \n    return count \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([5, -2, 1, -5]) == 0  \n    assert candidate([15, -73, 14, -15]) == 1\n    assert candidate([33, -2, -3, 45, 21, 109]) == 2\n    assert candidate([43, -12, 93, 125, 121, 109]) == 4\n    assert candidate([71, -2, -33, 75, 21, 19]) == 3\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1]) == 0              \n    assert candidate([]) == 0                   \n\n",
+    "entry_point": "specialFilter"
+  },
+  "path": "results/formalize/17/146_0_python.json",
+  "method": "formalize",
+  "trial": 17,
+  "time_taken": 2.309125,
+  "time_start": "2025-04-25T06:33:04.942433",
+  "time_end": "2025-04-25T06:33:07.251558",
+  "prompt_tokens": 486,
+  "completion_tokens": 132,
+  "total_tokens": 618,
+  "raw": {
+    "id": "chatcmpl-BQAef5YFkQ1CWUuBRi2UnsaiGSuRE",
+    "object": "chat.completion",
+    "created": 1745577185,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef specialFilter(nums):\n    def isOdd(n):\n        return n % 2 != 0\n\n    def getFirstDigit(n):\n        while n >= 10:\n            n //= 10\n        return n\n\n    def getLastDigit(n):\n        return abs(n) % 10\n\n    def isFirstAndLastDigitOdd(n):\n        return isOdd(getFirstDigit(abs(n))) and isOdd(getLastDigit(n))\n\n    count = 0\n    for num in nums:\n        if num > 10 and isFirstAndLastDigitOdd(num):\n            count += 1\n            \n    return count\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 486,
+      "completion_tokens": 132,
+      "total_tokens": 618,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 490.10005
+  }
+}

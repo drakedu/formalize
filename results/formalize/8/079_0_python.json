@@ -1,0 +1,60 @@
+{
+  "completion": "def decimal_to_binary(decimal: int) -> str:\n    binary_body = bin(decimal)[2:]  # Convert to binary and strip the '0b' prefix\n    return f\"db{binary_body}db\"",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef decimal_to_binary(decimal):\n    \"\"\"You will be given a number in decimal form and your task is to convert it to\n    binary format. The function should return a string, with each character representing a binary\n    number. Each character in the string will be '0' or '1'.\n\n    There will be an extra couple of characters 'db' at the beginning and at the end of the string.\n    The extra characters are there to help with the format.\n\n    Examples:\n    decimal_to_binary(15)   # returns \"db1111db\"\n    decimal_to_binary(32)   # returns \"db100000db\"\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method decimal_to_binary(decimal: int) returns (binary: string)\n    requires decimal >= 0\n    ensures binary.Length > 2 && binary == \"db\" + binary_body + \"db\" \n    ensures forall i :: 2 <= i < binary.Length - 2 ==> (binary[i] == '0' || binary[i] == '1')\n    ensures binary_body in { \"0\", \"1\" } ==> binary_body.Length > 0\n{\n    // Method implementation goes here\n}",
+  "problem_id": "HumanEval/79",
+  "problem_data": {
+    "task_id": "HumanEval/79",
+    "prompt": "\ndef decimal_to_binary(decimal):\n    \"\"\"You will be given a number in decimal form and your task is to convert it to\n    binary format. The function should return a string, with each character representing a binary\n    number. Each character in the string will be '0' or '1'.\n\n    There will be an extra couple of characters 'db' at the beginning and at the end of the string.\n    The extra characters are there to help with the format.\n\n    Examples:\n    decimal_to_binary(15)   # returns \"db1111db\"\n    decimal_to_binary(32)   # returns \"db100000db\"\n    \"\"\"\n",
+    "canonical_solution": "    return \"db\" + bin(decimal)[2:] + \"db\"\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(0) == \"db0db\"\n    assert candidate(32) == \"db100000db\"\n    assert candidate(103) == \"db1100111db\"\n    assert candidate(15) == \"db1111db\", \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "decimal_to_binary"
+  },
+  "path": "results/formalize/8/079_0_python.json",
+  "method": "formalize",
+  "trial": 8,
+  "time_taken": 1.975355,
+  "time_start": "2025-04-25T05:01:46.068029",
+  "time_end": "2025-04-25T05:01:48.043384",
+  "prompt_tokens": 374,
+  "completion_tokens": 50,
+  "total_tokens": 424,
+  "raw": {
+    "id": "chatcmpl-BQ9EIrbC1qlesoFLX3k5FLEfw7FQR",
+    "object": "chat.completion",
+    "created": 1745571706,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef decimal_to_binary(decimal: int) -> str:\n    binary_body = bin(decimal)[2:]  # Convert to binary and strip the '0b' prefix\n    return f\"db{binary_body}db\"\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 374,
+      "completion_tokens": 50,
+      "total_tokens": 424,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 491.99603
+  }
+}

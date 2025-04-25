@@ -1,0 +1,60 @@
+{
+  "completion": "def tri(n):\n    def tri_value(n):\n        if n == 0:\n            return 1\n        elif n == 1:\n            return 3\n        elif n > 1 and n % 2 == 0:\n            return 1 + n // 2\n        elif n > 1 and n % 2 == 1:\n            return tri_value(n - 1) + tri_value(n - 2) + tri_value(n + 1)\n    \n    return [tri_value(i) for i in range(n + 1)]",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method tri(n: int) returns (result: seq<int>)\n    requires n >= 0\n    ensures |result| == n + 1\n    ensures forall i :: 0 <= i < |result| ==> result[i] == triValue(i)\n{\n    // Implementation goes here\n}\n\nfunction triValue(n: int) : int\n    requires n >= 0\n    ensures (n == 0 ==> triValue(n) == 1)\n    ensures (n == 1 ==> triValue(n) == 3)\n    ensures (n > 1 && n % 2 == 0 ==> triValue(n) == 1 + n / 2)\n    ensures (n > 1 && n % 2 == 1 ==> triValue(n) == triValue(n - 1) + triValue(n - 2) + triValue(n + 1)\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/130",
+  "problem_data": {
+    "task_id": "HumanEval/130",
+    "prompt": "\ndef tri(n):\n    \"\"\"Everyone knows Fibonacci sequence, it was studied deeply by mathematicians in \n    the last couple centuries. However, what people don't know is Tribonacci sequence.\n    Tribonacci sequence is defined by the recurrence:\n    tri(1) = 3\n    tri(n) = 1 + n / 2, if n is even.\n    tri(n) =  tri(n - 1) + tri(n - 2) + tri(n + 1), if n is odd.\n    For example:\n    tri(2) = 1 + (2 / 2) = 2\n    tri(4) = 3\n    tri(3) = tri(2) + tri(1) + tri(4)\n           = 2 + 3 + 3 = 8 \n    You are given a non-negative integer number n, you have to a return a list of the \n    first n + 1 numbers of the Tribonacci sequence.\n    Examples:\n    tri(3) = [1, 3, 2, 8]\n    \"\"\"\n",
+    "canonical_solution": "    if n == 0:\n        return [1]\n    my_tri = [1, 3]\n    for i in range(2, n + 1):\n        if i % 2 == 0:\n            my_tri.append(i / 2 + 1)\n        else:\n            my_tri.append(my_tri[i - 1] + my_tri[i - 2] + (i + 3) / 2)\n    return my_tri\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    \n    assert candidate(3) == [1, 3, 2.0, 8.0]\n    assert candidate(4) == [1, 3, 2.0, 8.0, 3.0]\n    assert candidate(5) == [1, 3, 2.0, 8.0, 3.0, 15.0]\n    assert candidate(6) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0]\n    assert candidate(7) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0]\n    assert candidate(8) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0]\n    assert candidate(9) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0]\n    assert candidate(20) == [1, 3, 2.0, 8.0, 3.0, 15.0, 4.0, 24.0, 5.0, 35.0, 6.0, 48.0, 7.0, 63.0, 8.0, 80.0, 9.0, 99.0, 10.0, 120.0, 11.0]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(0) == [1]\n    assert candidate(1) == [1, 3]\n",
+    "entry_point": "tri"
+  },
+  "path": "results/formalize/18/130_4_python.json",
+  "method": "formalize",
+  "trial": 18,
+  "time_taken": 2.556849,
+  "time_start": "2025-04-25T06:45:22.877014",
+  "time_end": "2025-04-25T06:45:25.433863",
+  "prompt_tokens": 556,
+  "completion_tokens": 121,
+  "total_tokens": 677,
+  "raw": {
+    "id": "chatcmpl-BQAqZJ8TNk6vdhATmTKemCZdhiiN0",
+    "object": "chat.completion",
+    "created": 1745577923,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef tri(n):\n    def tri_value(n):\n        if n == 0:\n            return 1\n        elif n == 1:\n            return 3\n        elif n > 1 and n % 2 == 0:\n            return 1 + n // 2\n        elif n > 1 and n % 2 == 1:\n            return tri_value(n - 1) + tri_value(n - 2) + tri_value(n + 1)\n    \n    return [tri_value(i) for i in range(n + 1)]\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 556,
+      "completion_tokens": 121,
+      "total_tokens": 677,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00015,
+    "your_harvard_credits_still_available": 489.90454
+  }
+}

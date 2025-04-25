@@ -1,0 +1,60 @@
+{
+  "completion": "def add(lst):\n    result = 0\n    for i in range(1, len(lst), 2):\n        if lst[i] % 2 == 0:\n            result += lst[i]\n    return result",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method add(lst: seq<int>) returns (result: int)\n    requires |lst| > 0\n    ensures forall i :: 0 <= i < |lst| ==> (i % 2 == 1 && lst[i] % 2 == 0 ==> result == (result + lst[i])) \n    ensures result == SumEvenAtOddIndices(lst)\n{\n    // Implementation goes here\n}\n\nfunction SumEvenAtOddIndices(lst: seq<int>): int\n    requires |lst| > 0\n    ensures Result == SumEvenAtOddIndices(lst)\n{\n    // This function will compute the sum of even elements at odd indices.\n}",
+  "problem_id": "HumanEval/85",
+  "problem_data": {
+    "task_id": "HumanEval/85",
+    "prompt": "\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n",
+    "canonical_solution": "    return sum([lst[i] for i in range(1, len(lst), 2) if lst[i]%2 == 0])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([4, 88]) == 88\n    assert candidate([4, 5, 6, 7, 2, 122]) == 122\n    assert candidate([4, 0, 6, 7]) == 0\n    assert candidate([4, 4, 6, 8]) == 12\n\n    # Check some edge cases that are easy to work out by hand.\n    \n",
+    "entry_point": "add"
+  },
+  "path": "results/formalize/27/085_4_python.json",
+  "method": "formalize",
+  "trial": 27,
+  "time_taken": 1.423439,
+  "time_start": "2025-04-25T08:22:03.557134",
+  "time_end": "2025-04-25T08:22:04.980573",
+  "prompt_tokens": 319,
+  "completion_tokens": 51,
+  "total_tokens": 370,
+  "raw": {
+    "id": "chatcmpl-BQCM7ZqfcHenOLirekI0X0bnyGfAb",
+    "object": "chat.completion",
+    "created": 1745583723,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef add(lst):\n    result = 0\n    for i in range(1, len(lst), 2):\n        if lst[i] % 2 == 0:\n            result += lst[i]\n    return result\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 319,
+      "completion_tokens": 51,
+      "total_tokens": 370,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 488.12857
+  }
+}

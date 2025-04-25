@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod Add(lst: seq<int>) returns (result: int)\n    requires |lst| > 0\n    requires forall i :: 0 <= i < |lst| ==> lst[i] is int\n    ensures result == SumEvenAtOddIndices(lst)\n{\n    // Implementation goes here\n}\n\nmethod SumEvenAtOddIndices(lst: seq<int>) returns (sum: int)\n    ensures sum == SumEvenAtOddIndicesImpl(lst)\n{\n    // Implementation of the summing logic would be here\n}\n\nfunction SumEvenAtOddIndicesImpl(lst: seq<int>): int\n    reads lst\n    decreases |lst|\n{\n    if |lst| == 0 {\n        return 0;\n    } else if |lst| == 1 {\n        return 0;\n    } else if |lst| == 2 {\n        return if lst[1] % 2 == 0 then lst[1] else 0;\n    } else {\n        return if lst[1] % 2 == 0 then lst[1] + SumEvenAtOddIndicesImpl(lst[2..]) else SumEvenAtOddIndicesImpl(lst[2..]);\n    }\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n",
+  "problem_id": "HumanEval/85",
+  "problem_data": {
+    "task_id": "HumanEval/85",
+    "prompt": "\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n",
+    "canonical_solution": "    return sum([lst[i] for i in range(1, len(lst), 2) if lst[i]%2 == 0])\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([4, 88]) == 88\n    assert candidate([4, 5, 6, 7, 2, 122]) == 122\n    assert candidate([4, 0, 6, 7]) == 0\n    assert candidate([4, 4, 6, 8]) == 12\n\n    # Check some edge cases that are easy to work out by hand.\n    \n",
+    "entry_point": "add"
+  },
+  "path": "results/formalize/21/085_1_dafny.json",
+  "method": "formalize",
+  "trial": 21,
+  "time_taken": 4.583206,
+  "time_start": "2025-04-25T07:12:37.569312",
+  "time_end": "2025-04-25T07:12:42.152518",
+  "prompt_tokens": 142,
+  "completion_tokens": 246,
+  "total_tokens": 388,
+  "raw": {
+    "id": "chatcmpl-BQBGvxmln7AGS7ieUTnaGJWhnnbDa",
+    "object": "chat.completion",
+    "created": 1745579557,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod Add(lst: seq<int>) returns (result: int)\n    requires |lst| > 0\n    requires forall i :: 0 <= i < |lst| ==> lst[i] is int\n    ensures result == SumEvenAtOddIndices(lst)\n{\n    // Implementation goes here\n}\n\nmethod SumEvenAtOddIndices(lst: seq<int>) returns (sum: int)\n    ensures sum == SumEvenAtOddIndicesImpl(lst)\n{\n    // Implementation of the summing logic would be here\n}\n\nfunction SumEvenAtOddIndicesImpl(lst: seq<int>): int\n    reads lst\n    decreases |lst|\n{\n    if |lst| == 0 {\n        return 0;\n    } else if |lst| == 1 {\n        return 0;\n    } else if |lst| == 2 {\n        return if lst[1] % 2 == 0 then lst[1] else 0;\n    } else {\n        return if lst[1] % 2 == 0 then lst[1] + SumEvenAtOddIndicesImpl(lst[2..]) else SumEvenAtOddIndicesImpl(lst[2..]);\n    }\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 142,
+      "completion_tokens": 246,
+      "total_tokens": 388,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00016,
+    "your_harvard_credits_still_available": 489.36504
+  }
+}

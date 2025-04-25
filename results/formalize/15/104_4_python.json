@@ -1,0 +1,60 @@
+{
+  "completion": "def unique_digits(x):\n    def has_unique_odd_digits(n):\n        digits = set()\n        while n > 0:\n            digit = n % 10\n            if digit % 2 == 0 or digit in digits:\n                return False\n            digits.add(digit)\n            n //= 10\n        return True\n\n    result = [num for num in x if has_unique_odd_digits(num)]\n    return sorted(result)",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method unique_digits(x: seq<int>) returns (result: seq<int>)\n    requires forall i :: 0 <= i < |x| ==> x[i] >= 0 // All elements in the list are positive integers\n    modifies result\n    ensures result == SeqSort(SeqFilter(x, IsUniqueDigits)) // Result is the sorted list of elements with unique digits\n{\n    // Implementation here\n}\n\n// Helper function to check if a number has only unique digits that are all odd\nfunction IsUniqueDigits(n: int): bool\n    requires n >= 0\n    ensures result == (forall d :: (0 <= d < 10 ==> (d in Digits(n)) ==> d % 2 == 1)) // All digits must be odd\n    ensures result ==> (forall d1, d2 :: (0 <= d1 < d2 < 10 ==> (d1 in Digits(n) && d2 in Digits(n) ==> d1 != d2)) // All digits must be unique\n{\n    // Implementation here\n}\n\n// Helper function to extract digits from a number\nfunction Digits(n: int): set<int>\n    requires n >= 0\n    ensures result == { d | d in 0..9 && d in ExtractDigits(n) } // Returns a set of digits contained in n\n{\n    // Implementation here\n}",
+  "problem_id": "HumanEval/104",
+  "problem_data": {
+    "task_id": "HumanEval/104",
+    "prompt": "\ndef unique_digits(x):\n    \"\"\"Given a list of positive integers x. return a sorted list of all \n    elements that hasn't any even digit.\n\n    Note: Returned list should be sorted in increasing order.\n    \n    For example:\n    >>> unique_digits([15, 33, 1422, 1])\n    [1, 15, 33]\n    >>> unique_digits([152, 323, 1422, 10])\n    []\n    \"\"\"\n",
+    "canonical_solution": "    odd_digit_elements = []\n    for i in x:\n        if all (int(c) % 2 == 1 for c in str(i)):\n            odd_digit_elements.append(i)\n    return sorted(odd_digit_elements)\n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([15, 33, 1422, 1]) == [1, 15, 33]\n    assert candidate([152, 323, 1422, 10]) == []\n    assert candidate([12345, 2033, 111, 151]) == [111, 151]\n    assert candidate([135, 103, 31]) == [31, 135]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n",
+    "entry_point": "unique_digits"
+  },
+  "path": "results/formalize/15/104_4_python.json",
+  "method": "formalize",
+  "trial": 15,
+  "time_taken": 1.57946,
+  "time_start": "2025-04-25T06:12:22.917966",
+  "time_end": "2025-04-25T06:12:24.497426",
+  "prompt_tokens": 512,
+  "completion_tokens": 96,
+  "total_tokens": 608,
+  "raw": {
+    "id": "chatcmpl-BQAKd4rqShYgiydHWgPYFCTUgCyuX",
+    "object": "chat.completion",
+    "created": 1745575943,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef unique_digits(x):\n    def has_unique_odd_digits(n):\n        digits = set()\n        while n > 0:\n            digit = n % 10\n            if digit % 2 == 0 or digit in digits:\n                return False\n            digits.add(digit)\n            n //= 10\n        return True\n\n    result = [num for num in x if has_unique_odd_digits(num)]\n    return sorted(result)\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 512,
+      "completion_tokens": 96,
+      "total_tokens": 608,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 0.00013,
+    "your_harvard_credits_still_available": 490.55119
+  }
+}

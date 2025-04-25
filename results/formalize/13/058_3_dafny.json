@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod common(l1: seq<int>, l2: seq<int>) returns (result: seq<int>)\n    requires |l1| >= 0 && |l2| >= 0\n    ensures result == SeqDistinct(SeqSort(SeqIntersect(l1, l2)))\n    decreases |l1| + |l2|\n{\n    // Implementation will go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "\n\ndef common(l1: list, l2: list):\n    \"\"\"Return sorted unique common elements for two lists.\n    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])\n    [1, 5, 653]\n    >>> common([5, 3, 2, 8], [3, 2])\n    [2, 3]\n\n    \"\"\"\n",
+  "problem_id": "HumanEval/58",
+  "problem_data": {
+    "task_id": "HumanEval/58",
+    "prompt": "\n\ndef common(l1: list, l2: list):\n    \"\"\"Return sorted unique common elements for two lists.\n    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])\n    [1, 5, 653]\n    >>> common([5, 3, 2, 8], [3, 2])\n    [2, 3]\n\n    \"\"\"\n",
+    "canonical_solution": "    ret = set()\n    for e1 in l1:\n        for e2 in l2:\n            if e1 == e2:\n                ret.add(e1)\n    return sorted(list(ret))\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121]) == [1, 5, 653]\n    assert candidate([5, 3, 2, 8], [3, 2]) == [2, 3]\n    assert candidate([4, 3, 2, 8], [3, 2, 4]) == [2, 3, 4]\n    assert candidate([4, 3, 2, 8], []) == []\n\n",
+    "entry_point": "common"
+  },
+  "path": "results/formalize/13/058_3_dafny.json",
+  "method": "formalize",
+  "trial": 13,
+  "time_taken": 1.557281,
+  "time_start": "2025-04-25T05:49:47.820441",
+  "time_end": "2025-04-25T05:49:49.377722",
+  "prompt_tokens": 201,
+  "completion_tokens": 83,
+  "total_tokens": 284,
+  "raw": {
+    "id": "chatcmpl-BQ9ylx2opnpldYST3zJ76mABHpLH7",
+    "object": "chat.completion",
+    "created": 1745574587,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod common(l1: seq<int>, l2: seq<int>) returns (result: seq<int>)\n    requires |l1| >= 0 && |l2| >= 0\n    ensures result == SeqDistinct(SeqSort(SeqIntersect(l1, l2)))\n    decreases |l1| + |l2|\n{\n    // Implementation will go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 201,
+      "completion_tokens": 83,
+      "total_tokens": 284,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 7e-05,
+    "your_harvard_credits_still_available": 491.0182
+  }
+}

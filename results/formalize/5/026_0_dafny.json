@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod remove_duplicates(numbers: seq<int>) returns (result: seq<int>)\n    requires |numbers| > 0 // The input list must not be empty\n    ensures forall i :: 0 <= i < |result| ==> (result[i] !in numbers) && (result[i] !in set numbers && count(numbers, result[i]) == 1) // Each element in the result must be from the input list and must occur exactly once\n    ensures |result| == |numbers| - count(numbers, x) // The size of the result list is the size of the input list minus the number of duplicates\n    ensures forall i, j :: 0 <= i < |result| && 0 <= j < |result| ==> (i != j ==> result[i] != result[j]) // All elements in the result list must be unique\n    ensures forall i :: 0 <= i < |result| ==> result[i] == numbers[findIndex(numbers, result[i])] // The order of elements in the result must match their first occurrence in the input list\n{\n    // Implementation goes here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+  "problem_id": "HumanEval/26",
+  "problem_data": {
+    "task_id": "HumanEval/26",
+    "prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+    "canonical_solution": "    import collections\n    c = collections.Counter(numbers)\n    return [n for n in numbers if c[n] <= 1]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([1, 2, 3, 2, 4, 3, 5]) == [1, 4, 5]\n",
+    "entry_point": "remove_duplicates"
+  },
+  "path": "results/formalize/5/026_0_dafny.json",
+  "method": "formalize",
+  "trial": 5,
+  "time_taken": 4.639201,
+  "time_start": "2025-04-25T02:25:02.048230",
+  "time_end": "2025-04-25T02:25:06.687431",
+  "prompt_tokens": 170,
+  "completion_tokens": 234,
+  "total_tokens": 404,
+  "raw": {
+    "id": "chatcmpl-BQ6mcWFgxXi74fjn9sqePit7i3jXu",
+    "object": "chat.completion",
+    "created": 1745562302,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod remove_duplicates(numbers: seq<int>) returns (result: seq<int>)\n    requires |numbers| > 0 // The input list must not be empty\n    ensures forall i :: 0 <= i < |result| ==> (result[i] !in numbers) && (result[i] !in set numbers && count(numbers, result[i]) == 1) // Each element in the result must be from the input list and must occur exactly once\n    ensures |result| == |numbers| - count(numbers, x) // The size of the result list is the size of the input list minus the number of duplicates\n    ensures forall i, j :: 0 <= i < |result| && 0 <= j < |result| ==> (i != j ==> result[i] != result[j]) // All elements in the result list must be unique\n    ensures forall i :: 0 <= i < |result| ==> result[i] == numbers[findIndex(numbers, result[i])] // The order of elements in the result must match their first occurrence in the input list\n{\n    // Implementation goes here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 170,
+      "completion_tokens": 234,
+      "total_tokens": 404,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.00016,
+    "your_harvard_credits_still_available": 492.65504
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "completion": "def is_simple_power(x: int, n: int) -> bool:\n    if n <= 0 or x < 0:\n        return False\n    if x == 1:\n        return True\n    power = 1\n    while n ** power < x:\n        power += 1\n    return n ** power == x",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\ndef is_simple_power(x, n):\n    \"\"\"Your task is to write a function that returns true if a number x is a simple\n    power of n and false in other cases.\n    x is a simple power of n if n**int=x\n    For example:\n    is_simple_power(1, 4) => true\n    is_simple_power(2, 2) => true\n    is_simple_power(8, 2) => true\n    is_simple_power(3, 2) => false\n    is_simple_power(3, 1) => false\n    is_simple_power(5, 3) => false\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method is_simple_power(x: int, n: int) returns (result: bool)\n    requires n > 0 // n must be greater than 0 to avoid division by zero and negative powers\n    requires x >= 0 // x must be non-negative since we are dealing with powers\n    ensures result == (exists k: int :: n^k == x) // result is true if there exists an integer k such that n raised to the power of k equals x\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/76",
+  "problem_data": {
+    "task_id": "HumanEval/76",
+    "prompt": "\ndef is_simple_power(x, n):\n    \"\"\"Your task is to write a function that returns true if a number x is a simple\n    power of n and false in other cases.\n    x is a simple power of n if n**int=x\n    For example:\n    is_simple_power(1, 4) => true\n    is_simple_power(2, 2) => true\n    is_simple_power(8, 2) => true\n    is_simple_power(3, 2) => false\n    is_simple_power(3, 1) => false\n    is_simple_power(5, 3) => false\n    \"\"\"\n",
+    "canonical_solution": "    if (n == 1): \n        return (x == 1) \n    power = 1\n    while (power < x): \n        power = power * n \n    return (power == x) \n",
+    "test": "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(16, 2)== True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(143214, 16)== False, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(4, 2)==True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(9, 3)==True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(16, 4)==True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(24, 2)==False, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(128, 4)==False, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(12, 6)==False, \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(1, 1)==True, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate(1, 12)==True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n",
+    "entry_point": "is_simple_power"
+  },
+  "path": "results/formalize/29/076_0_python.json",
+  "method": "formalize",
+  "trial": 29,
+  "time_taken": 1.742846,
+  "time_start": "2025-04-25T08:41:58.150189",
+  "time_end": "2025-04-25T08:41:59.893035",
+  "prompt_tokens": 379,
+  "completion_tokens": 75,
+  "total_tokens": 454,
+  "raw": {
+    "id": "chatcmpl-BQCfOZUjftO6QsWpOhiCCdRyO5CLl",
+    "object": "chat.completion",
+    "created": 1745584918,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef is_simple_power(x: int, n: int) -> bool:\n    if n <= 0 or x < 0:\n        return False\n    if x == 1:\n        return True\n    power = 1\n    while n ** power < x:\n        power += 1\n    return n ** power == x\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 379,
+      "completion_tokens": 75,
+      "total_tokens": 454,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_0392822090",
+    "your_harvard_credits_used_this_transaction": 0.0001,
+    "your_harvard_credits_still_available": 487.73384
+  }
+}

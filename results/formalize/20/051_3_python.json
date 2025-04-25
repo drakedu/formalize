@@ -1,0 +1,60 @@
+{
+  "completion": "def remove_vowels(text):\n    return ''.join(char for char in text if char.lower() not in 'aeiou')",
+  "system_prompt": "You are an expert Python programmer. You are given the following problem:\\n\\n\n\ndef remove_vowels(text):\n    \"\"\"\n    remove_vowels is a function that takes string and returns string without vowels.\n    >>> remove_vowels('')\n    ''\n    >>> remove_vowels(\"abcdef\\nghijklm\")\n    'bcdf\\nghjklm'\n    >>> remove_vowels('abcdef')\n    'bcdf'\n    >>> remove_vowels('aaaaa')\n    ''\n    >>> remove_vowels('aaBAA')\n    'B'\n    >>> remove_vowels('zbcd')\n    'zbcd'\n    \"\"\"\n\\nYour job is to reason through the problem step by step and then create a Python implementation that satisfies the requirements of the docstring. To help with your reasoning, you will be given a Dafny specification, but prioritize the docstring as the Dafny specification could be incorrect. You should just return a single function without the docstring and no added commentary, and make sure to respond with the complete, valid, and idiomatic Python method including the function signature in the following format:\\n\\n```python\\n{YOUR RESPONSE}\\n```.",
+  "user_prompt": "method remove_vowels(text: string) returns (result: string)\n    requires text != null\n    ensures result != null\n    ensures |result| == |text| - CountVowels(text)\n    ensures forall i :: 0 <= i < |result| ==> result[i] !in {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}\n{\n    // Implementation goes here\n}",
+  "problem_id": "HumanEval/51",
+  "problem_data": {
+    "task_id": "HumanEval/51",
+    "prompt": "\n\ndef remove_vowels(text):\n    \"\"\"\n    remove_vowels is a function that takes string and returns string without vowels.\n    >>> remove_vowels('')\n    ''\n    >>> remove_vowels(\"abcdef\\nghijklm\")\n    'bcdf\\nghjklm'\n    >>> remove_vowels('abcdef')\n    'bcdf'\n    >>> remove_vowels('aaaaa')\n    ''\n    >>> remove_vowels('aaBAA')\n    'B'\n    >>> remove_vowels('zbcd')\n    'zbcd'\n    \"\"\"\n",
+    "canonical_solution": "    return \"\".join([s for s in text if s.lower() not in [\"a\", \"e\", \"i\", \"o\", \"u\"]])\n",
+    "test": "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate('') == ''\n    assert candidate(\"abcdef\\nghijklm\") == 'bcdf\\nghjklm'\n    assert candidate('fedcba') == 'fdcb'\n    assert candidate('eeeee') == ''\n    assert candidate('acBAA') == 'cB'\n    assert candidate('EcBOO') == 'cB'\n    assert candidate('ybcd') == 'ybcd'\n\n",
+    "entry_point": "remove_vowels"
+  },
+  "path": "results/formalize/20/051_3_python.json",
+  "method": "formalize",
+  "trial": 20,
+  "time_taken": 1.445859,
+  "time_start": "2025-04-25T07:00:10.057902",
+  "time_end": "2025-04-25T07:00:11.503761",
+  "prompt_tokens": 344,
+  "completion_tokens": 30,
+  "total_tokens": 374,
+  "raw": {
+    "id": "chatcmpl-BQB4skZlhyxCTxKc7FQfvZkZ68qh3",
+    "object": "chat.completion",
+    "created": 1745578810,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```python\ndef remove_vowels(text):\n    return ''.join(char for char in text if char.lower() not in 'aeiou')\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 344,
+      "completion_tokens": 30,
+      "total_tokens": 374,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 6e-05,
+    "your_harvard_credits_still_available": 489.59902
+  }
+}

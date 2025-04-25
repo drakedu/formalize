@@ -1,0 +1,60 @@
+{
+  "completion": "```dafny\nmethod remove_duplicates(numbers: seq<int>) returns (result: seq<int>)\n    requires numbers != []\n    ensures forall i :: 0 <= i < |result| ==> result[i] in numbers\n    ensures forall x :: x in result ==> Count(numbers, x) == 1\n    ensures |result| == |{x | x in numbers && Count(numbers, x) == 1}|\n{\n    // Method implementation would go here\n}\n```",
+  "system_prompt": "You are an expert Dafny programmer. Given a Python function signature, docstring, and examples, your job is to reason through the problem step by step and just write a Dafny specification consisting of preconditions and postconditions that satisfies the requirements. Make sure to respond with the valid and idiomatic Dafny specification in the following format:\\n\\n```dafny\\n{{YOUR RESPONSE}}\\n```.",
+  "user_prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+  "problem_id": "HumanEval/26",
+  "problem_data": {
+    "task_id": "HumanEval/26",
+    "prompt": "from typing import List\n\n\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n",
+    "canonical_solution": "    import collections\n    c = collections.Counter(numbers)\n    return [n for n in numbers if c[n] <= 1]\n",
+    "test": "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([]) == []\n    assert candidate([1, 2, 3, 4]) == [1, 2, 3, 4]\n    assert candidate([1, 2, 3, 2, 4, 3, 5]) == [1, 4, 5]\n",
+    "entry_point": "remove_duplicates"
+  },
+  "path": "results/formalize/25/026_4_dafny.json",
+  "method": "formalize",
+  "trial": 25,
+  "time_taken": 1.943702,
+  "time_start": "2025-04-25T07:56:56.380136",
+  "time_end": "2025-04-25T07:56:58.323838",
+  "prompt_tokens": 170,
+  "completion_tokens": 98,
+  "total_tokens": 268,
+  "raw": {
+    "id": "chatcmpl-BQBxoPLQrEfkZ7v2UG4kFgUIiSVUn",
+    "object": "chat.completion",
+    "created": 1745582216,
+    "model": "gpt-4o-mini-2024-07-18",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "```dafny\nmethod remove_duplicates(numbers: seq<int>) returns (result: seq<int>)\n    requires numbers != []\n    ensures forall i :: 0 <= i < |result| ==> result[i] in numbers\n    ensures forall x :: x in result ==> Count(numbers, x) == 1\n    ensures |result| == |{x | x in numbers && Count(numbers, x) == 1}|\n{\n    // Method implementation would go here\n}\n```",
+          "refusal": null,
+          "annotations": []
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 170,
+      "completion_tokens": 98,
+      "total_tokens": 268,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "audio_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "audio_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      }
+    },
+    "service_tier": "default",
+    "system_fingerprint": "fp_dbaca60df0",
+    "your_harvard_credits_used_this_transaction": 8e-05,
+    "your_harvard_credits_still_available": 488.5924
+  }
+}
