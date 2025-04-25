@@ -71,6 +71,12 @@ def create_directory(method: str, trial_number: int) -> str:
 def get_name() -> str:
     return os.path.splitext(os.path.basename(sys.argv[0]))[0]
 
+def strip_markdown_block(code: str) -> str:
+    lines = code.strip().splitlines()
+    if lines and lines[0].strip().startswith("```") and lines[-1].strip().startswith("```"):
+        return "\n".join(lines[1:-1])
+    return code
+
 def get_prompt(method: str) -> str:
     prompt_path = os.path.join(config.PROMPTS, f"{method}.txt")
     with open(prompt_path, "r") as f:
