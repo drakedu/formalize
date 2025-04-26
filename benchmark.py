@@ -61,7 +61,7 @@ def main():
         if os.path.exists(output_path):
             df = pd.read_csv(output_path, index_col="problem")
         else:
-            df = pd.DataFrame({"problem": [f"{i:03d}" for i in range(config.NUM_PROBLEMS)]})
+            df = pd.DataFrame({"problem": list(range(config.NUM_PROBLEMS))})
             df.set_index("problem", inplace=True)
 
         col_name = f"trial_{trial_index}"
