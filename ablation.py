@@ -9,6 +9,31 @@ from datasets import load_dataset
 from human_eval.evaluation import evaluate_functional_correctness
 import config
 import utils
+from datetime import datetime
+from scipy import stats
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+def parse_json_result(file_path):
+    with open(file_path, "r") as f:
+        data = json.load(f)
+    tokens = data.get("total_tokens") / 1000
+    start_str = data.get("time_start")
+    end_str = data.get("time_end")
+    start = datetime.fromisoformat(start_str)
+    end = datetime.fromisoformat(end_str)
+    latency = (end - start).total_seconds()
+    return tokens, latency
+
+def compute_mean_ci(values):
+    mean = sum(values) / len(values)
+    ci_low, ci_high = stats.t.interval(
+        confidence=0.95,
+        df=len(values) - 1,
+        loc=mean,
+        scale=stats.sem(values)
+    )
+    return ci_low, mean, ci_high
 
 # Choose a completion by self-consistency voting among first j completions.
 def vote_among_first_j(completions, j):
@@ -23,7 +48,7 @@ def vote_among_first_j(completions, j):
 def evaluate_completion(method, trial_index, problem_index, j, completion, problem_data):
     task_id = problem_data["task_id"]
 
-    for attempt in range(config.NUM_RETRIES):
+    for _ in range(config.NUM_RETRIES):
         try:
             with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".jsonl") as tmp_samples:
                 tmp_samples.write(json.dumps({"task_id": task_id, "completion": completion}) + "\n")
@@ -76,10 +101,12 @@ def main():
     benchmark_dfs = {}
     for j in range(1, k + 1):
         benchmark_path = os.path.join(benchmarks_dir, f"{method}_{j}.csv")
+
         if os.path.exists(benchmark_path):
-            benchmark_dfs[j] = pd.read_csv(benchmark_path, index_col=0)
+            benchmark_dfs[j] = pd.read_csv(benchmark_path, index_col="problem")
         else:
-            benchmark_dfs[j] = pd.DataFrame(index=range(num_problems))
+            benchmark_dfs[j] = pd.DataFrame({"problem": list(range(config.NUM_PROBLEMS))})
+            benchmark_dfs[j].set_index("problem", inplace=True)
 
     with ProcessPoolExecutor() as executor:
         for trial in range(num_trials):
@@ -102,7 +129,7 @@ def main():
                 for i in range(k):
                     path = os.path.join(results_dir, method, str(trial), f"{problem_name}_{i}_python.json")
                     if not os.path.exists(path):
-                        raise FileNotFoundError(f"Missing {path}")
+                        raise FileNotFoundError(f"{path} does not exist.")
                     with open(path, "r") as f:
                         data = json.load(f)
                         completions.append(data["completion"])
@@ -119,18 +146,163 @@ def main():
                 )
                 futures[future] = problem_index
 
+            # Batch collect results.
+            batch_results = {j: {} for j in range(1, k + 1)}
+
             for future in as_completed(futures):
                 problem_index, results = future.result()
                 for j, is_pass in results:
-                    benchmark_dfs[j].loc[problem_index, trial_col] = is_pass
+                    batch_results[j][problem_index] = is_pass
+
+            # Batch assign columns.
+            for j in range(1, k + 1):
+                ordered_results = [batch_results[j][i] for i in range(num_problems)]
+                benchmark_dfs[j][trial_col] = ordered_results
 
             # Save benchmarks after each trial.
             for j in range(1, k + 1):
                 benchmark_path = os.path.join(benchmarks_dir, f"{method}_{j}.csv")
                 benchmark_dfs[j].to_csv(benchmark_path)
+
             print(f"Trial {trial} finished benchmarking.")
 
     print("Ablation benchmarking finished.")
+
+    summary_path = "ablation.csv"
+    summary_df = pd.DataFrame()
+
+    for j in range(1, k + 1):
+        method_j = f"{method}_{j}"
+        benchmark_path = os.path.join(benchmarks_dir, f"{method_j}.csv")
+
+        if not os.path.exists(benchmark_path):
+            raise ValueError(f"Benchmark for {method_j} is missing.")
+
+        benchmark_df = pd.read_csv(benchmark_path, index_col=0)
+
+        pass_rates, avg_tokens_list, avg_latency_list = [], [], []
+
+        for trial in range(num_trials):
+            trial_col = f"trial_{trial}"
+            if trial_col not in benchmark_df:
+                raise ValueError(f"{trial_col} is missing in in benchmark {benchmark_df}.")
+
+            total_tokens, total_latency, n_problems = 0, 0, 0
+
+            for problem_idx in benchmark_df.index:
+                tokens_sum, latency_sum = 0, 0
+                for completion_idx in range(j):
+                    path_python = os.path.join(results_dir, method, str(trial), f"{int(problem_idx):03d}_{completion_idx}_python.json")
+                    path_dafny = os.path.join(results_dir, method, str(trial), f"{int(problem_idx):03d}_{completion_idx}_dafny.json")
+
+                    if not os.path.exists(path_python) or not os.path.exists(path_dafny):
+                        raise FileNotFoundError(f"One of the paths {path_python} or {path_dafny} does not exist.")
+
+                    tokens_py, latency_py = parse_json_result(path_python)
+                    tokens_dafny, latency_dafny = parse_json_result(path_dafny)
+                    tokens_sum += tokens_py + tokens_dafny
+                    latency_sum += latency_py + latency_dafny
+
+                total_tokens += tokens_sum
+                total_latency += latency_sum
+                n_problems += 1
+
+            avg_tokens_list.append(total_tokens / n_problems)
+            avg_latency_list.append(total_latency / n_problems)
+            pass_rates.append(benchmark_df[trial_col].mean())
+
+        pass_ci_low, pass_mean, pass_ci_high = compute_mean_ci(pass_rates)
+        token_ci_low, token_mean, token_ci_high = compute_mean_ci(avg_tokens_list)
+        latency_ci_low, latency_mean, latency_ci_high = compute_mean_ci(avg_latency_list)
+
+        row_data = [pass_ci_low, pass_mean, pass_ci_high,
+                    token_ci_low, token_mean, token_ci_high,
+                    latency_ci_low, latency_mean, latency_ci_high]
+
+        column_names = [
+            "pass_mean_lower", "pass_mean", "pass_mean_upper",
+            "token_mean_lower", "token_mean", "token_mean_upper",
+            "latency_mean_lower", "latency_mean", "latency_mean_upper"
+        ]
+
+        method_df = pd.DataFrame([row_data], index=[method_j], columns=column_names)
+        summary_df = pd.concat([summary_df, method_df])
+
+    summary_df.to_csv(summary_path)
+    print(f"Summary finished to {summary_path}.")
+
+    summary_df.reset_index(inplace=True)
+    summary_df.rename(columns={"index": "method"}, inplace=True)
+    summary_df["method"] = pd.Categorical(summary_df["method"], categories=summary_df["method"], ordered=True)
+
+    plots_dir = config.PLOTS
+    os.makedirs(plots_dir, exist_ok=True)
+
+    def plot_ablation(df, y, y_lower, y_upper, y_label, title, filename):
+        plt.figure()
+
+        # Extract k from method names like 'formalize_1'.
+        df["k"] = df["method"].str.extract(r'_(\d+)').astype(int)
+        df = df.sort_values("k")
+
+        sns.barplot(
+            data=df,
+            x="k",
+            y=y,
+            errorbar=None,
+            hue="k",
+            legend=False
+        )
+
+        for i, k_val in enumerate(df["k"]):
+            lower = df.loc[df["k"] == k_val, y_lower].values[0]
+            mean = df.loc[df["k"] == k_val, y].values[0]
+            upper = df.loc[df["k"] == k_val, y_upper].values[0]
+            plt.errorbar(
+                x=i,
+                y=mean,
+                yerr=[[mean - lower], [upper - mean]],
+                c='black',
+                capsize=5
+            )
+
+        plt.title(title)
+        plt.ylabel(y_label)
+        plt.xlabel("k")
+        plt.savefig(os.path.join(plots_dir, filename))
+        plt.close()
+
+    plot_ablation(
+        summary_df,
+        y="pass_mean",
+        y_lower="pass_mean_lower",
+        y_upper="pass_mean_upper",
+        y_label="Average Accuracy",
+        title="FORMALIZE Accuracy versus k",
+        filename="ablation_accuracy.png"
+    )
+
+    plot_ablation(
+        summary_df,
+        y="token_mean",
+        y_lower="token_mean_lower",
+        y_upper="token_mean_upper",
+        y_label="Average Tokens (k)",
+        title="FORMALIZE Tokens versus k",
+        filename="ablation_tokens.png"
+    )
+
+    plot_ablation(
+        summary_df,
+        y="latency_mean",
+        y_lower="latency_mean_lower",
+        y_upper="latency_mean_upper",
+        y_label="Average Latency (s)",
+        title="FORMALIZE Latency versus k",
+        filename="ablation_latency.png"
+    )
+
+    print("Plots were saved.")
 
 if __name__ == "__main__":
     main()
