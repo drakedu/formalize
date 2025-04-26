@@ -29,7 +29,7 @@ def parse_json_result(file_path):
 
 method = utils.parse_method_from_argv()
 benchmark_path = os.path.join(config.BENCHMARKS, f"{method}.csv")
-summary_path = f"{config.SUMMARY}.csv"
+summary_path = "summary.csv"
 
 if not os.path.exists(benchmark_path):
     print(f"Benchmark file for method {method} was not found at {benchmark_path}.")
