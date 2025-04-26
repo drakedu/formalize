@@ -6,7 +6,7 @@ import utils
 
 method = utils.parse_method_from_argv()
 
-def run_formalize(trial, problem):
+def run(trial, problem):
     for _ in range(config.NUM_RETRIES):
         try:
             subprocess.run(["python", sys.argv[1], str(trial), str(problem)], check=True)
@@ -22,7 +22,7 @@ if __name__ == "__main__":
         tasks = []
         with ProcessPoolExecutor() as executor:
             for problem in range(config.NUM_PROBLEMS):
-                tasks.append(executor.submit(run_formalize, trial, problem))
+                tasks.append(executor.submit(run, trial, problem))
 
             for future in as_completed(tasks):
                 trial_idx, problem_idx, success = future.result()

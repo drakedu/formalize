@@ -102,7 +102,6 @@ for i in range(config.K):
         data["usage"]
     )
 
-    # result["completion"] = utils.strip_function_signature(utils.strip_markdown_block(result["completion"]))
     result["completion"] = utils.strip_markdown_block(result["completion"])
 
     with open(partial_path_python, "w") as f:
