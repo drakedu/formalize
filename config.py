@@ -20,10 +20,10 @@ MODEL = "gpt-4o-mini"
 DATASET= "openai_humaneval"
 
 # Set key.
-KEY = "jymXh7blvxMSm0gcif1pkKShCW0tHzke"
+KEY = None
 
 # Set URL.
-URL = "https://go.apis.huit.harvard.edu/ais-openai-direct-limited-schools/v1/chat/completions"
+URL = None
 
 # Set locations.
 RESULTS = "results"
